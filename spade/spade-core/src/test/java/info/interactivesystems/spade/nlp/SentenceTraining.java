@@ -1,4 +1,4 @@
-package info.interacctivesystems.spade.nlp;
+package info.interactivesystems.spade.nlp;
 
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;

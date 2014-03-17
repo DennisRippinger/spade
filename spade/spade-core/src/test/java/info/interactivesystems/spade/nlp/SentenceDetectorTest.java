@@ -11,10 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package info.interacctivesystems.spade.nlp;
+package info.interactivesystems.spade.nlp;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import info.interacctivesystems.spade.PropertyUtil;
+import info.interactivesystems.spade.PropertyUtil;
+import info.interactivesystems.spade.nlp.SentenceDetector;
 
 import java.util.List;
 

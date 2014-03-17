@@ -1,4 +1,4 @@
-package info.interacctivesystems.spade.entities;
+package info.interactivesystems.spade.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,7 +1,7 @@
-package info.interacctivesystems.spade.nlp;
+package info.interactivesystems.spade.nlp;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import info.interacctivesystems.spade.nlp.NlpModelFactory;
+import info.interactivesystems.spade.nlp.NlpModelFactory;
 import opennlp.tools.sentdetect.SentenceModel;
 
 import org.testng.annotations.Test;
