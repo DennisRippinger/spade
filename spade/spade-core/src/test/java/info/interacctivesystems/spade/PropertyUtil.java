@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.XMLConfiguration;
 
 /**
  * Factory Methods for property files with example and test related information.
@@ -34,14 +35,13 @@ public final class PropertyUtil {
 	 * 
 	 * @return the example sentences
 	 */
-	public static PropertiesConfiguration getExampleSentences() {
+	public static XMLConfiguration getExampleSentences() {
 		try {
-			PropertiesConfiguration exampleSentences = new PropertiesConfiguration(
-					"example_sentences.properties");
+			XMLConfiguration exampleSentences = new XMLConfiguration(
+					"example_sentences.xml");
 
 			assertThat(exampleSentences).isNotNull();
-			assertThat(exampleSentences.containsKey("sentences.case1"))
-					.isTrue();
+			assertThat(exampleSentences.containsKey("cases.one.data")).isTrue();
 
 			return exampleSentences;
 		} catch (ConfigurationException e) {

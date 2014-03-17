@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+	<cases>
+		<one>
+			<data><![CDATA[
+I've tried others and am always confused by the menus... although could just be what you're used to.
+This camera has been great though.
+Even though it's an older model it does everything I need and then some.
+The upgraded ISO and DIGIC is a nice step up from my previous Rebel.
+A great full featured but reasonably priced DSLR.]]></data>
+			<result>5</result>
+		</one>
+		<two>
+			<data>
+<![CDATA[
+I bought this TV two months ago.
+About a month ago the TV power button would no longer work.
+Sears refused to exchange the TV because I did not take out the extended warranty.
+Seiki to date refuses to honor the one year warranty on the TV.
+I would never recommend buying a Seiki TV because their customer service is terrible.
+]]></data>
+			<result>5</result>
+		</two>
+		<three>
+			<data>
+<![CDATA[
+I have owned my 30D for over 2 years and approximately 12.000 frames and I am very happy with the camera.
+The build is substantial and the features are quite vast.
+I like the camera so much that I purchased one for my father for Christmas and he is very pleased with it as well.
+I have not had the opportunity to try a 40D other than the camera stores, but I have to say that I am set for a few more years, now I just need to upgrade all my lenses to L Series, but that takes a bit of time and money.
+]]>
+			</data>
+			<result>4</result>
+		</three>
+	</cases>
+</database>
