@@ -4,4 +4,4 @@
  * @author Dennis Rippinger
  *
  */
-package info.interacctivesystems.spadu.entities;
+package info.interacctivesystems.spade.entities;
