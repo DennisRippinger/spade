@@ -33,5 +33,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
 		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.10</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>
