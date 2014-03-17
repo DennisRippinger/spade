@@ -1,0 +1,13 @@
+# Classes #
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Folder and Eclipse Meta # 
+**/target/*
+**/.classpath*
+**/.project*
+**/.settings*
