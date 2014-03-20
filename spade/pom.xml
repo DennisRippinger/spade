@@ -12,6 +12,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf.version>1.7.6</slf.version>
 	</properties>
+	
+	<repositories>
+		<repository>
+			<id>Thesis</id>
+			<name>Thesis Nexus</name>
+			<url>http://drippinger.de:8080/nexus/content/repositories/Thesis/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>Maven Central</name>
+			<url>http://repo1.maven.org/maven/</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<!-- Logging -->

@@ -16,6 +16,11 @@
 			<artifactId>opennlp-tools</artifactId>
 			<version>1.5.3</version>
 		</dependency>
+		<dependency>
+			<groupId>de.linguatools</groupId>
+			<artifactId>disco</artifactId>
+			<version>1.4</version>
+		</dependency>
 
 		<!-- Persistence -->
 		<dependency>
