@@ -1,0 +1,5 @@
+# FOR English Data see: http://www.linguatools.de/disco/disco-languagedatapackets_en.html
+# Remove the .template suffix from the file after inserting your local path  
+disco.english.BNC=PATH TO YOUR BNC Folder
+disco.english.pubMed=**
+disco.english.wikipedia= **
