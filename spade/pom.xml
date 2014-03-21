@@ -22,7 +22,7 @@
 		<repository>
 			<id>central</id>
 			<name>Maven Central</name>
-			<url>http://repo1.maven.org/maven/</url>
+			<url>http://repo.maven.apache.org/maven2</url>
 		</repository>
 	</repositories>
 
