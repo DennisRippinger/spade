@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 public class TanimotoResemblance implements SimilarityCalculator {
 
 	/**
-	 * Calculates the Tanimot resemblance. The result value is between 0 and 1,
+	 * Calculates the Tanimoto resemblance. The result value is between 0 and 1,
 	 * where 1 is equality.
 	 * 
 	 * The vector multiplication is performed by simply counting the equal words
