@@ -12,3 +12,5 @@
 **/.project*
 **/.settings*
 **/test-output*
+hibernate.properties
+disco.properties
