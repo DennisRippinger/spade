@@ -14,6 +14,9 @@
  */
 package info.interactivesystems.spade.semantic;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.testng.annotations.Test;
 
 /**
@@ -44,6 +47,16 @@ public class SemanticResemblanceTest {
 		Float secondOrderSimilarity = semanticResemblance
 				.getSecondOrderSimilarity(WORD_ONE, WORD_TWO);
 		System.out.println("Second: " + secondOrderSimilarity);
+	}
+
+	@Test
+	public void getgetSimilarWords() {
+		Map<String, String> similarWords = semanticResemblance
+				.getSimilarWords(WORD_ONE);
+
+		for (Entry<String, String> word : similarWords.entrySet()) {
+			System.out.println(word.getKey() + " " + word.getValue());
+		}
 	}
 
 }
