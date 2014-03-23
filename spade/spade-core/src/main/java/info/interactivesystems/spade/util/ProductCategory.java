@@ -12,34 +12,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.dao;
-
-import org.springframework.stereotype.Repository;
-
-import info.interactivesystems.spade.entities.ShadowReview;
+package info.interactivesystems.spade.util;
 
 /**
- * The Class ShadowReviewDao for the {@link ShadowReview} entities.
+ * Describes a product category with their respective database identifier.
  * 
  * @author Dennis Rippinger
+ * 
  */
-@Repository
-public class ShadowReviewDao extends DaoHelper implements
-		GenericDao<ShadowReview> {
+public enum ProductCategory {
 
-	@Override
-	public void delete(ShadowReview obj) {
-		helperDeletion(obj);
-	}
+    BlurayPlayer(0),
+    Camcorder(1),
+    DigitalCamera(2),
+    Mobilephone(3),
+    PcSystem(4),
+    Printer(5),
+    TV(6),
+    Videoprojector(7);
 
-	@Override
-	public ShadowReview find(String id) {
-		return helperFind(id, ShadowReview.class);
-	}
+    private final Integer id;
 
-	@Override
-	public void save(ShadowReview t) {
-		helperSave(t);
-	}
+    /**
+     * Private instantiation of a new ProductCategory enum.
+     * 
+     * @param id the id
+     */
+    private ProductCategory(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
 }

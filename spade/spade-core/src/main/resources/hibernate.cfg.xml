@@ -23,7 +23,7 @@
 		<!-- Entities -->
 		<mapping class="info.interactivesystems.spade.entities.Product" />
 		<mapping class="info.interactivesystems.spade.entities.Review" />
-		<mapping class="info.interactivesystems.spade.entities.UncategorizedReview" />
+		<mapping class="info.interactivesystems.spade.entities.ShadowReview" />
 		<mapping class="info.interactivesystems.spade.entities.User" />
 
 	</session-factory>

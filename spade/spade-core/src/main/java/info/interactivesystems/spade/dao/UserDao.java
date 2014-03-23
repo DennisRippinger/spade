@@ -14,6 +14,8 @@
  */
 package info.interactivesystems.spade.dao;
 
+import org.springframework.stereotype.Repository;
+
 import info.interactivesystems.spade.entities.User;
 
 /**
@@ -21,21 +23,22 @@ import info.interactivesystems.spade.entities.User;
  * 
  * @author Dennis Rippinger
  */
+@Repository
 public class UserDao extends DaoHelper implements GenericDao<User> {
 
-	@Override
-	public void delete(User obj) {
-		helperDeletion(obj);
-	}
+    @Override
+    public void delete(User obj) {
+        helperDeletion(obj);
+    }
 
-	@Override
-	public User find(String id) {
-		return helperFind(id, User.class);
-	}
+    @Override
+    public User find(String id) {
+        return helperFind(id, User.class);
+    }
 
-	@Override
-	public void save(User t) {
-		helperSave(t);
-	}
+    @Override
+    public void save(User t) {
+        helperSave(t);
+    }
 
 }

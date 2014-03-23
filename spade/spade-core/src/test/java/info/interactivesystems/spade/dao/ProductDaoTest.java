@@ -8,20 +8,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-@Test
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class ProductDaoTest extends AbstractTestNGSpringContextTests {
 
-	@Autowired
-	private ProductDao productDao;
+    @Autowired
+    private ProductDao productDao;
 
-	@Test
-	public void find() {
-		assertThat(productDao).isNotNull();
+    @Test
+    public void find() {
+        assertThat(productDao).isNotNull();
 
-		Product result = productDao.find("1934148644");
-		assertThat(result.getName())
-				.isEqualTo(
-						"Nikon D90 inBrief laminated reference card by Blue Crane Digital (Apr 15, 2009)");
-	}
+        Product result = productDao.find("1934148644");
+        assertThat(result.getName())
+            .isEqualTo(
+                "Nikon D90 inBrief laminated reference card by Blue Crane Digital (Apr 15, 2009)");
+    }
 }

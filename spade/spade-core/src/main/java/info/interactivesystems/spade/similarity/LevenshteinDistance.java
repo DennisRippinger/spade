@@ -2,6 +2,8 @@ package info.interactivesystems.spade.similarity;
 
 import info.interactivesystems.spade.entities.SimilartyMesurement;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Calculates the Levenshtein Distance for two Strings. This measurement is
  * suitable for small changes in individual sentences, i.e. typing errors.
@@ -9,6 +11,7 @@ import info.interactivesystems.spade.entities.SimilartyMesurement;
  * @author Dennis Rippinger
  * @see http://en.wikipedia.org/wiki/Levenshtein_distance
  */
+@Service
 public class LevenshteinDistance implements SimilarityCalculator {
 
 	/**

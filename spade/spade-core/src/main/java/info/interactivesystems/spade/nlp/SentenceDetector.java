@@ -21,12 +21,15 @@ import lombok.NonNull;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Allows to detect individual sentences in a given corpus of a review.
  * 
  * @author Dennis Rippinger
  * 
  */
+@Service
 public class SentenceDetector {
 
 	private SentenceModel model;

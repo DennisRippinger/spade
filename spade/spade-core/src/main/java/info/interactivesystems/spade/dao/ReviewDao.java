@@ -14,28 +14,60 @@
  */
 package info.interactivesystems.spade.dao;
 
+import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
+import info.interactivesystems.spade.util.ProductCategory;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 /**
  * The Class ReviewDao for the {@link Review} entities.
  * 
  * @author Dennis Rippinger
  */
+@Repository
 public class ReviewDao extends DaoHelper implements GenericDao<Review> {
 
-	@Override
-	public void delete(Review obj) {
-		helperDeletion(obj);
-	}
+    @Override
+    public void delete(Review obj) {
+        helperDeletion(obj);
+    }
 
-	@Override
-	public Review find(String id) {
-		return helperFind(id, Review.class);
-	}
+    @Override
+    public Review find(String id) {
+        return helperFind(id, Review.class);
+    }
 
-	@Override
-	public void save(Review t) {
-		helperSave(t);
-	}
+    @Override
+    public void save(Review t) {
+        helperSave(t);
+    }
+
+    public List<Review> getReviewsOfCategory(ProductCategory category) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        Query query = session.createQuery("from Product WHERE type = :type");
+        query.setParameter("type", category.getId());
+
+        List<Review> result = new LinkedList<Review>();
+
+        @SuppressWarnings("unchecked")
+        List<Product> productList = query.list();
+        tx.commit();
+        
+        for (Product product : productList) {
+            result.addAll(product.getReviews());
+        }
+
+
+        return result;
+    }
 
 }

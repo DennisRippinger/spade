@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Calculates the Tanimoto resemblance.
  * 
  * @author Dennis Rippinger
  * 
  */
+@Service
 public class TanimotoResemblance implements SimilarityCalculator {
 
 	/**

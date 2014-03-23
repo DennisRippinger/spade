@@ -17,11 +17,13 @@ package info.interactivesystems.spade.entities;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * DTO for a Product.
@@ -29,24 +31,25 @@ import lombok.Data;
  * @author Dennis Rippinger
  */
 @Entity
+@Getter
+@Setter
 @Table(name = "Product")
-@Data
 public class Product {
 
-	@Id
-	private String id;
+    @Id
+    private String id;
 
-	private String name;
+    private String name;
 
-	private String type;
+    private Integer type;
 
-	private double rating;
+    private double rating;
 
-	private String imageUrl;
+    private String imageUrl;
 
-	private String source;
+    private String source;
 
-	@OneToMany(mappedBy = "product")
-	private Set<Review> reviews;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private Set<Review> reviews;
 
 }

@@ -20,6 +20,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.springframework.stereotype.Service;
+
 /**
  * 
  * Calculates a String based Jaccard Index for two Strings. The result ranges
@@ -28,6 +30,7 @@ import java.util.StringTokenizer;
  * @author Dennis Rippinger
  * 
  */
+@Service
 public class JaccardIndex implements SimilarityCalculator {
 
 	/**
