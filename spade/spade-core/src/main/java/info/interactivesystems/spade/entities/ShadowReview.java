@@ -25,9 +25,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 /**
- * DTO for a UncategorizedReview. These reviews contain similar data like a
+ * DTO for a ShadowReview. These reviews contain similar data like a
  * {@link Review}, but do not exist in a huge amount in their respective
- * category such that a text analysis is not suitable.
+ * category, such that a text analysis is not suitable.
  * 
  * @author Dennis Rippinger
  * 
@@ -35,7 +35,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "UncategorizedReviews")
-public class UncategorizedReview {
+public class ShadowReview {
 
 	@Id
 	private String id;
