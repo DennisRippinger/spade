@@ -14,38 +14,28 @@
  */
 package info.interactivesystems.spade.dao;
 
+import info.interactivesystems.spade.entities.User;
+
 /**
- * The Interface GenericDao. Offers generic methods for all entities.
+ * The Class UserDao for the {@link User} entities.
  * 
- * @param <T>
- *            the desired type.
  * @author Dennis Rippinger
  */
-public interface GenericDao<T> {
+public class UserDao extends DaoHelper implements GenericDao<User> {
 
-	/**
-	 * Delete an Object.
-	 * 
-	 * @param obj
-	 *            the obj
-	 */
-	void delete(T obj);
+	@Override
+	public void delete(User obj) {
+		helperDeletion(obj);
+	}
 
-	/**
-	 * Find and object.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the t
-	 */
-	T find(String id);
+	@Override
+	public User find(String id) {
+		return helperFind(id, User.class);
+	}
 
-	/**
-	 * Save an object.
-	 * 
-	 * @param t
-	 *            the t
-	 */
-	void save(T t);
+	@Override
+	public void save(User t) {
+		helperSave(t);
+	}
 
 }

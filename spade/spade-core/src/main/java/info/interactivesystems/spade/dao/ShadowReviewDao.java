@@ -14,38 +14,29 @@
  */
 package info.interactivesystems.spade.dao;
 
+import info.interactivesystems.spade.entities.ShadowReview;
+
 /**
- * The Interface GenericDao. Offers generic methods for all entities.
+ * The Class ShadowReviewDao for the {@link ShadowReview} entities.
  * 
- * @param <T>
- *            the desired type.
  * @author Dennis Rippinger
  */
-public interface GenericDao<T> {
+public class ShadowReviewDao extends DaoHelper implements
+		GenericDao<ShadowReview> {
 
-	/**
-	 * Delete an Object.
-	 * 
-	 * @param obj
-	 *            the obj
-	 */
-	void delete(T obj);
+	@Override
+	public void delete(ShadowReview obj) {
+		helperDeletion(obj);
+	}
 
-	/**
-	 * Find and object.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the t
-	 */
-	T find(String id);
+	@Override
+	public ShadowReview find(String id) {
+		return helperFind(id, ShadowReview.class);
+	}
 
-	/**
-	 * Save an object.
-	 * 
-	 * @param t
-	 *            the t
-	 */
-	void save(T t);
+	@Override
+	public void save(ShadowReview t) {
+		helperSave(t);
+	}
 
 }

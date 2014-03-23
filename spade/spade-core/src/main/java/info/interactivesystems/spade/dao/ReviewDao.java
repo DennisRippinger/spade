@@ -14,38 +14,28 @@
  */
 package info.interactivesystems.spade.dao;
 
+import info.interactivesystems.spade.entities.Review;
+
 /**
- * The Interface GenericDao. Offers generic methods for all entities.
+ * The Class ReviewDao for the {@link Review} entities.
  * 
- * @param <T>
- *            the desired type.
  * @author Dennis Rippinger
  */
-public interface GenericDao<T> {
+public class ReviewDao extends DaoHelper implements GenericDao<Review> {
 
-	/**
-	 * Delete an Object.
-	 * 
-	 * @param obj
-	 *            the obj
-	 */
-	void delete(T obj);
+	@Override
+	public void delete(Review obj) {
+		helperDeletion(obj);
+	}
 
-	/**
-	 * Find and object.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the t
-	 */
-	T find(String id);
+	@Override
+	public Review find(String id) {
+		return helperFind(id, Review.class);
+	}
 
-	/**
-	 * Save an object.
-	 * 
-	 * @param t
-	 *            the t
-	 */
-	void save(T t);
+	@Override
+	public void save(Review t) {
+		helperSave(t);
+	}
 
 }
