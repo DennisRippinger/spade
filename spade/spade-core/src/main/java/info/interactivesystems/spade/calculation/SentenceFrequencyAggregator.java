@@ -33,8 +33,6 @@ import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class SentenceFrequencyAggregator.
@@ -57,7 +55,7 @@ public class SentenceFrequencyAggregator {
     public void aggregateSentenceFrequency(ProductCategory productCategory) throws NoSuchAlgorithmException {
         List<Review> reviews = reviewDao.getReviewsOfCategory(productCategory);
 
-        Map<String, Double> frequencyTable = new HashMap<String, Double>();
+        Map<String, Integer> frequencyTable = new HashMap<String, Integer>();
         Integer sentenceCounter = 0;
 
         for (Review review : reviews) {
@@ -65,20 +63,20 @@ public class SentenceFrequencyAggregator {
             List<String> sentences = sentenceDetector.detectSentencesFromCorpus(review.getContent());
             for (String sentence : sentences) {
                 if (frequencyTable.containsKey(sentence)) {
-                    Double counter = frequencyTable.get(sentence);
+                    Integer counter = frequencyTable.get(sentence);
                     counter++;
                     frequencyTable.put(sentence, counter);
                 } else {
-                    frequencyTable.put(sentence, 1.0);
+                    frequencyTable.put(sentence, 1);
                 }
                 sentenceCounter++;
             }
         }
         Integer debugCounter = 1;
 
-        for (Entry<String, Double> wordFrequency : frequencyTable.entrySet()) {
-            Double count = wordFrequency.getValue();
-            Double frequency = count / (sentenceCounter * 1.0);
+        for (Entry<String, Integer> wordFrequency : frequencyTable.entrySet()) {
+            Integer count = wordFrequency.getValue();
+            Double frequency = (count * 1.0) / (sentenceCounter * 1.0);
 
             SentenceFrequency frequencyObject = new SentenceFrequency();
             String hash = HashUtil.sha1(wordFrequency.getKey());
@@ -86,6 +84,7 @@ public class SentenceFrequencyAggregator {
             frequencyObject.setCategory(productCategory.getId());
             frequencyObject.setFrequency(frequency);
             frequencyObject.setSentence(wordFrequency.getKey());
+            frequencyObject.setCount(count);
 
             log.info("Saving Sentence '{}", wordFrequency.getKey());
 

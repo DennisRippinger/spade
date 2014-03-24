@@ -44,4 +44,6 @@ public class SentenceFrequency {
 
     private Double frequency;
 
+    private Integer count;
+
 }

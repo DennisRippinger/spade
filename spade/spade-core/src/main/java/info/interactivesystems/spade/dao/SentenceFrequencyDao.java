@@ -14,9 +14,10 @@
  */
 package info.interactivesystems.spade.dao;
 
-import javax.annotation.Resource;
-
 import info.interactivesystems.spade.entities.SentenceFrequency;
+import info.interactivesystems.spade.util.ProductCategory;
+
+import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -57,12 +58,12 @@ public class SentenceFrequencyDao implements GenericDao<SentenceFrequency> {
      * @param category the category number.
      * @return the frequency value.
      */
-    public SentenceFrequency find(String id, Integer category) {
+    public SentenceFrequency find(String id, ProductCategory category) {
         Session session = sessionFactory.getCurrentSession();
 
         Query query = session.createQuery("FROM SentenceFrequency WHERE id = :id AND category = :category");
         query.setParameter("id", id);
-        query.setParameter("category", category);
+        query.setParameter("category", category.getId());
         SentenceFrequency result = (SentenceFrequency) query.uniqueResult();
 
         return result;
