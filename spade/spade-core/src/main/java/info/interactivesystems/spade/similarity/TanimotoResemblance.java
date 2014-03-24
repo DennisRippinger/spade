@@ -4,7 +4,6 @@ import info.interactivesystems.spade.entities.SimilartyMesurement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TanimotoResemblance implements SimilarityCalculator {
+
+    public static final Double THRESHOLD = 0.68;
 
     /**
      * Calculates the Tanimoto resemblance. The result value is between 0 and 1, where 1 is equality.
@@ -58,11 +59,11 @@ public class TanimotoResemblance implements SimilarityCalculator {
     }
 
     private List<String> getListOfString(String corpus) {
-        StringTokenizer tokenizer = new StringTokenizer(corpus);
+        int pos = 0, end;
         List<String> result = new ArrayList<String>();
-
-        while (tokenizer.hasMoreElements()) {
-            result.add(tokenizer.nextToken());
+        while ((end = corpus.indexOf(' ', pos)) >= 0) {
+            result.add(corpus.substring(pos, end));
+            pos = end + 1;
         }
 
         return result;
