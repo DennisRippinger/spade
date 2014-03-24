@@ -21,10 +21,13 @@ import info.interactivesystems.spade.util.ProductCategory;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class ReviewDao for the {@link Review} entities.
@@ -32,26 +35,29 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-public class ReviewDao extends DaoHelper implements GenericDao<Review> {
+@Transactional
+public class ReviewDao implements GenericDao<Review> {
+
+    @Resource
+    protected SessionFactory sessionFactory;
 
     @Override
     public void delete(Review obj) {
-        helperDeletion(obj);
+        sessionFactory.getCurrentSession().delete(obj);
     }
 
     @Override
     public Review find(String id) {
-        return helperFind(id, Review.class);
+        return (Review) sessionFactory.getCurrentSession().get(Review.class, id);
     }
 
     @Override
     public void save(Review t) {
-        helperSave(t);
+        sessionFactory.getCurrentSession().save(t);
     }
 
     public List<Review> getReviewsOfCategory(ProductCategory category) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
 
         Query query = session.createQuery("from Product WHERE type = :type");
         query.setParameter("type", category.getId());
@@ -60,7 +66,6 @@ public class ReviewDao extends DaoHelper implements GenericDao<Review> {
 
         @SuppressWarnings("unchecked")
         List<Product> productList = query.list();
-        tx.commit();
 
         for (Product product : productList) {
             result.addAll(product.getReviews());
@@ -68,5 +73,4 @@ public class ReviewDao extends DaoHelper implements GenericDao<Review> {
 
         return result;
     }
-
 }

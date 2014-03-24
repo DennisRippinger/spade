@@ -14,7 +14,11 @@
  */
 package info.interactivesystems.spade.dao;
 
+import javax.annotation.Resource;
+
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import info.interactivesystems.spade.entities.ShadowReview;
 
@@ -24,22 +28,25 @@ import info.interactivesystems.spade.entities.ShadowReview;
  * @author Dennis Rippinger
  */
 @Repository
-public class ShadowReviewDao extends DaoHelper implements
-    GenericDao<ShadowReview> {
+@Transactional
+public class ShadowReviewDao implements GenericDao<ShadowReview> {
+
+    @Resource
+    private SessionFactory sessionFactory;
 
     @Override
     public void delete(ShadowReview obj) {
-        helperDeletion(obj);
+        sessionFactory.getCurrentSession().delete(obj);
     }
 
     @Override
     public ShadowReview find(String id) {
-        return helperFind(id, ShadowReview.class);
+        return (ShadowReview) sessionFactory.getCurrentSession().get(ShadowReview.class, id);
     }
 
     @Override
     public void save(ShadowReview t) {
-        helperSave(t);
+        sessionFactory.getCurrentSession().save(t);
     }
 
 }

@@ -14,9 +14,13 @@
  */
 package info.interactivesystems.spade.dao;
 
+import javax.annotation.Resource;
+
 import info.interactivesystems.spade.entities.Product;
 
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class ProductDao for the {@link Product} entities.
@@ -24,21 +28,26 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-public class ProductDao extends DaoHelper implements GenericDao<Product> {
+@Transactional
+public class ProductDao implements GenericDao<Product> {
+
+    @Resource
+    private SessionFactory sessionFactory;
 
     @Override
     public void delete(Product obj) {
-        helperDeletion(obj);
+        sessionFactory.getCurrentSession().delete(obj);
     }
 
     @Override
     public Product find(String id) {
-        return helperFind(id, Product.class);
+        return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
+
     }
 
     @Override
     public void save(Product t) {
-        helperSave(t);
+        sessionFactory.getCurrentSession().save(t);
     }
 
 }

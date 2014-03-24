@@ -20,7 +20,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -39,15 +38,14 @@ public class Review {
     @Id
     private String id;
 
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String author;
 
     private String authorId;
 
     private Integer comments;
 
-    @Lob
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private Date created;

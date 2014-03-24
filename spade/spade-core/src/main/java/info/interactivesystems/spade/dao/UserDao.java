@@ -14,7 +14,11 @@
  */
 package info.interactivesystems.spade.dao;
 
+import javax.annotation.Resource;
+
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import info.interactivesystems.spade.entities.User;
 
@@ -24,21 +28,25 @@ import info.interactivesystems.spade.entities.User;
  * @author Dennis Rippinger
  */
 @Repository
-public class UserDao extends DaoHelper implements GenericDao<User> {
+@Transactional
+public class UserDao implements GenericDao<User> {
+
+    @Resource
+    private SessionFactory sessionFactory;
 
     @Override
     public void delete(User obj) {
-        helperDeletion(obj);
+        sessionFactory.getCurrentSession().delete(obj);
     }
 
     @Override
     public User find(String id) {
-        return helperFind(id, User.class);
+        return (User) sessionFactory.getCurrentSession().get(User.class, id);
     }
 
     @Override
     public void save(User t) {
-        helperSave(t);
+        sessionFactory.getCurrentSession().save(t);
     }
 
 }
