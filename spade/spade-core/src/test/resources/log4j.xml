@@ -17,4 +17,8 @@
 		<level value="DEBUG" />
 	</logger>
 
+	<root>
+		<level value="INFO" />
+	</root>
+
 </log4j:configuration>

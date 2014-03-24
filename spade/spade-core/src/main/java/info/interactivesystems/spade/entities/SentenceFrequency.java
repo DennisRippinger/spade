@@ -14,48 +14,34 @@
  */
 package info.interactivesystems.spade.entities;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 /**
- * DTO for a ShadowReview. These reviews contain similar data like a {@link Review}, but do not exist in a huge amount in their
- * respective category, such that a text analysis is not suitable.
+ * The Class SentenceFrequency.
  * 
  * @author Dennis Rippinger
- * 
  */
 @Data
 @Entity
-@Table(name = "UncategorizedReviews")
-public class ShadowReview {
+@Table(name = "SentenceFrequencies")
+@IdClass(SentenceFrequencyPk.class)
+public class SentenceFrequency {
 
     @Id
     private String id;
 
-    private String authorId;
+    @Id
+    private Integer category;
 
     @Column(columnDefinition = "TEXT")
-    private String product;
+    private String sentence;
 
-    private Date date;
-
-    private Double averageRating;
-
-    private Double userRating;
-
-    private Integer helpfulVotes;
-
-    private Integer totalVotes;
-
-    private String type;
-
-    @Column(columnDefinition = "TEXT")
-    private String content;
+    private Double frequency;
 
 }
