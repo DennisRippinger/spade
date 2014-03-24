@@ -28,32 +28,32 @@ import info.interactivesystems.spade.nlp.SentenceDetector;
  * 
  */
 public abstract class SimilarityTest {
-	protected SimilarityCalculator calculator;
-	protected XMLConfiguration exampleSentences;
-	protected SentenceDetector sentenceDetector;
+    protected SimilarityCalculator calculator;
+    protected XMLConfiguration exampleSentences;
+    protected SentenceDetector sentenceDetector;
 
-	SimilarityTest() {
-		sentenceDetector = new SentenceDetector();
-		exampleSentences = PropertyUtil.getExampleSentences();
-		assertThat(sentenceDetector).isNotNull();
-		assertThat(exampleSentences).isNotNull();
-	}
+    SimilarityTest() {
+        sentenceDetector = new SentenceDetector();
+        exampleSentences = PropertyUtil.getExampleSentences();
+        assertThat(sentenceDetector).isNotNull();
+        assertThat(exampleSentences).isNotNull();
+    }
 
-	/**
-	 * Get some test String from the test repository.
-	 * 
-	 * @return the test string
-	 */
-	protected List<String> getTestString() {
-		String case1 = exampleSentences.getString("cases.one.data");
-		List<String> detectedSentences = sentenceDetector
-				.detectSentencesFromCorpus(case1);
-		return detectedSentences;
-	}
+    /**
+     * Get some test String from the test repository.
+     * 
+     * @return the test string
+     */
+    protected List<String> getTestString() {
+        String case1 = exampleSentences.getString("cases.one.data");
+        List<String> detectedSentences = sentenceDetector
+            .detectSentencesFromCorpus(case1);
+        return detectedSentences;
+    }
 
-	protected final String testStringOne = "I did extensive research before selecting the SD600, "
-			+ "and I am thrilled with my purchase.";
-	protected final String testStringTwo = "I did extensive research before selecting the Kodak EasyShare C875, "
-			+ "and I am thrilled with my purchase.";
+    protected final String testStringOne = "I did extensive research before selecting the SD600, "
+        + "and I am thrilled with my purchase.";
+    protected final String testStringTwo = "I did extensive research before selecting the Kodak EasyShare C875, "
+        + "and I am thrilled with my purchase.";
 
 }

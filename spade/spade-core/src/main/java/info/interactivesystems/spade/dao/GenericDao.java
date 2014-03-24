@@ -17,35 +17,31 @@ package info.interactivesystems.spade.dao;
 /**
  * The Interface GenericDao. Offers generic methods for all entities.
  * 
- * @param <T>
- *            the desired type.
+ * @param <T> the desired type.
  * @author Dennis Rippinger
  */
 public interface GenericDao<T> {
 
-	/**
-	 * Delete an Object.
-	 * 
-	 * @param obj
-	 *            the obj
-	 */
-	void delete(T obj);
+    /**
+     * Delete an Object.
+     * 
+     * @param obj the obj
+     */
+    void delete(T obj);
 
-	/**
-	 * Find and object.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the t
-	 */
-	T find(String id);
+    /**
+     * Find and object.
+     * 
+     * @param id the id
+     * @return the t
+     */
+    T find(String id);
 
-	/**
-	 * Save an object.
-	 * 
-	 * @param t
-	 *            the t
-	 */
-	void save(T t);
+    /**
+     * Save an object.
+     * 
+     * @param t the t
+     */
+    void save(T t);
 
 }

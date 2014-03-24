@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 
 public class NlpModelFactoryTest {
 
-	@Test
-	public void getSentenceModel() {
-		SentenceModel sentenceModel = NlpModelFactory.getSentenceModel();
+    @Test
+    public void getSentenceModel() {
+        SentenceModel sentenceModel = NlpModelFactory.getSentenceModel();
 
-		assertThat(sentenceModel).isNotNull();
-		assertThat(sentenceModel).isInstanceOf(SentenceModel.class);
-	}
+        assertThat(sentenceModel).isNotNull();
+        assertThat(sentenceModel).isInstanceOf(SentenceModel.class);
+    }
 }

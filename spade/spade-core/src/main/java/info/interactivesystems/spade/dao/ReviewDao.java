@@ -61,11 +61,10 @@ public class ReviewDao extends DaoHelper implements GenericDao<Review> {
         @SuppressWarnings("unchecked")
         List<Product> productList = query.list();
         tx.commit();
-        
+
         for (Product product : productList) {
             result.addAll(product.getReviews());
         }
-
 
         return result;
     }

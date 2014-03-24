@@ -28,29 +28,29 @@ import org.testng.annotations.Test;
  */
 public class JaccardIndexTest extends SimilarityTest {
 
-	public JaccardIndexTest() {
-		super();
-		calculator = new JaccardIndex();
-		assertThat(calculator).isNotNull();
-	}
+    public JaccardIndexTest() {
+        super();
+        calculator = new JaccardIndex();
+        assertThat(calculator).isNotNull();
+    }
 
-	@Test
-	public void calculateSimilarity_same() {
-		List<String> detectedSentences = getTestString();
+    @Test
+    public void calculateSimilarity_same() {
+        List<String> detectedSentences = getTestString();
 
-		for (String testSentence : detectedSentences) {
-			SimilartyMesurement calculatedSimilarity = calculator
-					.calculateSimilarity(testSentence, testSentence);
+        for (String testSentence : detectedSentences) {
+            SimilartyMesurement calculatedSimilarity = calculator
+                .calculateSimilarity(testSentence, testSentence);
 
-			assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(1.0);
-		}
-	}
+            assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(1.0);
+        }
+    }
 
-	@Test
-	public void calculateSimilarity_different() {
-		SimilartyMesurement calculatedSimilarity = calculator
-				.calculateSimilarity(testStringOne, testStringTwo);
+    @Test
+    public void calculateSimilarity_different() {
+        SimilartyMesurement calculatedSimilarity = calculator
+            .calculateSimilarity(testStringOne, testStringTwo);
 
-		assertThat(calculatedSimilarity.getSimilarty()).isBetween(0.7, 0.8);
-	}
+        assertThat(calculatedSimilarity.getSimilarty()).isBetween(0.7, 0.8);
+    }
 }

@@ -25,9 +25,8 @@ import javax.persistence.Table;
 import lombok.Data;
 
 /**
- * DTO for a ShadowReview. These reviews contain similar data like a
- * {@link Review}, but do not exist in a huge amount in their respective
- * category, such that a text analysis is not suitable.
+ * DTO for a ShadowReview. These reviews contain similar data like a {@link Review}, but do not exist in a huge amount in their
+ * respective category, such that a text analysis is not suitable.
  * 
  * @author Dennis Rippinger
  * 
@@ -37,28 +36,28 @@ import lombok.Data;
 @Table(name = "UncategorizedReviews")
 public class ShadowReview {
 
-	@Id
-	private String id;
+    @Id
+    private String id;
 
-	private String authorId;
+    private String authorId;
 
-	@Column(length = 1000)
-	private String product;
+    @Column(length = 1000)
+    private String product;
 
-	private Date date;
+    private Date date;
 
-	private Double averageRating;
+    private Double averageRating;
 
-	private Double userRating;
+    private Double userRating;
 
-	private Integer helpfulVotes;
+    private Integer helpfulVotes;
 
-	private Integer totalVotes;
+    private Integer totalVotes;
 
-	private String type;
+    private String type;
 
-	@Lob
-	@Column(length = 1000)
-	private String content;
+    @Lob
+    @Column(length = 1000)
+    private String content;
 
 }

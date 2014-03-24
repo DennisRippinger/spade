@@ -24,10 +24,10 @@ import lombok.Data;
 @Data
 public class SimilartyMesurement {
 
-	Double similarty;
+    Double similarty;
 
-	/**
-	 * Additional values follow.
-	 */
+    /**
+     * Additional values follow.
+     */
 
 }

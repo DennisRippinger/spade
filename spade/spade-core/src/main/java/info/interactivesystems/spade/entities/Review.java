@@ -36,35 +36,35 @@ import lombok.Data;
 @Data
 public class Review {
 
-	@Id
-	private String id;
+    @Id
+    private String id;
 
-	@Column(length = 1000)
-	private String author;
+    @Column(length = 1000)
+    private String author;
 
-	private String authorId;
+    private String authorId;
 
-	private Integer comments;
+    private Integer comments;
 
-	@Lob
-	@Column(length = 1000)
-	private String content;
+    @Lob
+    @Column(length = 1000)
+    private String content;
 
-	private Date created;
+    private Date created;
 
-	private int helpfulVotes;
+    private int helpfulVotes;
 
-	private Double rating;
+    private Double rating;
 
-	private Date reviewDate;
+    private Date reviewDate;
 
-	private String source;
+    private String source;
 
-	private String title;
+    private String title;
 
-	private int totalVotes;
+    private int totalVotes;
 
-	@ManyToOne
-	@JoinColumn(name = "Product_fk")
-	private Product product;
+    @ManyToOne
+    @JoinColumn(name = "Product_fk")
+    private Product product;
 }

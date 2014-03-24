@@ -33,40 +33,40 @@ import de.linguatools.disco.DISCO;
 @Slf4j
 public final class DiscoFactory {
 
-	private static final Boolean LOAD_TO_RAM = false;
+    private static final Boolean LOAD_TO_RAM = false;
 
-	private static PropertiesConfiguration configuration;
-	private static String discoDir;
+    private static PropertiesConfiguration configuration;
+    private static String discoDir;
 
-	static {
-		try {
-			configuration = new PropertiesConfiguration("disco.properties");
-			discoDir = configuration.getString("disco.english.wikipedia");
-		} catch (ConfigurationException e) {
-			log.error("Could not load Disco Properties", e);
-		}
-	}
+    static {
+        try {
+            configuration = new PropertiesConfiguration("disco.properties");
+            discoDir = configuration.getString("disco.english.wikipedia");
+        } catch (ConfigurationException e) {
+            log.error("Could not load Disco Properties", e);
+        }
+    }
 
-	/**
-	 * Creates an {@link DICO} Instance with English co-occurence data.
-	 * 
-	 * @return the english co-ocurence data as {@link DISCO} instance.
-	 */
-	public static DISCO getEnglishCoOcurenceData() {
-		DISCO disco = null;
-		try {
+    /**
+     * Creates an {@link DICO} Instance with English co-occurence data.
+     * 
+     * @return the english co-ocurence data as {@link DISCO} instance.
+     */
+    public static DISCO getEnglishCoOcurenceData() {
+        DISCO disco = null;
+        try {
 
-			log.debug("Loading English word coocurence File from '{}'",
-					discoDir);
-			disco = new DISCO(discoDir, LOAD_TO_RAM);
-			log.debug("Loaded English word coocurence into RAM = '{}'",
-					LOAD_TO_RAM);
+            log.debug("Loading English word coocurence File from '{}'",
+                discoDir);
+            disco = new DISCO(discoDir, LOAD_TO_RAM);
+            log.debug("Loaded English word coocurence into RAM = '{}'",
+                LOAD_TO_RAM);
 
-		} catch (IOException e) {
-			log.error("Could not load Disco folder", e);
-		}
+        } catch (IOException e) {
+            log.error("Could not load Disco folder", e);
+        }
 
-		return disco;
-	}
+        return disco;
+    }
 
 }

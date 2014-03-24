@@ -27,55 +27,50 @@ import org.hibernate.Transaction;
  */
 public class DaoHelper {
 
-	@Resource
-	protected SessionFactory sessionFactory;
+    @Resource
+    protected SessionFactory sessionFactory;
 
-	/**
-	 * Deletes a generic object from the database.
-	 * 
-	 * @param obj
-	 *            the object for deletetion.
-	 */
-	public void helperDeletion(Object obj) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.delete(obj);
-		tx.commit();
-	}
+    /**
+     * Deletes a generic object from the database.
+     * 
+     * @param obj the object for deletetion.
+     */
+    public void helperDeletion(Object obj) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.delete(obj);
+        tx.commit();
+    }
 
-	/**
-	 * Finds a generic object from the database.
-	 * 
-	 * @param <T>
-	 *            the generic return type.
-	 * @param id
-	 *            the id of the desired object.
-	 * @param t
-	 *            the generic class.
-	 * @return An object of the desired class.
-	 */
-	public <T> T helperFind(String id, Class<T> t) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+    /**
+     * Finds a generic object from the database.
+     * 
+     * @param <T> the generic return type.
+     * @param id the id of the desired object.
+     * @param t the generic class.
+     * @return An object of the desired class.
+     */
+    public <T> T helperFind(String id, Class<T> t) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
 
-		@SuppressWarnings("unchecked")
-		T object = (T) session.get(t, id);
-		tx.commit();
+        @SuppressWarnings("unchecked")
+        T object = (T) session.get(t, id);
+        tx.commit();
 
-		return object;
-	}
+        return object;
+    }
 
-	/**
-	 * Saves a generic object to the database.
-	 * 
-	 * @param obj
-	 *            the desired object.
-	 */
-	public void helperSave(Object obj) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+    /**
+     * Saves a generic object to the database.
+     * 
+     * @param obj the desired object.
+     */
+    public void helperSave(Object obj) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
 
-		session.save(obj);
-		tx.commit();
-	}
+        session.save(obj);
+        tx.commit();
+    }
 }

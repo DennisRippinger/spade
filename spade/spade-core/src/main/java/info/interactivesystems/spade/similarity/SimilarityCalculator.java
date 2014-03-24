@@ -22,18 +22,15 @@ import info.interactivesystems.spade.entities.SimilartyMesurement;
  */
 public interface SimilarityCalculator {
 
-	/**
-	 * Calculates a similarity measurement between to given Strings. It returns
-	 * a {@link SimilartyMesurement} object which can contain various forms of
-	 * similarity, e.g. similar sentences, or a numeric value.
-	 * 
-	 * @param corpusFirst
-	 *            compared to corpusSecond.
-	 * @param corpusSecond
-	 *            compared to corpusOne.
-	 * @return A {@link SimilartyMesurement}.
-	 */
-	SimilartyMesurement calculateSimilarity(String corpusFirst,
-			String corpusSecond);
+    /**
+     * Calculates a similarity measurement between to given Strings. It returns a {@link SimilartyMesurement} object which can
+     * contain various forms of similarity, e.g. similar sentences, or a numeric value.
+     * 
+     * @param corpusFirst compared to corpusSecond.
+     * @param corpusSecond compared to corpusOne.
+     * @return A {@link SimilartyMesurement}.
+     */
+    SimilartyMesurement calculateSimilarity(String corpusFirst,
+        String corpusSecond);
 
 }

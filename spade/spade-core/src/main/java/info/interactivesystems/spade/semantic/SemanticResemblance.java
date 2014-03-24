@@ -34,83 +34,78 @@ import de.linguatools.disco.ReturnDataBN;
 @Service
 public class SemanticResemblance {
 
-	private DISCO disco;
+    private DISCO disco;
 
-	/**
-	 * Instantiates a new semantic resemblance.
-	 */
-	public SemanticResemblance() {
-		disco = DiscoFactory.getEnglishCoOcurenceData();
-	}
+    /**
+     * Instantiates a new semantic resemblance.
+     */
+    public SemanticResemblance() {
+        disco = DiscoFactory.getEnglishCoOcurenceData();
+    }
 
-	/**
-	 * Gets the first order similarity.
-	 * 
-	 * @param wordOne
-	 *            the word one
-	 * @param wordTwo
-	 *            the word two
-	 * @return the first order similarity
-	 */
-	public Float getFirstOrderSimilarity(String wordOne, String wordTwo) {
-		Float result = 0.0f;
+    /**
+     * Gets the first order similarity.
+     * 
+     * @param wordOne the word one
+     * @param wordTwo the word two
+     * @return the first order similarity
+     */
+    public Float getFirstOrderSimilarity(String wordOne, String wordTwo) {
+        Float result = 0.0f;
 
-		try {
-			result = disco.firstOrderSimilarity(wordOne, wordTwo);
-		} catch (IOException e) {
-			log.error("Error with words '{}', and '{}'", wordOne, wordTwo);
-			log.error("Error reading the co-occurence file", e);
-		}
+        try {
+            result = disco.firstOrderSimilarity(wordOne, wordTwo);
+        } catch (IOException e) {
+            log.error("Error with words '{}', and '{}'", wordOne, wordTwo);
+            log.error("Error reading the co-occurence file", e);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Gets the second order similarity.
-	 * 
-	 * @param wordOne
-	 *            the word one
-	 * @param wordTwo
-	 *            the word two
-	 * @return the second order similarity
-	 */
-	public Float getSecondOrderSimilarity(String wordOne, String wordTwo) {
-		Float result = 0.0f;
+    /**
+     * Gets the second order similarity.
+     * 
+     * @param wordOne the word one
+     * @param wordTwo the word two
+     * @return the second order similarity
+     */
+    public Float getSecondOrderSimilarity(String wordOne, String wordTwo) {
+        Float result = 0.0f;
 
-		try {
-			result = disco.secondOrderSimilarity(wordOne, wordTwo);
-		} catch (IOException e) {
-			log.error("Error with words '{}', and '{}'", wordOne, wordTwo);
-			log.error("Error reading the co-occurence file", e);
-		}
+        try {
+            result = disco.secondOrderSimilarity(wordOne, wordTwo);
+        } catch (IOException e) {
+            log.error("Error with words '{}', and '{}'", wordOne, wordTwo);
+            log.error("Error reading the co-occurence file", e);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Gets a map of similar Words.
-	 * 
-	 * @param word
-	 *            a target word.
-	 * @return List of semantic similar words.
-	 */
-	public Map<String, String> getSimilarWords(String word) {
-		Map<String, String> result = new LinkedHashMap<String, String>();
-		try {
-			ReturnDataBN similarWords = disco.similarWords(word);
+    /**
+     * Gets a map of similar Words.
+     * 
+     * @param word a target word.
+     * @return List of semantic similar words.
+     */
+    public Map<String, String> getSimilarWords(String word) {
+        Map<String, String> result = new LinkedHashMap<String, String>();
+        try {
+            ReturnDataBN similarWords = disco.similarWords(word);
 
-			if (similarWords != null) {
-				for (Integer i = 0; i < similarWords.words.length; i++) {
-					result.put(similarWords.words[i], similarWords.values[i]);
-				}
-			} else {
-				log.debug("Word '{}' not in co-occurence database", word);
-			}
-		} catch (IOException e) {
-			log.error("Error with word '{}'", word);
-			log.error("Error reading the co-occurence file", e);
-		}
+            if (similarWords != null) {
+                for (Integer i = 0; i < similarWords.words.length; i++) {
+                    result.put(similarWords.words[i], similarWords.values[i]);
+                }
+            } else {
+                log.debug("Word '{}' not in co-occurence database", word);
+            }
+        } catch (IOException e) {
+            log.error("Error with word '{}'", word);
+            log.error("Error reading the co-occurence file", e);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

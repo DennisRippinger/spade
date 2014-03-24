@@ -26,19 +26,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductDao extends DaoHelper implements GenericDao<Product> {
 
-	@Override
-	public void delete(Product obj) {
-		helperDeletion(obj);
-	}
+    @Override
+    public void delete(Product obj) {
+        helperDeletion(obj);
+    }
 
-	@Override
-	public Product find(String id) {
-		return helperFind(id, Product.class);
-	}
+    @Override
+    public Product find(String id) {
+        return helperFind(id, Product.class);
+    }
 
-	@Override
-	public void save(Product t) {
-		helperSave(t);
-	}
+    @Override
+    public void save(Product t) {
+        helperSave(t);
+    }
 
 }

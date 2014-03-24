@@ -28,32 +28,32 @@ import opennlp.tools.sentdetect.SentenceModel;
 @Slf4j
 public class NlpModelFactory {
 
-	private static final String SENTENCE_MODEL = "/en-sent.bin";
+    private static final String SENTENCE_MODEL = "/en-sent.bin";
 
-	/**
-	 * Creates a Sentence Model for the Apache NLP Tooling
-	 * 
-	 * @return the sentence model
-	 */
-	public static SentenceModel getSentenceModel() {
+    /**
+     * Creates a Sentence Model for the Apache NLP Tooling
+     * 
+     * @return the sentence model
+     */
+    public static SentenceModel getSentenceModel() {
 
-		try (InputStream is = NlpModelFactory.class
-				.getResourceAsStream(SENTENCE_MODEL);) {
-			SentenceModel model = new SentenceModel(is);
-			log.debug("Create Sentence Model for '{}' language",
-					model.getLanguage());
-			return model;
-		} catch (IOException e) {
-			log.error("Could not load sentence model '{}'", SENTENCE_MODEL, e);
-		}
+        try (InputStream is = NlpModelFactory.class
+            .getResourceAsStream(SENTENCE_MODEL);) {
+            SentenceModel model = new SentenceModel(is);
+            log.debug("Create Sentence Model for '{}' language",
+                model.getLanguage());
+            return model;
+        } catch (IOException e) {
+            log.error("Could not load sentence model '{}'", SENTENCE_MODEL, e);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Private Constructor.
-	 */
-	private NlpModelFactory() {
+    /**
+     * Private Constructor.
+     */
+    private NlpModelFactory() {
 
-	}
+    }
 }

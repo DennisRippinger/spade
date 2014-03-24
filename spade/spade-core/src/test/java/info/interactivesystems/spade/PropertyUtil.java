@@ -29,31 +29,30 @@ import org.apache.commons.configuration.XMLConfiguration;
 @Slf4j
 public final class PropertyUtil {
 
-	/**
-	 * Creates an {@link PropertiesConfiguration} instance for example
-	 * sentences.
-	 * 
-	 * @return the example sentences
-	 */
-	public static XMLConfiguration getExampleSentences() {
-		try {
-			XMLConfiguration exampleSentences = new XMLConfiguration(
-					"example_sentences.xml");
+    /**
+     * Creates an {@link PropertiesConfiguration} instance for example sentences.
+     * 
+     * @return the example sentences
+     */
+    public static XMLConfiguration getExampleSentences() {
+        try {
+            XMLConfiguration exampleSentences = new XMLConfiguration(
+                "example_sentences.xml");
 
-			assertThat(exampleSentences).isNotNull();
-			assertThat(exampleSentences.containsKey("cases.one.data")).isTrue();
+            assertThat(exampleSentences).isNotNull();
+            assertThat(exampleSentences.containsKey("cases.one.data")).isTrue();
 
-			return exampleSentences;
-		} catch (ConfigurationException e) {
-			log.error("Could not load Example Sentences", e);
-		}
-		return null;
-	}
+            return exampleSentences;
+        } catch (ConfigurationException e) {
+            log.error("Could not load Example Sentences", e);
+        }
+        return null;
+    }
 
-	/**
-	 * Private Constructor
-	 */
-	private PropertyUtil() {
+    /**
+     * Private Constructor
+     */
+    private PropertyUtil() {
 
-	}
+    }
 }

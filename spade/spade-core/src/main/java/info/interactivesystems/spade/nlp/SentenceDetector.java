@@ -32,25 +32,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class SentenceDetector {
 
-	private SentenceModel model;
-	private SentenceDetectorME sentenceDetector;
+    private SentenceModel model;
+    private SentenceDetectorME sentenceDetector;
 
-	public SentenceDetector() {
-		model = NlpModelFactory.getSentenceModel();
-		sentenceDetector = new SentenceDetectorME(model);
-	}
+    public SentenceDetector() {
+        model = NlpModelFactory.getSentenceModel();
+        sentenceDetector = new SentenceDetectorME(model);
+    }
 
-	/**
-	 * Detect sentences from a given corpus.
-	 * 
-	 * @param corpus
-	 *            the text corpus from a given review.
-	 * @return a list of individual sentences.
-	 */
-	public List<String> detectSentencesFromCorpus(@NonNull String corpus) {
-		String[] arraySentences = sentenceDetector.sentDetect(corpus);
-		List<String> result = Arrays.asList(arraySentences);
+    /**
+     * Detect sentences from a given corpus.
+     * 
+     * @param corpus the text corpus from a given review.
+     * @return a list of individual sentences.
+     */
+    public List<String> detectSentencesFromCorpus(@NonNull String corpus) {
+        String[] arraySentences = sentenceDetector.sentDetect(corpus);
+        List<String> result = Arrays.asList(arraySentences);
 
-		return result;
-	}
+        return result;
+    }
 }

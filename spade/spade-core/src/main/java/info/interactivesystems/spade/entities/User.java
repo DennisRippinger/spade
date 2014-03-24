@@ -31,19 +31,19 @@ import lombok.Data;
 @Table(name = "Users")
 public class User {
 
-	@Id
-	private String id;
+    @Id
+    private String id;
 
-	private String name;
+    private String name;
 
-	private Integer ranking;
+    private Integer ranking;
 
-	private Integer helpfulness;
+    private Integer helpfulness;
 
-	private Integer helpfulVotes;
+    private Integer helpfulVotes;
 
-	private Integer helpfulOverallVotes;
+    private Integer helpfulOverallVotes;
 
-	private Integer numberOfReviews;
+    private Integer numberOfReviews;
 
 }

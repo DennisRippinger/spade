@@ -25,21 +25,21 @@ import info.interactivesystems.spade.entities.ShadowReview;
  */
 @Repository
 public class ShadowReviewDao extends DaoHelper implements
-		GenericDao<ShadowReview> {
+    GenericDao<ShadowReview> {
 
-	@Override
-	public void delete(ShadowReview obj) {
-		helperDeletion(obj);
-	}
+    @Override
+    public void delete(ShadowReview obj) {
+        helperDeletion(obj);
+    }
 
-	@Override
-	public ShadowReview find(String id) {
-		return helperFind(id, ShadowReview.class);
-	}
+    @Override
+    public ShadowReview find(String id) {
+        return helperFind(id, ShadowReview.class);
+    }
 
-	@Override
-	public void save(ShadowReview t) {
-		helperSave(t);
-	}
+    @Override
+    public void save(ShadowReview t) {
+        helperSave(t);
+    }
 
 }
