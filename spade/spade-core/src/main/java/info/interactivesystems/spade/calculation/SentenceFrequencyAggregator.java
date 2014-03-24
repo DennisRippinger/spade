@@ -72,7 +72,6 @@ public class SentenceFrequencyAggregator {
                 sentenceCounter++;
             }
         }
-        Integer debugCounter = 1;
 
         for (Entry<String, Integer> wordFrequency : frequencyTable.entrySet()) {
             Integer count = wordFrequency.getValue();
@@ -89,7 +88,6 @@ public class SentenceFrequencyAggregator {
             log.info("Saving Sentence '{}", wordFrequency.getKey());
 
             frequencyDao.save(frequencyObject);
-            debugCounter++;
         }
 
         log.info("Found '{}' distinct sentences", sentenceCounter);
