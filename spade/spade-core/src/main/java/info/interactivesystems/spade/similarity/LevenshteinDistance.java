@@ -32,8 +32,9 @@ public class LevenshteinDistance implements SimilarityCalculator {
         Integer[] newcost = new Integer[len0];
 
         // initial cost of skipping prefix in String corpusFirst
-        for (Integer i = 0; i < len0; i++)
+        for (Integer i = 0; i < len0; i++) {
             cost[i] = i;
+        }
 
         for (Integer j = 1; j < len1; j++) {
 
@@ -48,13 +49,13 @@ public class LevenshteinDistance implements SimilarityCalculator {
                     .charAt(j - 1)) ? 0 : 1;
 
                 // computing cost for each transformation
-                Integer cost_replace = cost[i - 1] + match;
-                Integer cost_insert = cost[i] + 1;
-                Integer cost_delete = newcost[i - 1] + 1;
+                Integer costReplace = cost[i - 1] + match;
+                Integer costInsert = cost[i] + 1;
+                Integer costDelete = newcost[i - 1] + 1;
 
                 // keep minimum cost
-                newcost[i] = Math.min(Math.min(cost_insert, cost_delete),
-                    cost_replace);
+                newcost[i] = Math.min(Math.min(costInsert, costDelete),
+                    costReplace);
             }
 
             // swap cost/newcost arrays

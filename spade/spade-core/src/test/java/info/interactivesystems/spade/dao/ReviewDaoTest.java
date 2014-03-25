@@ -20,7 +20,7 @@ public class ReviewDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getReviewsOfCategory() {
-        List<Review> reviews = reviewDao.getReviewsOfCategory(ProductCategory.BlurayPlayer);
+        List<Review> reviews = reviewDao.getReviewsOfCategory(ProductCategory.BLURAY_PLAYER);
 
         assertThat(reviews).isNotNull();
         assertThat(reviews).isNotEmpty();

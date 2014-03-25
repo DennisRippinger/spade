@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewDao implements GenericDao<Review> {
 
     @Resource
-    protected SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Override
     public void delete(Review obj) {

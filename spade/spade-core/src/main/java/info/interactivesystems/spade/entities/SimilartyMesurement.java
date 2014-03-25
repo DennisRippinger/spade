@@ -24,7 +24,7 @@ import lombok.Data;
 @Data
 public class SimilartyMesurement {
 
-    Double similarty;
+    private Double similarty;
 
     /**
      * Additional values follow.

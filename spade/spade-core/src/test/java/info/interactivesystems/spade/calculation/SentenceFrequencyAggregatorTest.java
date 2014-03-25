@@ -1,5 +1,6 @@
 package info.interactivesystems.spade.calculation;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import info.interactivesystems.spade.util.ProductCategory;
@@ -17,7 +18,7 @@ public class SentenceFrequencyAggregatorTest extends AbstractTestNGSpringContext
     private SentenceFrequencyAggregator sentenceFrequency;
 
     @Test
-    public void aggregateSenenceFrequency() throws NoSuchAlgorithmException {
-        sentenceFrequency.aggregateSentenceFrequency(ProductCategory.BlurayPlayer);
+    public void aggregateSenenceFrequency() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        sentenceFrequency.aggregateSentenceFrequency(ProductCategory.DIGITAL_CAMERA);
     }
 }

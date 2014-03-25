@@ -14,6 +14,7 @@
  */
 package info.interactivesystems.spade.util;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,11 +31,12 @@ public final class HashUtil {
      * @param input the original String.
      * @return the the SHA-1 Value.
      * @throws NoSuchAlgorithmException thrown if the SHA-1 Hash is not within the Java Runtime.
+     * @throws UnsupportedEncodingException thrown if UTF-8 is not supported by the system.
      * @see Source: http://www.sha1-online.com/sha1-java/
      */
-    public static String sha1(String input) throws NoSuchAlgorithmException {
+    public static String sha1(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
-        byte[] result = mDigest.digest(input.getBytes());
+        byte[] result = mDigest.digest(input.getBytes("UTF-8"));
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < result.length; i++) {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));

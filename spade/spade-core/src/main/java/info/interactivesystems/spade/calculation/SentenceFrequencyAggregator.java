@@ -22,6 +22,7 @@ import info.interactivesystems.spade.nlp.SentenceDetector;
 import info.interactivesystems.spade.util.HashUtil;
 import info.interactivesystems.spade.util.ProductCategory;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class SentenceFrequencyAggregator {
     @Resource
     private SentenceDetector sentenceDetector;
 
-    public void aggregateSentenceFrequency(ProductCategory productCategory) throws NoSuchAlgorithmException {
+    public void aggregateSentenceFrequency(ProductCategory productCategory) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         List<Review> reviews = reviewDao.getReviewsOfCategory(productCategory);
 
         Map<String, Integer> frequencyTable = new HashMap<String, Integer>();
@@ -84,8 +85,6 @@ public class SentenceFrequencyAggregator {
             frequencyObject.setFrequency(frequency);
             frequencyObject.setSentence(wordFrequency.getKey());
             frequencyObject.setCount(count);
-
-            log.info("Saving Sentence '{}", wordFrequency.getKey());
 
             frequencyDao.save(frequencyObject);
         }

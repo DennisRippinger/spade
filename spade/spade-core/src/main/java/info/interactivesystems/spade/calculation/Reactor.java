@@ -25,6 +25,7 @@ import info.interactivesystems.spade.similarity.TanimotoResemblance;
 import info.interactivesystems.spade.util.HashUtil;
 import info.interactivesystems.spade.util.ProductCategory;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,12 +77,14 @@ public class Reactor {
             }
         } catch (NoSuchAlgorithmException e) {
             log.error("Could not Hash value", e);
+        } catch (UnsupportedEncodingException e) {
+            log.error("UTF-8 not supported by the host system", e);
         }
         return result;
     }
 
     private List<SentenceSimilarity> getSimilarSentences(List<String> referenceSentences, Review referenceReview, Review targetReview, ProductCategory productCategory)
-        throws NoSuchAlgorithmException {
+        throws NoSuchAlgorithmException, UnsupportedEncodingException {
         List<SentenceSimilarity> result = new LinkedList<SentenceSimilarity>();
 
         List<String> targetSentences = sentenceDetector.detectSentencesFromCorpus(targetReview.getContent());
@@ -89,7 +92,7 @@ public class Reactor {
 
             String hash = HashUtil.sha1(referenceSentence);
             SentenceFrequency frequency = frequencyDao.find(hash, productCategory);
-            if (frequency.getFrequency() < 0.000004) {
+            if (frequency.getCount() < 4) {
                 continue;
             }
 

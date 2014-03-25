@@ -69,4 +69,11 @@ public final class DiscoFactory {
         return disco;
     }
 
+    /**
+     * Private Constructor
+     */
+    private DiscoFactory() {
+
+    }
+
 }

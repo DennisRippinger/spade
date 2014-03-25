@@ -26,7 +26,7 @@ import opennlp.tools.sentdetect.SentenceModel;
  * @author Dennis Rippinger
  */
 @Slf4j
-public class NlpModelFactory {
+public final class NlpModelFactory {
 
     private static final String SENTENCE_MODEL = "/en-sent.bin";
 

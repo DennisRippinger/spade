@@ -22,14 +22,14 @@ package info.interactivesystems.spade.util;
  */
 public enum ProductCategory {
 
-    BlurayPlayer(0),
-    Camcorder(1),
-    DigitalCamera(2),
-    Mobilephone(3),
-    PcSystem(4),
-    Printer(5),
+    BLURAY_PLAYER(0),
+    CAMCORDER(1),
+    DIGITAL_CAMERA(2),
+    MOBILEPHONE(3),
+    PC_SYSTEM(4),
+    PRINTER(5),
     TV(6),
-    Videoprojector(7);
+    VIDEOPROJECTOR(7);
 
     private final Integer id;
 
