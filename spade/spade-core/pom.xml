@@ -9,10 +9,6 @@
 	<artifactId>spade-core</artifactId>
 	<name>Spade Core</name>
 
-	<properties>
-		<spring.version>4.0.2.RELEASE</spring.version>
-	</properties>
-
 	<dependencies>
 
 		<!-- Spring -->
@@ -37,8 +33,7 @@
 			<version>1.6.11</version>
 		</dependency>
 
-		<!-- Hibernate -->
-
+		<!-- Persistence -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -49,10 +44,25 @@
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>4.3.4.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.5.6-Final</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
 
 
 		<!-- Commons -->
-
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
@@ -74,30 +84,6 @@
 			<groupId>de.linguatools</groupId>
 			<artifactId>disco</artifactId>
 			<version>1.4</version>
-		</dependency>
-
-		<!-- Persistence -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.3.3.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.5.6-Final</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
