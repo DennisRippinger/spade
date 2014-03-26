@@ -20,7 +20,7 @@ public class ReactorTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void agregateSentenceSimilarity() {
-        List<SentenceSimilarity> agregateSentenceSimilarity = reactor.agregateSentenceSimilarity(ProductCategory.BLURAY_PLAYER);
+        List<SentenceSimilarity> agregateSentenceSimilarity = reactor.agregateSentenceSimilarity(ProductCategory.DIGITAL_CAMERA);
 
         assertThat(agregateSentenceSimilarity).isNotEmpty();
 

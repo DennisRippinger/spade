@@ -37,5 +37,7 @@ public class SentenceSimilarity {
     private String targetSentence;
     
     private Double similarity;
+    
+    private Double weightendSimilarity;
 
 }

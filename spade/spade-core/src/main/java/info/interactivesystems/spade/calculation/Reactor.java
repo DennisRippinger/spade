@@ -92,31 +92,54 @@ public class Reactor {
 
             String hash = HashUtil.sha1(referenceSentence);
             SentenceFrequency frequency = frequencyDao.find(hash, productCategory);
-            if (frequency.getCount() < 4) {
+            if (frequency.getCount() > 4) {
                 continue;
             }
 
             for (String targetSentence : targetSentences) {
 
-                if (targetSentence.length() >= 30) {
-                    SimilartyMesurement calculateSimilarity = similarityCalculator.calculateSimilarity(referenceSentence, targetSentence);
+                SimilartyMesurement calculateSimilarity = similarityCalculator.calculateSimilarity(referenceSentence, targetSentence);
+                if (calculateSimilarity.getSimilarty() > 0.4) {
+                    Double normalized = getNormalized(referenceSentence, targetSentence);
+                    Double similarity = calculateSimilarity.getSimilarty();
 
-                    if (calculateSimilarity.getSimilarty() >= TanimotoResemblance.THRESHOLD) {
+                    Double weightendSimilarity = normalized * similarity;
+                    if (weightendSimilarity > 4) {
                         SentenceSimilarity value = new SentenceSimilarity();
                         value.setReferenceReviewId(referenceReview.getId());
                         value.setTargetReviewId(targetReview.getId());
                         value.setReferenceSentence(referenceSentence);
                         value.setTargetSentence(targetSentence);
                         value.setSimilarity(calculateSimilarity.getSimilarty());
+                        value.setWeightendSimilarity(weightendSimilarity);
                         result.add(value);
 
                         System.out.println(value);
                     }
                 }
             }
+
         }
 
         return result;
+    }
+
+    private Double getNormalized(String referenceSentence, String targetSentence) {
+        Double referenceCount = getWordCount(referenceSentence);
+        Double targetCount = getWordCount(targetSentence);
+
+        return (referenceCount + targetCount) / 2;
+    }
+
+    private Double getWordCount(String sentence) {
+        Integer pos = 0, end, counter = 0;
+
+        while ((end = sentence.indexOf(' ', pos)) >= 0) {
+            pos = end + 1;
+            counter++;
+        }
+
+        return counter * 1.0;
     }
 
 }
