@@ -24,6 +24,7 @@
 		<mapping class="info.interactivesystems.spade.entities.Product" />
 		<mapping class="info.interactivesystems.spade.entities.Review" />
 		<mapping class="info.interactivesystems.spade.entities.SentenceFrequency" />
+		<mapping class="info.interactivesystems.spade.entities.SentenceSimilarity" />
 		<mapping class="info.interactivesystems.spade.entities.ShadowReview" />
 		<mapping class="info.interactivesystems.spade.entities.User" />
 

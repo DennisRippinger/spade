@@ -14,6 +14,12 @@
  */
 package info.interactivesystems.spade.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
 
 /**
@@ -26,7 +32,13 @@ import lombok.Data;
  * Instantiates a new sentence similarity.
  */
 @Data
+@Entity
+@Table(name = "Sentence_Similarities")
 public class SentenceSimilarity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String referenceReviewId;
 
@@ -35,9 +47,9 @@ public class SentenceSimilarity {
     private String referenceSentence;
 
     private String targetSentence;
-    
+
     private Double similarity;
-    
+
     private Double weightendSimilarity;
 
 }
