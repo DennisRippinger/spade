@@ -18,7 +18,7 @@
 		<repository>
 			<id>Thesis</id>
 			<name>Thesis Nexus</name>
-			<url>http://drippinger.de:8080/nexus/content/repositories/Thesis/</url>
+			<url>http://nexus.drippinger.de/content/repositories/Thesis/</url>
 		</repository>
 		<repository>
 			<id>central</id>
