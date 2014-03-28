@@ -28,10 +28,6 @@ import lombok.Data;
  *
  * @author Dennis Rippinger
  */
-
-/**
- * Instantiates a new sentence similarity.
- */
 @Data
 @Entity
 @Table(name = "Sentence_Similarities")

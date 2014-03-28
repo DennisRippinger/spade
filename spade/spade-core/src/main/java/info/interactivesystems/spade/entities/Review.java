@@ -30,9 +30,9 @@ import lombok.Data;
  * 
  * @author Dennis Rippinger
  */
+@Data
 @Entity
 @Table(name = "Review")
-@Data
 public class Review {
 
     @Id
