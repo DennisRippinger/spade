@@ -15,7 +15,6 @@ package info.interactivesystems.spade.nlp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.PropertyUtil;
-import info.interactivesystems.spade.nlp.SentenceDetector;
 
 import java.util.List;
 
@@ -27,6 +26,7 @@ import org.testng.annotations.Test;
  * 
  * @author Dennis Rippinger
  */
+@Test(enabled=false)
 public class SentenceDetectorTest {
 
     private SentenceDetector sentenceDetector;

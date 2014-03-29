@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 /**
  * Tests similarity for the Levenshtein Similarity.
  */
+@Test(groups = { "functionTest" })
 public class LevenshteinSimilarityTest extends SimilarityTest {
 
     public LevenshteinSimilarityTest() {

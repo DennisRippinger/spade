@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 @Transactional
+@Test(groups = { "functionTest" })
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class SentenceSimilarityDaoTest extends AbstractTestNGSpringContextTests {
 

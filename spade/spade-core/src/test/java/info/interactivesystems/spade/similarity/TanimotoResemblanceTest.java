@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 /**
  * The Class TanimotoResemblanceTest.
  */
+@Test(groups = { "functionTest" })
 public class TanimotoResemblanceTest extends SimilarityTest {
 
     public TanimotoResemblanceTest() {

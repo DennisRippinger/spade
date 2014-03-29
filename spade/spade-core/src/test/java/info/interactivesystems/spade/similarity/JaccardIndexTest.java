@@ -26,6 +26,7 @@ import org.testng.annotations.Test;
  * 
  * @author Dennis Rippinger
  */
+@Test(groups = { "functionTest" })
 public class JaccardIndexTest extends SimilarityTest {
 
     public JaccardIndexTest() {
