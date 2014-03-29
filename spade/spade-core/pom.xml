@@ -95,6 +95,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.13</version>
 				<configuration>
+					<forkMode>never</forkMode>
+					<argLine>-Xms512m -Xmx512m -XX:MaxPermSize=1024m</argLine>
 					<suiteXmlFiles>
 						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
