@@ -82,5 +82,6 @@
 	<modules>
 		<module>spade-core</module>
 		<module>spade-ui</module>
+		<module>spade-crawler</module>
 	</modules>
 </project>
