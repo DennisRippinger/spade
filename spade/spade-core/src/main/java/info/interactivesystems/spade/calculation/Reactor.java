@@ -16,10 +16,10 @@ package info.interactivesystems.spade.calculation;
 
 import info.interactivesystems.spade.dao.ReviewDao;
 import info.interactivesystems.spade.dao.SentenceFrequencyDao;
+import info.interactivesystems.spade.dto.SimilartyMesurement;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.SentenceFrequency;
 import info.interactivesystems.spade.entities.SentenceSimilarity;
-import info.interactivesystems.spade.entities.SimilartyMesurement;
 import info.interactivesystems.spade.nlp.SentenceDetector;
 import info.interactivesystems.spade.similarity.TanimotoResemblance;
 import info.interactivesystems.spade.util.HashUtil;

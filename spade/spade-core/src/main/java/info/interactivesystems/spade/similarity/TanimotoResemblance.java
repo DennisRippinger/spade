@@ -1,6 +1,6 @@
 package info.interactivesystems.spade.similarity;
 
-import info.interactivesystems.spade.entities.SimilartyMesurement;
+import info.interactivesystems.spade.dto.SimilartyMesurement;
 
 import java.util.ArrayList;
 import java.util.List;

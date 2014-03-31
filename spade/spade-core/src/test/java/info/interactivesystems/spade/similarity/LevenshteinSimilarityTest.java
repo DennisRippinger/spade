@@ -15,7 +15,7 @@
 package info.interactivesystems.spade.similarity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import info.interactivesystems.spade.entities.SimilartyMesurement;
+import info.interactivesystems.spade.dto.SimilartyMesurement;
 
 import java.util.List;
 

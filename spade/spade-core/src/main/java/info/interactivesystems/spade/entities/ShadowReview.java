@@ -32,7 +32,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "UncategorizedReviews")
+@Table(name = "Shadow_Reviews")
 public class ShadowReview {
 
     @Id

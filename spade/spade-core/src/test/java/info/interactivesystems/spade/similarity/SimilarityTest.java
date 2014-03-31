@@ -15,13 +15,12 @@
 package info.interactivesystems.spade.similarity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import info.interactivesystems.spade.PropertyUtil;
+import info.interactivesystems.spade.nlp.SentenceDetector;
 
 import java.util.List;
 
 import org.apache.commons.configuration.XMLConfiguration;
-
-import info.interactivesystems.spade.PropertyUtil;
-import info.interactivesystems.spade.nlp.SentenceDetector;
 
 /**
  * @author Dennis Rippinger

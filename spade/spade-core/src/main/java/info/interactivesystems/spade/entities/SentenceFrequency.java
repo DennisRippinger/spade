@@ -29,7 +29,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "SentenceFrequencies")
+@Table(name = "Sentence_Frequencies")
 @IdClass(SentenceFrequencyPk.class)
 public class SentenceFrequency {
 
