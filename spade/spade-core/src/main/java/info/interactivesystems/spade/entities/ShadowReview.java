@@ -54,6 +54,8 @@ public class ShadowReview {
     private Integer totalVotes;
 
     private String type;
+    
+    private String url;
 
     @Column(columnDefinition = "TEXT")
     private String content;
