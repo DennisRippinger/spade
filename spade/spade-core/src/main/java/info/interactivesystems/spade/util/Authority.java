@@ -15,28 +15,14 @@
 package info.interactivesystems.spade.util;
 
 /**
- * Describes a product category with their respective database identifier.
+ * The Enum Authority to store the source and nature of the product. I.e. Amazon or Yelp.
  * 
  * @author Dennis Rippinger
- * 
  */
-public enum ProductCategory {
+public enum Authority {
 
-    // AMAZON
-    BLURAY_PLAYER(0),
-    CAMCORDER(1),
-    DIGITAL_CAMERA(2),
-    MOBILEPHONE(3),
-    PC_SYSTEM(4),
-    PRINTER(5),
-    TV(6),
-    VIDEOPROJECTOR(7),
-
-    // YELP
-    RESTAURANT(8),
-    FOOD(9),
-    NIGHTLIFE(10),
-    SHOPPING(11);
+    AMAZON(1),
+    YELP(2);
 
     private final Integer id;
 
@@ -45,7 +31,7 @@ public enum ProductCategory {
      * 
      * @param id the id
      */
-    private ProductCategory(Integer id) {
+    private Authority(Integer id) {
         this.id = id;
     }
 
