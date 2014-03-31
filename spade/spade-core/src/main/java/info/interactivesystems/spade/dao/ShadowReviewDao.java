@@ -71,6 +71,7 @@ public class ShadowReviewDao implements GenericDao<ShadowReview> {
     public List<String> getDistinctUrls() {
         return sessionFactory.getCurrentSession()
             .createSQLQuery("SELECT DISTINCT(URL) FROM Shadow_Reviews WHERE averageRating IS NULL")
+            .setMaxResults(100)
             .list();
     }
 

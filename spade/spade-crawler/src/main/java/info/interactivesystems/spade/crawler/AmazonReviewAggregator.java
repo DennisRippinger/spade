@@ -47,6 +47,7 @@ public class AmazonReviewAggregator {
         List<String> reviewUrls = shadowReviewDao.getDistinctUrls();
         for (String url : reviewUrls) {
             try {
+                log.info("Crawling '{}'", url);
                 crawler.getAverageRating(url);
             } catch (Exception e) {
                 log.error("Renewing IP");

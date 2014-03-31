@@ -86,10 +86,11 @@ public class AmazonRatingCrawler {
                     String[] arrayAverageRating = averageRating.split(" ");
                     doubleAverageRating = Double.parseDouble(arrayAverageRating[0]);
                 }
-            } else {
+            }
 
+            else if (stringCategory.contains("Books")) {
                 List<DomElement> listAverageCustomerRating = (List<DomElement>) htmlPage
-                    .getByXPath("//*[@id=\"averageCustomerReviews\"]/span");
+                    .getByXPath("//*[@id=\"handleBuy\"]/div[2]/span/span/span/a/span");
 
                 if (!listAverageCustomerRating.isEmpty()) {
                     DomElement averageCustomerRating = listAverageCustomerRating
@@ -98,7 +99,13 @@ public class AmazonRatingCrawler {
                         .getAttribute("title");
                     String[] arrayAverageRating = averageRating.split(" ");
                     doubleAverageRating = Double.parseDouble(arrayAverageRating[0]);
+                } else {
+                    doubleAverageRating = defaultCase(htmlPage, doubleAverageRating);
                 }
+            }
+            else {
+                doubleAverageRating = defaultCase(htmlPage, doubleAverageRating);
+
             }
 
             for (ShadowReview review : reviewsOfSameProduct) {
@@ -109,6 +116,21 @@ public class AmazonRatingCrawler {
             }
         }
 
+    }
+
+    private Double defaultCase(HtmlPage htmlPage, Double doubleAverageRating) {
+        List<DomElement> listAverageCustomerRating = (List<DomElement>) htmlPage
+            .getByXPath("//*[@id=\"averageCustomerReviews\"]/span");
+
+        if (!listAverageCustomerRating.isEmpty()) {
+            DomElement averageCustomerRating = listAverageCustomerRating
+                .get(0);
+            String averageRating = averageCustomerRating
+                .getAttribute("title");
+            String[] arrayAverageRating = averageRating.split(" ");
+            doubleAverageRating = Double.parseDouble(arrayAverageRating[0]);
+        }
+        return doubleAverageRating;
     }
 
     private HtmlPage loadPage(String currentProductPage) {
