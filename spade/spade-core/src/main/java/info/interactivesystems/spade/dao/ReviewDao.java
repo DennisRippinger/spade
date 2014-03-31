@@ -53,7 +53,7 @@ public class ReviewDao implements GenericDao<Review> {
 
     @Override
     public void save(Review t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
     public List<Review> getReviewsOfCategory(ProductCategory category) {

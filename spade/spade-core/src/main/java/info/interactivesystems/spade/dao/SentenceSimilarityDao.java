@@ -52,7 +52,7 @@ public class SentenceSimilarityDao implements GenericDao<SentenceSimilarity> {
 
     @Override
     public void save(SentenceSimilarity t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
 }

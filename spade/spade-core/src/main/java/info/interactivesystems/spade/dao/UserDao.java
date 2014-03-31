@@ -46,7 +46,7 @@ public class UserDao implements GenericDao<User> {
 
     @Override
     public void save(User t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
 }

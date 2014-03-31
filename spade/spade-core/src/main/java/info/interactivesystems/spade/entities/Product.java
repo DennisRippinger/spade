@@ -14,6 +14,7 @@
  */
 package info.interactivesystems.spade.entities;
 
+import info.interactivesystems.spade.util.Authority;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.util.Set;
@@ -53,6 +54,9 @@ public class Product {
     private String imageUrl;
 
     private String source;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Authority authority;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Review> reviews;

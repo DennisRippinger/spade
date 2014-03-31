@@ -47,7 +47,7 @@ public class ProductDao implements GenericDao<Product> {
 
     @Override
     public void save(Product t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
 }

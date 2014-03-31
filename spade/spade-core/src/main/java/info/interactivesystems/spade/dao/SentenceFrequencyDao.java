@@ -71,7 +71,7 @@ public class SentenceFrequencyDao implements GenericDao<SentenceFrequency> {
 
     @Override
     public void save(SentenceFrequency t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
 }

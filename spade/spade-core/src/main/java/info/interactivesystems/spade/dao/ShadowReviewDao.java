@@ -46,7 +46,7 @@ public class ShadowReviewDao implements GenericDao<ShadowReview> {
 
     @Override
     public void save(ShadowReview t) {
-        sessionFactory.getCurrentSession().save(t);
+        sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
 }
