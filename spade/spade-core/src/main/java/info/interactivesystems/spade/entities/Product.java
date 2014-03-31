@@ -14,9 +14,13 @@
  */
 package info.interactivesystems.spade.entities;
 
+import info.interactivesystems.spade.util.ProductCategory;
+
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -41,7 +45,8 @@ public class Product {
 
     private String name;
 
-    private Integer type;
+    @Enumerated(EnumType.ORDINAL)
+    private ProductCategory type;
 
     private double rating;
 

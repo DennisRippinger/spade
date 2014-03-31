@@ -17,7 +17,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 @Transactional
-//@Test(groups = { "FunctionTest" })
+// @Test(groups = { "FunctionTest" })
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class ProductDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -32,7 +32,7 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
         result.setId("AED12345");
         result.setName("Demo Product");
         result.setSource("Test source");
-        result.setType(ProductCategory.DIGITAL_CAMERA.getId());
+        result.setType(ProductCategory.DIGITAL_CAMERA);
         result.setRating(4.5);
 
         Review review = new Review();
@@ -72,6 +72,13 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
 
         found = productDao.find(found.getId());
         assertThat(found).isNull();
+    }
+
+    @Test
+    public void findExisting() {
+        Product found = productDao.find("B00000JFM5");
+        assertThat(found).isNotNull();
+        assertThat(found.getType()).isEqualTo(ProductCategory.BLURAY_PLAYER);
     }
 
     @Test
