@@ -7,11 +7,15 @@
 		</layout>
 	</appender>
 
-	<logger name="info.interactivesystems" level="DEBUG" />
+	<logger name="info.interactivesystems" level="ALL" />
 
 	<!-- Reduce Noise -->
 	<logger name="org.hibernate" level="ERROR" />
 	<logger name="com.gargoylesoftware" level="ERROR" />
 	<logger name="com.mchange.v2.c3p0" level="ERROR" />
+
+	<root level="OFF">
+		<appender-ref ref="STDOUT" />
+	</root>
 
 </configuration>
