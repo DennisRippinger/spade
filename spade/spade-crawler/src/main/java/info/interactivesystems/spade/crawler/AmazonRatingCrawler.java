@@ -19,7 +19,10 @@ import info.interactivesystems.spade.entities.ShadowReview;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -37,7 +40,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 @Service
 public class AmazonRatingCrawler {
 
-    private final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_24);
+    private final WebClient webClient = new WebClient(BrowserVersion.CHROME);
+    private final Pattern starPattern = Pattern.compile("\\d[-\\d]*");
 
     public AmazonRatingCrawler() {
         webClient.getOptions().setJavaScriptEnabled(false);
@@ -58,12 +62,13 @@ public class AmazonRatingCrawler {
     public void getAverageRating(String url) throws Exception {
         HtmlPage htmlPage = loadPage(url);
 
-        List<ShadowReview> reviewsOfSameProduct = dao.findReviewFromUrl(url);
-
-        String stringCategory = "";
-        Double doubleAverageRating = 0.0;
-
         if (htmlPage != null) {
+
+            List<ShadowReview> reviewsOfSameProduct = dao.findReviewFromUrl(url);
+
+            String stringCategory = "";
+            Double doubleAverageRating = 0.0;
+
             // Get Category
             List<DomElement> listCategory = (List<DomElement>) htmlPage
                 .getByXPath("//*[@id=\"nav-subnav\"]/li[1]/a");
@@ -73,15 +78,8 @@ public class AmazonRatingCrawler {
                 stringCategory = category.getTextContent();
             }
 
-            List<DomElement> listAverageCustomerRating = (List<DomElement>) htmlPage.getByXPath("//span[@title]");
-            if (!listAverageCustomerRating.isEmpty()) {
-                DomElement averageCustomerRating = listAverageCustomerRating
-                    .get(0);
-                String averageRating = averageCustomerRating
-                    .getAttribute("title");
-                String[] arrayAverageRating = averageRating.split(" ");
-                doubleAverageRating = Double.parseDouble(arrayAverageRating[0]);
-            }
+            doubleAverageRating = checkAverageRating(htmlPage, doubleAverageRating);
+            doubleAverageRating = checkAverageRatingAlternativeLayout(htmlPage, doubleAverageRating);
 
             for (ShadowReview review : reviewsOfSameProduct) {
                 review.setType(stringCategory);
@@ -93,7 +91,78 @@ public class AmazonRatingCrawler {
 
     }
 
+    @SuppressWarnings("unchecked")
+    private Double checkAverageRating(HtmlPage htmlPage, Double doubleAverageRating) {
+        List<DomElement> listAverageCustomerRating;
+        if (doubleAverageRating.equals(0.0)) {
+            listAverageCustomerRating = (List<DomElement>) htmlPage
+                .getByXPath("//i[@class]");
+            if (!listAverageCustomerRating.isEmpty()) {
+                for (DomElement averageCustomerRating : listAverageCustomerRating) {
+                    String averageRating = averageCustomerRating
+                        .getAttribute("class");
+                    if (averageRating.contains("a-icon a-icon-star a-star")) {
+                        Matcher matcher = starPattern.matcher(averageRating);
+                        while (matcher.find()) {
+                            String rating = matcher.group();
+                            // rating comes in 3-5 or 3 pattern.
+                            rating = rating.replace("-", ".");
+                            return Double.parseDouble(rating);
+                        }
+                    }
+                }
+
+            }
+            return 0.0;
+        }
+        return doubleAverageRating;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Double checkAverageRatingAlternativeLayout(HtmlPage htmlPage, Double doubleAverageRating) {
+        if (doubleAverageRating.equals(0.0)) {
+            List<DomElement> listAverageCustomerRating = (List<DomElement>) htmlPage.getByXPath("//span[@title]");
+            if (!listAverageCustomerRating.isEmpty()) {
+                DomElement averageCustomerRating = listAverageCustomerRating
+                    .get(0);
+                String averageRating = averageCustomerRating
+                    .getAttribute("title");
+                String[] arrayAverageRating = averageRating.split(" ");
+                doubleAverageRating = Double.parseDouble(arrayAverageRating[0]);
+            }
+        }
+        return doubleAverageRating;
+    }
+
+    /**
+     * Collect some cookies to appear as valid user.
+     * 
+     * @param currentProductPage
+     * @return
+     */
     private HtmlPage loadPage(String currentProductPage) {
+        HtmlPage page = loadPageRaw(currentProductPage);
+        if (page.getTitleText().equals("Robot Check")) {
+            webClient.getCookieManager().clearCookies();
+            randomWalk(page);
+            return loadPageRaw(currentProductPage);
+        }
+        return page;
+
+    }
+
+    @SuppressWarnings("unchecked")
+    private void randomWalk(HtmlPage page) {
+        List<DomElement> listOfLinks = (List<DomElement>) page.getByXPath("//a[@href]");
+        Collections.shuffle(listOfLinks);
+        for (Integer i = 0; i >= 4; i++) {
+            DomElement domUrl = listOfLinks.get(i);
+            String relativeUrl = domUrl.getAttribute("href");
+            loadPageRaw("http://www.amazon.com" + relativeUrl);
+        }
+    }
+
+    private HtmlPage loadPageRaw(String currentProductPage) {
         HtmlPage page = null;
         try {
             page = webClient.getPage(currentProductPage);
@@ -104,6 +173,7 @@ public class AmazonRatingCrawler {
         } catch (IOException e1) {
             log.error("IOException {}", currentProductPage, e1);
         }
+
         return page;
     }
 }
