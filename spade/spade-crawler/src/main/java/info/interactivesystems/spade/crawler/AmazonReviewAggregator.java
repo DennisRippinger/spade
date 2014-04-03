@@ -14,11 +14,11 @@
  */
 package info.interactivesystems.spade.crawler;
 
-import info.interactivesystems.spade.crawler.util.RenewIP;
 import info.interactivesystems.spade.dao.ShadowReviewDao;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,17 +43,24 @@ public class AmazonReviewAggregator {
     /**
      * Load missing reviews.
      */
+    @PostConstruct
     public void loadMissingReviews() {
-        List<String> reviewUrls = shadowReviewDao.getDistinctUrls();
-        for (String url : reviewUrls) {
-            try {
-                log.info("Crawling '{}'", url);
-                crawler.getAverageRating(url);
-            } catch (Exception e) {
-                log.error("Renewing IP");
-                RenewIP.renewIpOnFritzBox();
+        while (true) {
+            List<String> reviewUrls = shadowReviewDao.getRandomDistinct(1000);
+            if (reviewUrls.size() < 1000) {
+                log.info("Less than 1000 Reviews available, quit");
+                System.exit(0);
             }
-
+            for (String url : reviewUrls) {
+                try {
+                    log.info("Crawling '{}'", url);
+                    crawler.getAverageRating(url);
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    // log.error("Renewing IP");
+                    // RenewIP.renewIpOnFritzBox();
+                }
+            }
         }
 
     }

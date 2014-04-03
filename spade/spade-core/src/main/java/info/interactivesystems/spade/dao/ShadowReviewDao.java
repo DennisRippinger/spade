@@ -68,11 +68,14 @@ public class ShadowReviewDao implements GenericDao<ShadowReview> {
     }
 
     @SuppressWarnings("unchecked")
-    public List<String> getDistinctUrls() {
+    public List<String> getRandomDistinct(Integer maximum) {
+        String query = "SELECT DISTINCT(r1.url) FROM Spade.Shadow_Reviews AS r1 " +
+            "JOIN (SELECT (RAND() * (SELECT MAX(randomIdSort) FROM Spade.Shadow_Reviews)) AS id) AS r2 " +
+            "WHERE r1.randomIdSort >= r2.id AND ((r1.url IS NOT NULL AND r1.averageRating IS NULL) OR (r1.url IS NOT NULL AND r1.averageRating = 0)) " +
+            "ORDER BY r1.id ASC";
         return sessionFactory.getCurrentSession()
-            .createSQLQuery("SELECT DISTINCT(URL) FROM Shadow_Reviews WHERE averageRating IS NULL")
-            .setMaxResults(100)
+            .createSQLQuery(query)
+            .setMaxResults(maximum)
             .list();
     }
-
 }
