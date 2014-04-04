@@ -21,6 +21,7 @@ import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletCont
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +44,9 @@ public class CrawlerApplication {
      * @param args the arguments
      */
     public static void main(String[] args) {
-        SpringApplication.run(CrawlerApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(CrawlerApplication.class, args);
+        AmazonReviewAggregator crawler = context.getBean(AmazonReviewAggregator.class);
+        crawler.loadMissingReviews();
     }
 
     @Bean
