@@ -49,7 +49,7 @@ public class AmazonReviewAggregator {
         String threadCount = System.getProperty("crawler.threads");
         Integer threads = 3;
         if (!threadCount.isEmpty()) {
-            threads = Integer.getInteger(threadCount);
+            threads = Integer.parseInt(threadCount);
         }
 
         ExecutorService executor = Executors.newCachedThreadPool();
