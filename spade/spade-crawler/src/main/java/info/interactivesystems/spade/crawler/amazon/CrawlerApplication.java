@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.crawler;
+package info.interactivesystems.spade.crawler.amazon;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.SpringApplication;
