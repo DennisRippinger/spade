@@ -31,7 +31,7 @@ import de.linguatools.disco.ReturnDataBN;
  * @author Dennis Rippinger
  */
 @Slf4j
-@Service
+//@Service
 public class SemanticResemblance {
 
     private DISCO disco;

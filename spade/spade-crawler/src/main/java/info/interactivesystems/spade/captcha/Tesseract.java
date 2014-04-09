@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
@@ -36,7 +35,7 @@ public class Tesseract {
 
     public static final String TESSERACT_LOCATION = System.getProperty("ocr.tesseract.location");
 
-    public String recognizeCaptcha(@NonNull File tiffImage) {
+    public String recognizeCaptcha(File tiffImage) {
 
         try {
             Runtime runtime = Runtime.getRuntime();
