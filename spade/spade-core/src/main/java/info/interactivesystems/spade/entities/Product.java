@@ -15,6 +15,7 @@
 package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
+import info.interactivesystems.spade.util.PriceCategory;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.util.Set;
@@ -29,6 +30,7 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * DTO for a Product.
@@ -39,6 +41,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "Products")
+@ToString
 public class Product {
 
     @Id
@@ -54,6 +57,12 @@ public class Product {
     private String imageUrl;
 
     private String source;
+
+    // Venues only
+    private String location;
+
+    @Enumerated(EnumType.ORDINAL)
+    private PriceCategory priceCategory;
 
     @Enumerated(EnumType.ORDINAL)
     private Authority authority;

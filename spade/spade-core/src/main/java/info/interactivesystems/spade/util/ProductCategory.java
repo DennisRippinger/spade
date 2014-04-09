@@ -53,4 +53,20 @@ public enum ProductCategory {
         return id;
     }
 
+    public String getURLString() {
+        
+        switch (id) {
+            case 8:
+                return "restaurants";
+            case 9:
+                return "food";
+            case 10:
+                return "nightlife";
+            case 11:
+                return "shopping";
+            default:
+                return "";
+        }
+    }
+
 }
