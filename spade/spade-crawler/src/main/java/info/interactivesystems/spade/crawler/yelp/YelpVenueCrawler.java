@@ -15,7 +15,9 @@
 package info.interactivesystems.spade.crawler.yelp;
 
 import info.interactivesystems.spade.crawler.util.CrawlerUtil;
+import info.interactivesystems.spade.dao.ProductDao;
 import info.interactivesystems.spade.entities.Product;
+import info.interactivesystems.spade.exception.CrawlerException;
 import info.interactivesystems.spade.util.Authority;
 import info.interactivesystems.spade.util.PriceCategory;
 import info.interactivesystems.spade.util.ProductCategory;
@@ -26,7 +28,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Resource;
+
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.stereotype.Service;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -38,29 +45,23 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * @author Dennis Rippinger
  */
 @Slf4j
-public class YelpCrawler {
+@Service
+public class YelpVenueCrawler {
 
     private static final String YELP_URL = "http://www.yelp.com/search?cflt=%s&find_loc=%s&start=%s";
 
     private final WebClient webClient = CrawlerUtil.getRandomDesktopWebClient(false, false);
     private final Pattern starPattern = Pattern.compile("\\d[.\\d]*");
 
-    private String location;
-    private Integer page;
-    private ProductCategory category;
+    @Resource
+    private ProductDao productDao;
 
-    /**
-     * Instantiates a new yelp crawler.
-     * 
-     * @param location the location
-     * @param page the page
-     * @param category the category
-     */
-    public YelpCrawler(String location, Integer page, ProductCategory category) {
-        this.location = location;
-        this.page = page;
-        this.category = category;
-    }
+    @Setter
+    private String location;
+    @Setter
+    private Integer page = 0;
+    @Setter
+    private ProductCategory category;
 
     /**
      * Crawl reviews.
@@ -68,25 +69,35 @@ public class YelpCrawler {
      * @throws UnsupportedEncodingException the unsupported encoding exception
      * @throws InterruptedException the interrupted exception
      */
-    public void crawlReviews() throws UnsupportedEncodingException, InterruptedException {
+    public void crawlVenues() throws UnsupportedEncodingException, InterruptedException {
         String yelpOverviewURL = getURL(location, page, category);
-        HtmlPage yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 0);
-        Integer numberOfVenues = getMaximumItems(yelpPage);
+        HtmlPage yelpPage;
+        try {
+            yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 0);
 
-        // First Page
-        crawlVenues(yelpPage);
+            Integer numberOfVenues = getMaximumItems(yelpPage);
 
-        // Iteration
-        Double counterPage = page * 1.0;
-        Double counterMax = getMaximumPageNumber(numberOfVenues);
-
-        for (; counterPage < counterMax; counterPage++) {
-            page++;
-
-            yelpOverviewURL = getURL(location, page, category);
-            yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 3);
-
+            // First Page
             crawlVenues(yelpPage);
+
+            // Iteration
+            Double counterPage = page * 1.0;
+            Double counterMax = getMaximumPageNumber(numberOfVenues);
+
+            for (; counterPage < counterMax; counterPage++) {
+                page++;
+
+                try {
+                    yelpOverviewURL = getURL(location, page, category);
+                    yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 3);
+                    crawlVenues(yelpPage);
+                } catch (CrawlerException e) {
+                    log.warn("Could not load a following page", e);
+                }
+
+            }
+        } catch (CrawlerException e) {
+            log.error("Could not load first page", e);
         }
 
     }
@@ -114,8 +125,7 @@ public class YelpCrawler {
             extractImageLocation(venueContainer, product);
             extractPriceRange(venueContainer, product);
 
-            // DAO SAVE
-            log.info(product.toString());
+            productDao.save(product);
         }
 
     }
@@ -189,7 +199,7 @@ public class YelpCrawler {
             product.setRating(0.0);
         }
 
-        //log.info("Venue '{}' has a '{}' rating", product.getName(), product.getRating());
+        // log.info("Venue '{}' has a '{}' rating", product.getName(), product.getRating());
 
     }
 

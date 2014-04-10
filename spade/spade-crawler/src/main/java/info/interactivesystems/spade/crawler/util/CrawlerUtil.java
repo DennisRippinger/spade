@@ -1,7 +1,8 @@
 package info.interactivesystems.spade.crawler.util;
 
+import info.interactivesystems.spade.exception.CrawlerException;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -44,20 +45,17 @@ public final class CrawlerUtil {
         return webClient;
     }
 
-    public static HtmlPage getWebPage(WebClient client, String url, Integer wait) {
+    public static HtmlPage getWebPage(WebClient client, String url, Integer wait) throws CrawlerException {
         HtmlPage page = null;
         try {
 
             page = client.getPage(url);
+
             waitAroundTimeInSeconds(wait);
             log.info("Page Title: '{}' for '{}'", page.getTitleText(), url);
 
-        } catch (FailingHttpStatusCodeException e1) {
-            log.error("Http Status Error: '{}'", e1.getMessage());
-        } catch (MalformedURLException e1) {
-            log.error("Malformed URL: '{}'", url, e1);
-        } catch (IOException e1) {
-            log.error("IOException: '{}'", url, e1);
+        } catch (FailingHttpStatusCodeException | IOException e) {
+            throw new CrawlerException("HTTP Error", e);
         }
 
         return page;

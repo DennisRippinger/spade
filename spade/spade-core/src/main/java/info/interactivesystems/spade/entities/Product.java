@@ -52,7 +52,7 @@ public class Product {
     @Enumerated(EnumType.ORDINAL)
     private ProductCategory type;
 
-    private double rating;
+    private Double rating;
 
     private String imageUrl;
 

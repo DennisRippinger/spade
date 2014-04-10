@@ -4,14 +4,23 @@ import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.annotation.Resource;
+
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-public class YelpCrawlerTest {
+@ContextConfiguration(locations = { "classpath:beans.xml" })
+public class YelpCrawlerTest extends AbstractTestNGSpringContextTests {
+
+    @Resource
+    private YelpVenueCrawler crawler;
 
     @Test
     public void YelpCrawler() throws UnsupportedEncodingException, InterruptedException {
-        YelpCrawler crawler = new YelpCrawler("Detroit, MI, USA", 0, ProductCategory.RESTAURANT);
+        crawler.setLocation("New York, NY, USA");
+        crawler.setCategory(ProductCategory.RESTAURANT);
 
-        crawler.crawlReviews();
+        crawler.crawlVenues();
     }
 }

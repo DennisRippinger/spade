@@ -14,7 +14,11 @@
  */
 package info.interactivesystems.spade.entities;
 
+import info.interactivesystems.spade.util.Authority;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -45,5 +49,8 @@ public class User {
     private Integer helpfulOverallVotes;
 
     private Integer numberOfReviews;
+    
+    @Enumerated(EnumType.ORDINAL)
+    private Authority authority;
 
 }
