@@ -33,7 +33,8 @@ import javax.annotation.Resource;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -45,7 +46,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * @author Dennis Rippinger
  */
 @Slf4j
-@Service
+@Component
+@Scope(value="prototype")
 public class YelpVenueCrawler {
 
     private static final String YELP_URL = "http://www.yelp.com/search?cflt=%s&find_loc=%s&start=%s";
@@ -59,7 +61,7 @@ public class YelpVenueCrawler {
     @Setter
     private String location;
     @Setter
-    private Integer page = 0;
+    private Integer pageNo = 0;
     @Setter
     private ProductCategory category;
 
@@ -70,7 +72,7 @@ public class YelpVenueCrawler {
      * @throws InterruptedException the interrupted exception
      */
     public void crawlVenues() throws UnsupportedEncodingException, InterruptedException {
-        String yelpOverviewURL = getURL(location, page, category);
+        String yelpOverviewURL = getURL(location, pageNo, category);
         HtmlPage yelpPage;
         try {
             yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 0);
@@ -81,14 +83,14 @@ public class YelpVenueCrawler {
             crawlVenues(yelpPage);
 
             // Iteration
-            Double counterPage = page * 1.0;
+            Double counterPage = pageNo * 1.0;
             Double counterMax = getMaximumPageNumber(numberOfVenues);
 
             for (; counterPage < counterMax; counterPage++) {
-                page++;
+                pageNo++;
 
                 try {
-                    yelpOverviewURL = getURL(location, page, category);
+                    yelpOverviewURL = getURL(location, pageNo, category);
                     yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 3);
                     crawlVenues(yelpPage);
                 } catch (CrawlerException e) {
@@ -120,12 +122,15 @@ public class YelpVenueCrawler {
             product.setLocation(location);
             product.setType(category);
 
-            extractIdNameAndSource(venueContainer, product);
+            extractIdAndName(venueContainer, product);
             extractRating(venueContainer, product);
             extractImageLocation(venueContainer, product);
             extractPriceRange(venueContainer, product);
 
-            productDao.save(product);
+            // Random ID eats update.
+            if (!productDao.checkIfAlreadyExists(product.getId())) {
+                productDao.save(product);
+            }
         }
 
     }
@@ -136,15 +141,13 @@ public class YelpVenueCrawler {
      * @param venueContainer the venue container
      * @param product the product
      */
-    private void extractIdNameAndSource(DomElement venueContainer, Product product) {
+    private void extractIdAndName(DomElement venueContainer, Product product) {
         DomElement domName = venueContainer.getFirstByXPath(".//a[@class='biz-name']");
-        String id = domName.getAttribute("data-hovercard-id");
         String venueName = domName.asText();
         String venueURL = domName.getAttribute("href");
 
-        product.setId(id);
         product.setName(venueName);
-        product.setSource(venueURL);
+        product.setId(venueURL);
     }
 
     /**

@@ -21,7 +21,8 @@ import javax.annotation.Resource;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -32,7 +33,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * 
  */
 @Slf4j
-@Service
+@Component
+@Scope(value="prototype")
 public class YelpReviewCrawler {
 
     private static final String YELP_URL = "http://www.yelp.com%s?start=%s";
@@ -52,7 +54,7 @@ public class YelpReviewCrawler {
     private Integer page = 0;
 
     public void crawlReviews(Product yelpVenue) {
-        String yelpOverviewURL = getURL(yelpVenue.getSource());
+        String yelpOverviewURL = getURL(yelpVenue.getId());
         HtmlPage yelpPage;
         try {
             yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 0);
@@ -63,7 +65,7 @@ public class YelpReviewCrawler {
             for (; page < numberOfPages; page++) {
 
                 try {
-                    yelpOverviewURL = getURL(yelpVenue.getSource());
+                    yelpOverviewURL = getURL(yelpVenue.getId());
                     yelpPage = CrawlerUtil.getWebPage(webClient, yelpOverviewURL, 3);
                     crawlReviews(yelpPage, yelpVenue);
                 } catch (CrawlerException e) {
@@ -90,16 +92,58 @@ public class YelpReviewCrawler {
                 extractReviewDate(review, domReview);
                 extractRating(review, domReview);
                 extractUser(review, domReview);
+                extractCheckins(review, domReview);
+                extractVotings(review, domReview);
 
                 review.setProduct(yelpVenue);
-                review.setCreated(new Date());
 
-                reviewDao.save(review);
+                if (!reviewDao.checkIfAlreadyExists(review.getId())) {
+                    reviewDao.save(review);
+                }
 
             } catch (ParseException e) {
                 log.warn("Could not parse the date", e);
             } catch (NullPointerException e) {
                 log.warn("NullPointer thrown, possible captcha", e);
+            }
+        }
+    }
+
+    private void extractVotings(Review review, DomElement domReview) {
+        @SuppressWarnings("unchecked")
+        List<DomElement> votings = (List<DomElement>) domReview.getByXPath(".//span[@class='count']");
+        if (votings != null) {
+            String useful = votings.get(0).asText();
+            String funny = votings.get(1).asText();
+            String cool = votings.get(2).asText();
+
+            if (!useful.isEmpty()) {
+                Integer usefulCount = Integer.parseInt(useful);
+                review.setVoteUseful(usefulCount);
+            }
+            if (!funny.isEmpty()) {
+                Integer funnyCount = Integer.parseInt(funny);
+                review.setVoteFunny(funnyCount);
+            }
+            if (!cool.isEmpty()) {
+                Integer coolCount = Integer.parseInt(cool);
+                review.setVoteCool(coolCount);
+            }
+
+        }
+
+    }
+
+    private void extractCheckins(Review yelpReview, DomElement domReview) {
+        DomElement domChecking = domReview
+            .getFirstByXPath(".//span[@class='i-wrap ig-wrap-common i-checkin-burst-blue-small-common-wrap badge checkin checkin-irregular']");
+        if (domChecking != null) {
+            String checkingString = domChecking.asText();
+            Matcher matcher = starPattern.matcher(checkingString);
+            if (matcher.find()) {
+                String rating = matcher.group();
+                Integer result = Integer.parseInt(rating);
+                yelpReview.setCheckins(result);
             }
         }
     }
@@ -159,9 +203,11 @@ public class YelpReviewCrawler {
         user.setAuthority(Authority.YELP);
 
         review.setAuthorId(userId);
-        review.setAuthor(userName);
 
-        userDao.save(user);
+        // Random ID eats Update.
+        if (!userDao.checkIfAlreadyExists(userId)) {
+            userDao.save(user);
+        }
     }
 
     private Integer getMaximumItems(HtmlPage yelpPage, Product yelpVenue) {
@@ -179,9 +225,9 @@ public class YelpReviewCrawler {
         return 0;
     }
 
-    private String getURL(String resturant) {
+    private String getURL(String venue) {
         Integer from = page * 40;
-        String url = String.format(YELP_URL, resturant, from);
+        String url = String.format(YELP_URL, venue, from);
 
         return url;
     }

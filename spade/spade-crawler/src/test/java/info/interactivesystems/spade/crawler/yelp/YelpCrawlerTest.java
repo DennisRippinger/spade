@@ -18,9 +18,10 @@ public class YelpCrawlerTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void YelpCrawler() throws UnsupportedEncodingException, InterruptedException {
-        crawler.setLocation("New York, NY, USA");
+        crawler.setLocation("Jacksonville, FL, USA");
         crawler.setCategory(ProductCategory.RESTAURANT);
-
+        
+        crawler.setPageNo(63);
         crawler.crawlVenues();
     }
 }
