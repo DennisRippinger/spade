@@ -18,10 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * Allows to detect individual sentences in a given corpus of a review.
@@ -29,7 +30,8 @@ import org.springframework.stereotype.Service;
  * @author Dennis Rippinger
  * 
  */
-@Service
+@Slf4j
+@Component
 public class SentenceDetector {
 
     private SentenceModel model;
@@ -38,6 +40,7 @@ public class SentenceDetector {
     public SentenceDetector() {
         model = NlpModelFactory.getSentenceModel();
         sentenceDetector = new SentenceDetectorME(model);
+        log.info("Created Sentence Detector '{}'", sentenceDetector.toString());
     }
 
     /**

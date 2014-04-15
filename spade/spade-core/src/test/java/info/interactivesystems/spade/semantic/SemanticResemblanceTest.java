@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
  * 
  * @author Dennis Rippinger
  */
-@Test(enabled=false)
+@Test(enabled = false)
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class SemanticResemblanceTest extends AbstractTestNGSpringContextTests {
 
