@@ -45,6 +45,16 @@ public final class CrawlerUtil {
         return webClient;
     }
 
+    public static WebClient getChrome(Boolean javascript, Boolean css) {
+        BrowserVersion browserVersion = browserVersionDesktop.get(0);
+        log.info("Creating new '{}' Browser.", browserVersion.getApplicationVersion());
+        WebClient webClient = new WebClient(browserVersion);
+        webClient.getOptions().setJavaScriptEnabled(javascript);
+        webClient.getOptions().setCssEnabled(css);
+
+        return webClient;
+    }
+
     public static HtmlPage getWebPage(WebClient client, String url, Integer wait) throws CrawlerException {
         HtmlPage page = null;
         try {

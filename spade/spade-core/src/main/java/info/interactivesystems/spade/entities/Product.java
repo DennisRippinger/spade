@@ -60,6 +60,10 @@ public class Product extends AbstractTimestampEntity implements Serializable {
 
     private String source;
 
+    private Double price;
+    
+    private Integer noOfReviews;
+
     // Venues only
     private String location;
 
