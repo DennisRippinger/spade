@@ -34,7 +34,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  */
 @Slf4j
 @Component
-@Scope(value="prototype")
+@Scope(value = "prototype")
 public class YelpReviewCrawler {
 
     private static final String YELP_URL = "http://www.yelp.com%s?start=%s";

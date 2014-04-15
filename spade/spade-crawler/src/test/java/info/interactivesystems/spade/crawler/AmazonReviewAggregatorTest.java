@@ -1,6 +1,6 @@
 package info.interactivesystems.spade.crawler;
 
-import info.interactivesystems.spade.crawler.amazon.AmazonReviewAggregator;
+import info.interactivesystems.spade.crawler.amazon.AmazonAggregator;
 
 import javax.annotation.Resource;
 
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 public class AmazonReviewAggregatorTest extends AbstractTestNGSpringContextTests {
 
     @Resource
-    private AmazonReviewAggregator aggregator;
+    private AmazonAggregator aggregator;
 
     @Test
     public void getAverageRating() {

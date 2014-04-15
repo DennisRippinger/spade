@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class AmazonReviewAggregator {
+public class AmazonAggregator {
 
     @Resource
     private ShadowReviewDao shadowReviewDao;

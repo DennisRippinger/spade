@@ -43,6 +43,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 @Slf4j
 @Service
+@Deprecated
 public class AmazonRatingCrawler {
 
     @Resource
