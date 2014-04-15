@@ -15,11 +15,9 @@
 package info.interactivesystems.spade.crawler.amazon;
 
 import info.interactivesystems.spade.captcha.CaptchaService;
-import info.interactivesystems.spade.captcha.FileNamer;
 import info.interactivesystems.spade.dao.ShadowReviewDao;
 import info.interactivesystems.spade.entities.ShadowReview;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collections;
@@ -40,7 +38,6 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
