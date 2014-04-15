@@ -21,9 +21,6 @@ package info.interactivesystems.spade.exception;
  */
 public class CrawlerException extends Exception {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8307212821761023653L;
 
     /**

@@ -15,6 +15,9 @@
 package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
+import info.interactivesystems.spade.util.ConcurrentBit;
+
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +25,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * DTO for a UncategorizedReview.
@@ -30,10 +34,13 @@ import lombok.Data;
  * @author Dennis Rippinger
  * 
  */
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "Users")
-public class User {
+public class User extends AbstractTimestampEntity implements Serializable {
+
+    private static final long serialVersionUID = 7916895135811744472L;
 
     @Id
     private String id;
@@ -42,15 +49,25 @@ public class User {
 
     private Integer ranking;
 
-    private Integer helpfulness;
+    private Integer helpfulness = 0;
 
-    private Integer helpfulVotes;
+    private Integer helpfulVotes = 0;
 
-    private Integer helpfulOverallVotes;
+    private Integer helpfulOverallVotes = 0;
 
-    private Integer numberOfReviews;
-    
+    private Integer numberOfReviews = 0;
+
     @Enumerated(EnumType.ORDINAL)
     private Authority authority;
+
+    // Temp
+    private Integer randomID;
+
+    @Enumerated(EnumType.ORDINAL)
+    private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;
+
+    private String error;
+    
+    private String currentWorker;
 
 }

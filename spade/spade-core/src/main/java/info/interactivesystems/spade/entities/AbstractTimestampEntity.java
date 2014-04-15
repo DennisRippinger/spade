@@ -14,34 +14,27 @@
  */
 package info.interactivesystems.spade.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import java.util.Date;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * The Class SentenceFrequency.
+ * Abstract Superclass to enable timestamps
  * 
  * @author Dennis Rippinger
  */
-@Data
-@Entity
-@Table(name = "Sentence_Frequencies")
-@IdClass(SentenceFrequencyPk.class)
-public class SentenceFrequency {
+@Getter
+@Setter
+@MappedSuperclass
+public abstract class AbstractTimestampEntity {
 
-    @Id
-    private String id;
-
-    @Id
-    private Integer category;
-
-    private String sentence;
-
-    private Double frequency;
-
-    private Integer count;
-
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TIMESTAMP", columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    private Date timestamp;
 }

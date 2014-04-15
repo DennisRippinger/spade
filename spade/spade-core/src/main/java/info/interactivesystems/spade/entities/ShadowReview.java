@@ -16,7 +16,6 @@ package info.interactivesystems.spade.entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -40,7 +39,6 @@ public class ShadowReview {
 
     private String authorId;
 
-    @Column(columnDefinition = "TEXT")
     private String product;
 
     private Date date;
@@ -57,7 +55,6 @@ public class ShadowReview {
     
     private String url;
 
-    @Column(columnDefinition = "TEXT")
     private String content;
 
 }

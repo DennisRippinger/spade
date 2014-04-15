@@ -16,6 +16,7 @@ package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.util.Authority;
+import info.interactivesystems.spade.util.ProductCategory;
 
 import java.util.List;
 
@@ -55,16 +56,59 @@ public class ProductDao implements GenericDao<Product> {
         sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
+    public Product getProductByURL(String url) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("from Product WHERE source= :url");
+        query.setParameter("url", url);
+
+        Product result = (Product) query.uniqueResult();
+
+        return result;
+    }
+
+    public Boolean checkIfAlreadyExists(String id) {
+        Product find = find(id);
+        if (find == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * @deprecated temp method to get test related values
+     * @return
+     */
+    @Deprecated
     public List<Product> getYelpVenues() {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("from Product WHERE authority = :authority AND rating > 0 AND location = 'New York, NY, USA'");
+        Query query = session.createQuery("from Product WHERE authority = :authority AND rating > 0 ");
         query.setParameter("authority", Authority.YELP);
 
         @SuppressWarnings("unchecked")
         List<Product> productList = query.list();
 
         return productList;
+    }
+
+    public Product getRandomProduct(ProductCategory category) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session
+            .createSQLQuery("SELECT id FROM Spade.Products WHERE concurrentBit = 0 AND type = :type ORDER BY RAND()");
+        query.setParameter("type", category.getId());
+        query.setMaxResults(1);
+
+        String id = (String) query.uniqueResult();
+        if (id != null) {
+            Product randomProduct = find(id);
+
+            return randomProduct;
+        }
+        return null;
+
     }
 
 }

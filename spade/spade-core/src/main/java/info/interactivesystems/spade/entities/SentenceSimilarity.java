@@ -14,7 +14,6 @@
  */
 package info.interactivesystems.spade.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,10 +40,8 @@ public class SentenceSimilarity {
 
     private String targetReviewId;
 
-    @Column(columnDefinition = "TEXT")
     private String referenceSentence;
 
-    @Column(columnDefinition = "TEXT")
     private String targetSentence;
 
     private Double similarity;

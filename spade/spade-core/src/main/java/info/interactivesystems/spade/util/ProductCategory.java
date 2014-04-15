@@ -36,7 +36,8 @@ public enum ProductCategory {
     RESTAURANT(8),
     FOOD(9),
     NIGHTLIFE(10),
-    SHOPPING(11);
+    SHOPPING(11),
+    UNKNOWN(99);
 
     private final Integer id;
 

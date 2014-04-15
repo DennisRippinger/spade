@@ -55,6 +55,15 @@ public class ReviewDao implements GenericDao<Review> {
     public void save(Review t) {
         sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
+    
+    public Boolean checkIfAlreadyExists(String id) {
+        Review find = find(id);
+        if (find == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public List<Review> getReviewsOfCategory(ProductCategory category) {
         Session session = sessionFactory.getCurrentSession();

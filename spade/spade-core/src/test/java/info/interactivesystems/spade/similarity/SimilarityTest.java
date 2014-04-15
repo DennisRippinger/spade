@@ -15,7 +15,7 @@
 package info.interactivesystems.spade.similarity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import info.interactivesystems.spade.PropertyUtil;
+import info.interactivesystems.spade.PropertyTestUtil;
 import info.interactivesystems.spade.nlp.SentenceDetector;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public abstract class SimilarityTest {
 
     SimilarityTest() {
         sentenceDetector = new SentenceDetector();
-        exampleSentences = PropertyUtil.getExampleSentences();
+        exampleSentences = PropertyTestUtil.getExampleSentences();
         assertThat(sentenceDetector).isNotNull();
         assertThat(exampleSentences).isNotNull();
     }

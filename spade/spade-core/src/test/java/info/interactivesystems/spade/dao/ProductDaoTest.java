@@ -2,11 +2,7 @@ package info.interactivesystems.spade.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.Product;
-import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.util.ProductCategory;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -35,13 +31,6 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
         result.setType(ProductCategory.DIGITAL_CAMERA);
         result.setRating(4.5);
 
-        Review review = new Review();
-        review.setId("123");
-        review.setAuthor("Test");
-        review.setProduct(result);
-        Set<Review> setReview = new LinkedHashSet<Review>();
-        setReview.add(review);
-        result.setReviews(setReview);
 
         demoValue = result;
     }
@@ -75,13 +64,6 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findExisting() {
-        Product found = productDao.find("B00000JFM5");
-        assertThat(found).isNotNull();
-        assertThat(found.getType()).isEqualTo(ProductCategory.BLURAY_PLAYER);
-    }
-
-    @Test
     public void save() {
         productDao.save(demoValue);
         Product found = productDao.find(demoValue.getId());
@@ -93,5 +75,11 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
 
         found = productDao.find(found.getId());
         assertThat(found).isNull();
+    }
+
+    @Test
+    public void getRandom() {
+        Product randomProduct = productDao.getRandomProduct(ProductCategory.RESTAURANT);
+        assertThat(randomProduct).isNotNull();
     }
 }

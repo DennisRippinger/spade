@@ -14,7 +14,7 @@
 package info.interactivesystems.spade.nlp;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import info.interactivesystems.spade.PropertyUtil;
+import info.interactivesystems.spade.PropertyTestUtil;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class SentenceDetectorTest {
      */
     public SentenceDetectorTest() {
         sentenceDetector = new SentenceDetector();
-        exampleSentences = PropertyUtil.getExampleSentences();
+        exampleSentences = PropertyTestUtil.getExampleSentences();
 
         assertThat(sentenceDetector).isNotNull();
         assertThat(exampleSentences).isNotNull();

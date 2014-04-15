@@ -15,9 +15,11 @@
 package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
+import info.interactivesystems.spade.util.ConcurrentBit;
 import info.interactivesystems.spade.util.PriceCategory;
 import info.interactivesystems.spade.util.ProductCategory;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -30,7 +32,6 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * DTO for a Product.
@@ -41,8 +42,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @Table(name = "Products")
-@ToString
-public class Product {
+public class Product extends AbstractTimestampEntity implements Serializable {
+
+    private static final long serialVersionUID = 7936029047258589542L;
 
     @Id
     private String id;
@@ -69,5 +71,11 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Review> reviews;
+
+    // Temp
+    private Integer randomID;
+
+    @Enumerated(EnumType.ORDINAL)
+    private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;
 
 }

@@ -48,15 +48,20 @@ public final class CrawlerUtil {
     public static HtmlPage getWebPage(WebClient client, String url, Integer wait) throws CrawlerException {
         HtmlPage page = null;
         try {
-
+            waitAroundTimeInSeconds(wait);
             page = client.getPage(url);
 
-            waitAroundTimeInSeconds(wait);
-            log.info("Page Title: '{}' for '{}'", page.getTitleText(), url);
-
         } catch (FailingHttpStatusCodeException | IOException e) {
-            throw new CrawlerException("HTTP Error", e);
+            // Retry
+            waitAroundTimeInSeconds(5);
+            try {
+                page = client.getPage(url);
+            } catch (FailingHttpStatusCodeException | IOException e1) {
+                throw new CrawlerException("HTTP Error", e);
+            }
+
         }
+        log.info("Page Title: '{}' for '{}'", page.getTitleText(), url);
 
         return page;
     }

@@ -14,55 +14,65 @@
  */
 package info.interactivesystems.spade.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * DTO for a Review.
  * 
  * @author Dennis Rippinger
  */
-@Data
+
+@Getter
+@Setter
 @Entity
 @Table(name = "Reviews")
-public class Review {
+public class Review extends AbstractTimestampEntity implements Serializable {
+
+    private static final long serialVersionUID = -2877180343613831483L;
 
     @Id
     private String id;
 
-    @Column(columnDefinition = "TEXT")
-    private String author;
-
     private String authorId;
 
-    private Integer comments;
-
-    @Column(columnDefinition = "TEXT")
     private String content;
 
-    private Date created;
+    private Date reviewDate;
 
-    private int helpfulVotes;
+    private Integer comments = 0;
+
+    private Integer helpfulVotes = 0;
 
     private Double rating;
-
-    private Date reviewDate;
 
     private String source;
 
     private String title;
 
-    private int totalVotes;
+    private Integer totalVotes = 0;
 
+    // Yelp specific
+    private Integer checkins = 0;
+
+    private Integer voteUseful = 0;
+
+    private Integer voteFunny = 0;
+
+    private Integer voteCool = 0;
+
+    // Key Mapping
     @ManyToOne
     @JoinColumn(name = "Product_fk")
     private Product product;
+
 }

@@ -4,14 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.SentenceSimilarity;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-@Transactional
 @Test(groups = { "functionTest" })
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class SentenceSimilarityDaoTest extends AbstractTestNGSpringContextTests {
@@ -47,7 +45,6 @@ public class SentenceSimilarityDaoTest extends AbstractTestNGSpringContextTests 
 
         found = sentenceSimilarityDao.find(found.getId());
         assertThat(found).isNull();
-
     }
 
     @Test

@@ -16,9 +16,6 @@ package info.interactivesystems.spade.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.Review;
-import info.interactivesystems.spade.util.ProductCategory;
-
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -47,7 +44,6 @@ public class ReviewDaoTest extends AbstractTestNGSpringContextTests {
     @BeforeTest
     private void getDemoReview() {
         Review result = new Review();
-        result.setAuthor("Test User");
         result.setAuthorId("12345ABC");
         result.setContent("Text String");
         result.setHelpfulVotes(5);
@@ -100,11 +96,4 @@ public class ReviewDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found).isNull();
     }
 
-    @Test
-    public void getReviewsOfCategory() {
-        List<Review> reviews = reviewDao.getReviewsOfCategory(ProductCategory.BLURAY_PLAYER);
-
-        assertThat(reviews).isNotNull();
-        assertThat(reviews).isNotEmpty();
-    }
 }
