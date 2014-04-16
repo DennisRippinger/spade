@@ -56,6 +56,14 @@ public class ProductDao implements GenericDao<Product> {
         sessionFactory.getCurrentSession().saveOrUpdate(t);
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Product> getAllOfCategory(ProductCategory category) {
+        Query query = sessionFactory.getCurrentSession().createQuery("FROM Product WHERE type = :type");
+        query.setParameter("type", category);
+
+        return query.list();
+    }
+
     public Product getProductByURL(String url) {
         Session session = sessionFactory.getCurrentSession();
 

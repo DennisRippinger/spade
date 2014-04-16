@@ -27,6 +27,15 @@ public class CrawlerException extends Exception {
      * Instantiates a new crawler exception.
      * 
      * @param message the message
+     */
+    public CrawlerException(String message) {
+        super(message);
+    }
+
+    /**
+     * Instantiates a new crawler exception.
+     * 
+     * @param message the message
      * @param cause the cause
      */
     public CrawlerException(String message, Throwable cause) {

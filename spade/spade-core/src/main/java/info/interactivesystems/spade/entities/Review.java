@@ -47,19 +47,23 @@ public class Review extends AbstractTimestampEntity implements Serializable {
 
     private String content;
 
+    private Double rating;
+
     private Date reviewDate;
+
+    private String source;
+
+    // Amazon Specific
+
+    private String title;
 
     private Integer comments = 0;
 
     private Integer helpfulVotes = 0;
 
-    private Double rating;
-
-    private String source;
-
-    private String title;
-
     private Integer totalVotes = 0;
+
+    private Boolean verified = false;
 
     // Yelp specific
     private Integer checkins = 0;
@@ -69,6 +73,12 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     private Integer voteFunny = 0;
 
     private Integer voteCool = 0;
+
+    // Calculation Values
+
+    private Double ari;
+
+    private Double gfi;
 
     // Key Mapping
     @ManyToOne
