@@ -37,6 +37,9 @@ public class SentenceService {
     @Resource
     private InfoDensityIndex idi;
 
+    @Resource
+    private WordCountCalculator wordCount;
+
     /**
      * Calculates the AR Index of a given review.
      * 
@@ -66,5 +69,15 @@ public class SentenceService {
      */
     public Double calculateInformationDensity(@NonNull String review) {
         return idi.getInformationDensity(review);
+    }
+
+    /**
+     * Calculates the number of words for a given review.
+     * 
+     * @param review the review
+     * @return the integer
+     */
+    public Integer calculateWordCount(@NonNull String review) {
+        return wordCount.getWordCount(review);
     }
 }

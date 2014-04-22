@@ -81,6 +81,8 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     private Double gfi;
     
     private Double density;
+    
+    private Integer wordCount;
 
     // Key Mapping
     @ManyToOne
