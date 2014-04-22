@@ -45,7 +45,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AmazonImport {
 
-    private static final Boolean IMPORT_UNKOWN = false;
+    private static final Boolean IMPORT_UNKOWN = true;
 
     private static final String UNKNOWN = "unknown";
     private static final String PRODUCT_ID = "product/productId: ";
@@ -84,7 +84,7 @@ public class AmazonImport {
                     extractProductTitle(line, product);
                     extractProductPrice(line, product);
 
-                    extractUserID(line, user);
+                    extractUserID(line, user, review);
                     extractUserName(line, user);
 
                     extractReviewHelpfulness(line, review);
@@ -135,11 +135,11 @@ public class AmazonImport {
         }
 
         if (!user.getId().equals(UNKNOWN)) {
-            String id = (reviewCounter++).toString();
+            String id = String.format("R%010d", reviewCounter++);
             review.setId(id);
             contentService.saveReview(review);
         } else if (IMPORT_UNKOWN) {
-            String id = (reviewCounter++).toString();
+            String id = String.format("R%010d", reviewCounter++);
             review.setId(id);
             contentService.saveReview(review);
         }
@@ -147,12 +147,14 @@ public class AmazonImport {
 
     private void calculateMetric(Review review) {
         Double calculatedARIndex = sentenceService.calculateARIndex(review.getContent());
-        Double calculateGFIndex = sentenceService.calculateGFIndex(review.getContent());
-        Double calculateInformationDensity = sentenceService.calculateInformationDensity(review.getContent());
+        Double calculatedGFIndex = sentenceService.calculateGFIndex(review.getContent());
+        Double calculatedInformationDensity = sentenceService.calculateInformationDensity(review.getContent());
+        Integer wordCount = sentenceService.calculateWordCount(review.getContent());
 
         review.setAri(calculatedARIndex);
-        review.setGfi(calculateGFIndex);
-        review.setDensity(calculateInformationDensity);
+        review.setGfi(calculatedGFIndex);
+        review.setDensity(calculatedInformationDensity);
+        review.setWordCount(wordCount);
 
     }
 
@@ -226,10 +228,11 @@ public class AmazonImport {
 
     }
 
-    private void extractUserID(String line, User user) {
+    private void extractUserID(String line, User user, Review review) {
         if (line.startsWith(REVIEW_USERID)) {
             String userID = line.replaceFirst(REVIEW_USERID, "");
 
+            review.setAuthorId(userID);
             user.setId(userID);
         }
     }
@@ -274,8 +277,8 @@ public class AmazonImport {
         review.setProduct(product);
 
         // Reduce output noise
-        Integer rand = ThreadLocalRandom.current().nextInt(1, 20);
-        if (rand == 10) {
+        Integer rand = ThreadLocalRandom.current().nextInt(1, 1000);
+        if (rand == 500) {
             log.info("Current Item ID '{}'", reviewCounter);
         }
 
