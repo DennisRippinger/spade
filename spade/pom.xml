@@ -17,9 +17,8 @@
 
 	<repositories>
 		<repository>
-			<id>Thesis</id>
-			<name>Thesis Nexus</name>
-			<url>http://nexus.drippinger.de/content/repositories/Thesis/</url>
+			<id>oss-maven-repo</id>
+			<url>https://github.com/DennisRippinger/oss-maven-repo/raw/master</url>
 		</repository>
 		<repository>
 			<id>central</id>
@@ -43,6 +42,7 @@
 			<version>1.12.6</version>
 			<scope>provided</scope>
 		</dependency>
+
 
 		<!-- Tests -->
 		<dependency>
@@ -83,5 +83,6 @@
 		<module>spade-core</module>
 		<module>spade-ui</module>
 		<module>spade-crawler</module>
+		<module>spade-import</module>
 	</modules>
 </project>
