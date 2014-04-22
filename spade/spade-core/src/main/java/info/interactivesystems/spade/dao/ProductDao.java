@@ -21,12 +21,12 @@ import info.interactivesystems.spade.util.ProductCategory;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class ProductDao for the {@link Product} entities.

@@ -89,7 +89,7 @@ public class AmazonProductCrawler {
 
                 try {
                     amazonOverviewURL = getURL(pageNo, category);
-                    amazonPage = CrawlerUtil.getWebPage(webClient, amazonOverviewURL, 2);
+                    amazonPage = CrawlerUtil.getWebPage(webClient, amazonOverviewURL, 0);
                     crawlProducts(amazonPage);
                 } catch (CrawlerException e) {
                     log.warn("Could not load a following page", e);

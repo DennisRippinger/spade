@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@Deprecated
 public class ShadowReviewDao implements GenericDao<ShadowReview> {
 
     @Resource

@@ -87,7 +87,7 @@
 		</dependency>
 
 		<!-- Tests -->
-		
+
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
