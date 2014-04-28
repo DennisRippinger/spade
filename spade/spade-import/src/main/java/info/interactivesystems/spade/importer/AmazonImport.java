@@ -277,7 +277,7 @@ public class AmazonImport {
         review.setProduct(product);
 
         // Reduce output noise
-        Integer rand = ThreadLocalRandom.current().nextInt(1, 1000);
+        Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
         if (rand == 500) {
             log.info("Current Item ID '{}'", reviewCounter);
         }
