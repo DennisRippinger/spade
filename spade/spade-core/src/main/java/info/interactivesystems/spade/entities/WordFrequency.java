@@ -14,8 +14,13 @@
  */
 package info.interactivesystems.spade.entities;
 
+import info.interactivesystems.spade.util.Authority;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -26,6 +31,7 @@ import lombok.Data;
  */
 @Data
 @Entity
+@Table(name = "Word_Frequencies")
 public class WordFrequency {
 
     @Column(name = "Word")
@@ -33,5 +39,9 @@ public class WordFrequency {
 
     @Column(name = "Frequency")
     private Integer frequency;
+
+    @Column(name = "Authority")
+    @Enumerated(EnumType.ORDINAL)
+    private Authority authority;
 
 }
