@@ -12,17 +12,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.semantic;
+package info.interactivesystems.spade.dto;
 
-public interface SemanticResemblance {
+import lombok.Data;
+import edu.smu.tspell.wordnet.Synset;
 
-    /**
-     * Calculates the similarity between two words.
-     * 
-     * @param wordOne the first word.
-     * @param wordTwo the second word.
-     * @return Result as Float.
-     */
-    public abstract Float calculateSimilarity(String wordOne, String wordTwo);
+/**
+ * The Class SynSetWrapper.
+ * 
+ * @author Dennis Rippinger
+ */
+@Data
+public class SynSetWrapper {
+
+    private String firstSynset;
+
+    private Synset[] synset;
+
+    private Boolean root = false;
+
+    public SynSetWrapper(Synset[] synset) {
+        this.synset = synset;
+        firstSynset = synset[0].toString();
+        if (firstSynset.equals("entity")) {
+            root = true;
+        }
+    }
 
 }

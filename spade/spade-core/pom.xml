@@ -34,6 +34,13 @@
 		</dependency>
 
 		<!-- Persistence -->
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.4.2.RELEASE</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -84,6 +91,11 @@
 			<groupId>de.linguatools</groupId>
 			<artifactId>disco</artifactId>
 			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.smu</groupId>
+			<artifactId>jaws</artifactId>
+			<version>1.3</version>
 		</dependency>
 
 		<!-- Tests -->

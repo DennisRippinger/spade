@@ -22,6 +22,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 import de.linguatools.disco.DISCO;
+import edu.smu.tspell.wordnet.WordNetDatabase;
 
 /**
  * Basic factory to create a {@link DISCO} instance.
@@ -31,7 +32,7 @@ import de.linguatools.disco.DISCO;
  * 
  */
 @Slf4j
-public final class DiscoFactory {
+public final class SemanticFactory {
 
     private static final Boolean LOAD_TO_RAM = false;
 
@@ -42,9 +43,20 @@ public final class DiscoFactory {
         try {
             configuration = new PropertiesConfiguration("disco.properties");
             discoDir = configuration.getString("disco.english.wikipedia");
+
+            System.setProperty("wordnet.database.dir", "/Users/dennisrippinger/Downloads/WordNet-3.0/dict");
         } catch (ConfigurationException e) {
             log.error("Could not load Disco Properties", e);
         }
+    }
+
+    public static WordNetDatabase getWordnetDatabase() {
+        try {
+            return WordNetDatabase.getFileInstance();
+        } catch (Exception e) {
+            log.error("Could not load Wordnet Database");
+        }
+        return null;
     }
 
     /**
@@ -72,7 +84,7 @@ public final class DiscoFactory {
     /**
      * Private Constructor
      */
-    private DiscoFactory() {
+    private SemanticFactory() {
 
     }
 

@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
 public class SemanticResemblanceTest extends AbstractTestNGSpringContextTests {
 
     @Resource
-    private SemanticResemblance semanticResemblance;
+    private DiscoResemblance semanticResemblance;
 
     private static final String WORD_ONE = "love";
     private static final String WORD_TWO = "feel";
@@ -41,7 +41,7 @@ public class SemanticResemblanceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void getFirstOrderSimilarity() {
         Float firstOrderSimilarity = semanticResemblance
-            .getFirstOrderSimilarity(WORD_ONE, WORD_TWO);
+            .calculateSimilarity(WORD_ONE, WORD_TWO);
         System.out.println("First: " + firstOrderSimilarity);
     }
 

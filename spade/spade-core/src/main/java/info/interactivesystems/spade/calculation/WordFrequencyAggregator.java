@@ -85,14 +85,19 @@ public class WordFrequencyAggregator {
     }
 
     private void incrementWordCount(String word) {
-        Integer frequency = wordFrequencies.get(word);
-        if (frequency != null) {
-            frequency++;
-            wordFrequencies.put(word, frequency);
+        word = word.toLowerCase();
+        
+        // The Key within the database is a varchar(500)
+        if (word.length() < 500) {
+            Integer frequency = wordFrequencies.get(word);
+            if (frequency != null) {
+                frequency++;
+                wordFrequencies.put(word, frequency);
 
-            return;
+                return;
+            }
+            wordFrequencies.put(word, 1);
         }
-        wordFrequencies.put(word, 1);
     }
 
     private void logSometimes(Object current) {
