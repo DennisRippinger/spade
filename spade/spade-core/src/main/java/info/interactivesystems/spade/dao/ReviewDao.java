@@ -14,20 +14,16 @@
  */
 package info.interactivesystems.spade.dao;
 
-import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
-import info.interactivesystems.spade.util.ProductCategory;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class ReviewDao for the {@link Review} entities.
@@ -35,27 +31,26 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Dennis Rippinger
  */
 @Repository
-@Transactional
 public class ReviewDao implements GenericDao<Review> {
 
     @Resource
-    private SessionFactory sessionFactory;
+    private MongoOperations operations;
 
     @Override
     public void delete(Review obj) {
-        sessionFactory.getCurrentSession().delete(obj);
+        operations.remove(obj);
     }
 
     @Override
     public Review find(String id) {
-        return (Review) sessionFactory.getCurrentSession().get(Review.class, id);
+        return operations.findById(id, Review.class);
     }
 
     @Override
     public void save(Review t) {
-        sessionFactory.getCurrentSession().saveOrUpdate(t);
+        operations.save(t);
     }
-    
+
     public Boolean checkIfAlreadyExists(String id) {
         Review find = find(id);
         if (find == null) {
@@ -65,21 +60,11 @@ public class ReviewDao implements GenericDao<Review> {
         }
     }
 
-    public List<Review> getReviewsOfCategory(ProductCategory category) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("from Product WHERE type = :type");
-        query.setParameter("type", category.getId());
-
-        List<Review> result = new LinkedList<Review>();
-
-        @SuppressWarnings("unchecked")
-        List<Product> productList = query.list();
-
-        for (Product product : productList) {
-            result.addAll(product.getReviews());
-        }
+    public List<Review> findReviewByProductID(String productID) {
+        Criteria criteria = Criteria.where("product").is(productID);
+        List<Review> result = operations.find(Query.query(criteria), Review.class);
 
         return result;
     }
+
 }

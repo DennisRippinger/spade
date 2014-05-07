@@ -18,27 +18,27 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class AmazonReviewCrawlerTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private AmazonReviewCrawler crawler;
-
-    @Resource
-    private ProductDao productDao;
-
-    private ProductCategory category = ProductCategory.DIGITAL_CAMERA;
-
-    @Test
-    public void f() {
-        List<Product> allOfCategory = productDao.getAllOfCategory(category);
-        log.info("Category '{}' has '{}' Products", category.toString(), allOfCategory.size());
-        Integer counter = 1;
-
-        for (Product product : allOfCategory) {
-            log.info("Item No '{}'", counter++);
-
-            crawler.setPage(1);
-            crawler.setNoReviews(10);
-
-            crawler.crawlReviews(product);
-        }
-    }
+//    @Resource
+//    private AmazonReviewCrawler crawler;
+//
+//    @Resource
+//    private ProductDao productDao;
+//
+//    private ProductCategory category = ProductCategory.DIGITAL_CAMERA;
+//
+//    @Test
+//    public void f() {
+//        List<Product> allOfCategory = productDao.getAllOfCategory(category);
+//        log.info("Category '{}' has '{}' Products", category.toString(), allOfCategory.size());
+//        Integer counter = 1;
+//
+//        for (Product product : allOfCategory) {
+//            log.info("Item No '{}'", counter++);
+//
+//            crawler.setPage(1);
+//            crawler.setNoReviews(10);
+//
+//            crawler.crawlReviews(product);
+//        }
+//    }
 }

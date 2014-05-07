@@ -15,17 +15,12 @@
 package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Product;
-import info.interactivesystems.spade.util.Authority;
-import info.interactivesystems.spade.util.ProductCategory;
-
-import java.util.List;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -34,45 +29,24 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-@Transactional
 public class ProductDao implements GenericDao<Product> {
 
     @Resource
-    private SessionFactory sessionFactory;
+    private MongoOperations operations;
 
     @Override
     public void delete(Product obj) {
-        sessionFactory.getCurrentSession().delete(obj);
+        operations.remove(obj);
     }
 
     @Override
     public Product find(String id) {
-        return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
-
+        return operations.findById(id, Product.class);
     }
 
     @Override
     public void save(Product t) {
-        sessionFactory.getCurrentSession().saveOrUpdate(t);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<Product> getAllOfCategory(ProductCategory category) {
-        Query query = sessionFactory.getCurrentSession().createQuery("FROM Product WHERE type = :type");
-        query.setParameter("type", category);
-
-        return query.list();
-    }
-
-    public Product getProductByURL(String url) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query query = session.createQuery("from Product WHERE source= :url");
-        query.setParameter("url", url);
-
-        Product result = (Product) query.uniqueResult();
-
-        return result;
+        operations.save(t);
     }
 
     public Boolean checkIfAlreadyExists(String id) {
@@ -84,39 +58,11 @@ public class ProductDao implements GenericDao<Product> {
         }
     }
 
-    /**
-     * @deprecated temp method to get test related values
-     * @return
-     */
-    @Deprecated
-    public List<Product> getYelpVenues() {
-        Session session = sessionFactory.getCurrentSession();
+    public Product findByID(Integer id) {
+        Criteria criteria = Criteria.where("randomID").is(id);
+        Product product = operations.findOne(Query.query(criteria), Product.class);
 
-        Query query = session.createQuery("from Product WHERE authority = :authority AND rating > 0 ");
-        query.setParameter("authority", Authority.YELP);
-
-        @SuppressWarnings("unchecked")
-        List<Product> productList = query.list();
-
-        return productList;
-    }
-
-    public Product getRandomProduct(ProductCategory category) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Query query = session
-            .createSQLQuery("SELECT id FROM Spade.Products WHERE concurrentBit = 0 AND type = :type ORDER BY RAND()");
-        query.setParameter("type", category.getId());
-        query.setMaxResults(1);
-
-        String id = (String) query.uniqueResult();
-        if (id != null) {
-            Product randomProduct = find(id);
-
-            return randomProduct;
-        }
-        return null;
-
+        return product;
     }
 
 }

@@ -35,7 +35,7 @@ public class AmazonImportTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void amazonImporterTest() {
-        File amazonFile = new File("/Users/dennisrippinger/Downloads/all.txt");
+        File amazonFile = new File("/Volumes/Extended/Thesis/all.txt");
 
         importer.importAmazonDataset(amazonFile);
     }

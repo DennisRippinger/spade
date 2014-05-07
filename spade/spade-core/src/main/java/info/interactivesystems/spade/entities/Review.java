@@ -17,25 +17,23 @@ package info.interactivesystems.spade.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
- * DTO for a Review.
+ * Entity for a Review.
  * 
  * @author Dennis Rippinger
  */
 
 @Getter
 @Setter
-@Entity
-@Table(name = "Reviews")
+@Document
 public class Review extends AbstractTimestampEntity implements Serializable {
 
     private static final long serialVersionUID = -2877180343613831483L;
@@ -44,6 +42,9 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     private String id;
 
     private String authorId;
+    
+    @Indexed
+    private String product;
 
     private String content;
 
@@ -79,14 +80,9 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     private Double ari;
 
     private Double gfi;
-    
-    private Double density;
-    
-    private Integer wordCount;
 
-    // Key Mapping
-    @ManyToOne
-    @JoinColumn(name = "Product_fk")
-    private Product product;
+    private Double density;
+
+    private Integer wordCount;
 
 }

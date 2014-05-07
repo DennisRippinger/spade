@@ -48,7 +48,7 @@ public class CrawlerApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(CrawlerApplication.class, args);
         YelpReverseAggegator crawler = context.getBean(YelpReverseAggegator.class);
-        crawler.startCrawlingThreads();
+//        crawler.startCrawlingThreads();
     }
 
     @Bean

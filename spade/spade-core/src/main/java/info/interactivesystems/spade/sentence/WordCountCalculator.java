@@ -14,9 +14,9 @@
  */
 package info.interactivesystems.spade.sentence;
 
-import java.util.List;
-
 import info.interactivesystems.spade.nlp.SentenceDetector;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 

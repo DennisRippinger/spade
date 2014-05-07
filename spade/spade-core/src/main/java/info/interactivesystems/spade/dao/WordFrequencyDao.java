@@ -18,9 +18,8 @@ import info.interactivesystems.spade.entities.WordFrequency;
 
 import javax.annotation.Resource;
 
-import org.hibernate.SessionFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Class WordFrequencyDao.
@@ -28,26 +27,24 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Dennis Rippinger
  */
 @Repository
-@Transactional
 public class WordFrequencyDao implements GenericDao<WordFrequency> {
 
     @Resource
-    private SessionFactory sessionFactory;
+    private MongoOperations operations;
 
     @Override
     public void delete(WordFrequency obj) {
-        sessionFactory.getCurrentSession().delete(obj);
-
+        operations.remove(obj);
     }
 
     @Override
     public WordFrequency find(String id) {
-        return (WordFrequency) sessionFactory.getCurrentSession().get(WordFrequency.class, id);
+        return operations.findById(id, WordFrequency.class);
     }
 
     @Override
     public void save(WordFrequency t) {
-        sessionFactory.getCurrentSession().saveOrUpdate(t);
+        operations.save(t);
     }
 
 }

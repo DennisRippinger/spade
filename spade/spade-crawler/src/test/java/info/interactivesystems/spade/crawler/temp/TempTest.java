@@ -1,47 +1,35 @@
 package info.interactivesystems.spade.crawler.temp;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.testng.annotations.Test;
 
+import edu.smu.tspell.wordnet.NounSynset;
+import edu.smu.tspell.wordnet.Synset;
+import edu.smu.tspell.wordnet.SynsetType;
+import edu.smu.tspell.wordnet.WordNetDatabase;
+
 @Slf4j
 public class TempTest {
-    private static final SimpleDateFormat YELP_DATE = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-    private final Pattern starPattern = Pattern.compile("\\d[.\\d]*");
 
     @Test
-    public void f() throws ParseException {
+    public void wordnet() {
+        System.setProperty("wordnet.database.dir", "/Users/dennisrippinger/Downloads/WordNet-3.0/dict");
 
-        Date date = YELP_DATE.parse("August 1, 2013");
-        Calendar calendar = new GregorianCalendar(2013, 8, 1);
-        Date is = calendar.getTime();
+        WordNetDatabase database = WordNetDatabase.getFileInstance();
+        Synset[] manSynset = database.getSynsets("man", SynsetType.NOUN);
+        Synset[] womanSynset = database.getSynsets("woman", SynsetType.NOUN);
 
-        assertThat(date).isEqualTo(is);
+        NounSynset manSyn = (NounSynset) (manSynset[0]);
+        NounSynset womanSyn = (NounSynset) (womanSynset[0]);
+        
+        NounSynset[] manHySyn = manSyn.getHypernyms();
+        NounSynset[] womanHySyn = womanSyn.getHypernyms();
+        
+        System.out.println(manHySyn[1].getDefinition());
+        System.out.println(womanHySyn[1].getDefinition());
 
-    }
 
-    @Test
-    public void t() {
-        System.out.println(System.getProperty("hostname"));
-        try {
-            System.out.println(InetAddress.getLocalHost().getHostName());
-        } catch (UnknownHostException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
 }

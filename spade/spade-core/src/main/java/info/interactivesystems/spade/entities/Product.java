@@ -20,28 +20,25 @@ import info.interactivesystems.spade.util.PriceCategory;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.Serializable;
-import java.util.Set;
 
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
- * DTO for a Product.
+ * Entitiy for a Product.
  * 
  * @author Dennis Rippinger
  */
-@Entity
 @Getter
 @Setter
-@Table(name = "Products")
+@Document
 public class Product extends AbstractTimestampEntity implements Serializable {
 
     private static final long serialVersionUID = 7936029047258589542L;
@@ -61,7 +58,7 @@ public class Product extends AbstractTimestampEntity implements Serializable {
     private String source;
 
     private Double price;
-    
+
     private Integer noOfReviews;
 
     // Venues only
@@ -73,11 +70,9 @@ public class Product extends AbstractTimestampEntity implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Authority authority;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Review> reviews;
-
     // Temp
-    private Integer randomID;
+    @Indexed(unique = true)
+    private Long randomID;
 
     @Enumerated(EnumType.ORDINAL)
     private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;

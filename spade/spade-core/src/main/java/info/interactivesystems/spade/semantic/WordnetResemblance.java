@@ -16,13 +16,11 @@ package info.interactivesystems.spade.semantic;
 
 import info.interactivesystems.spade.dto.SynSetWrapper;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import edu.smu.tspell.wordnet.NounSynset;
 import edu.smu.tspell.wordnet.Synset;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 

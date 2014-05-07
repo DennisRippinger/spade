@@ -16,11 +16,6 @@ package info.interactivesystems.spade.entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,10 +26,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@MappedSuperclass
 public abstract class AbstractTimestampEntity {
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "TIMESTAMP", columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date timestamp;
 }

@@ -16,13 +16,12 @@ package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Table;
 
 import lombok.Data;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * The Class WordFrequency.
@@ -30,17 +29,13 @@ import lombok.Data;
  * @author Dennis Rippinger
  */
 @Data
-@Entity
-@Table(name = "Word_Frequencies")
+@Document
 public class WordFrequency {
 
-    @Column(name = "Word")
     private String word;
 
-    @Column(name = "Frequency")
     private Integer frequency;
 
-    @Column(name = "Authority")
     @Enumerated(EnumType.ORDINAL)
     private Authority authority;
 

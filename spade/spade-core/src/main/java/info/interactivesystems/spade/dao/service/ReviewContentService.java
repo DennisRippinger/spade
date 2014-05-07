@@ -21,8 +21,9 @@ import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 
+import java.util.List;
+
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -32,7 +33,6 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-@Transactional
 public class ReviewContentService {
 
     @Resource
@@ -74,6 +74,10 @@ public class ReviewContentService {
         productDao.delete(product);
     }
 
+    public Product findByID(Integer id) {
+        return productDao.findByID(id);
+    }
+
     /**
      * Check if a product exists.
      * 
@@ -103,6 +107,10 @@ public class ReviewContentService {
      */
     public Review findReview(String id) {
         return reviewDao.find(id);
+    }
+    
+    public List<Review> findReviewByProductID(String productID){
+         return reviewDao.findReviewByProductID(productID);
     }
 
     /**

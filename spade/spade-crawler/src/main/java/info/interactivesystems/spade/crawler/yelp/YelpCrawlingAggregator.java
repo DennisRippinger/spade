@@ -25,53 +25,53 @@ public class YelpCrawlingAggregator {
     @Resource
     private ObjectFactory<YelpReviewCrawler> crawlerFactory;
 
-    public void startCrawlingThreads() {
-        String threadCount = System.getProperty("crawler.threads");
-        Integer threads = 2;
-        if (threadCount != null && !threadCount.isEmpty()) {
-            threads = Integer.parseInt(threadCount);
-        }
+//    public void startCrawlingThreads() {
+//        String threadCount = System.getProperty("crawler.threads");
+//        Integer threads = 2;
+//        if (threadCount != null && !threadCount.isEmpty()) {
+//            threads = Integer.parseInt(threadCount);
+//        }
+//
+//        ExecutorService executor = Executors.newCachedThreadPool();
+//        for (Integer i = 1; i <= threads; i++) {
+//            log.info("Starting Thread No {}", i);
+//            executor.execute(new CrawlerThread());
+//        }
+//
+//    }
+//
+//    private class CrawlerThread implements Runnable {
+//
+//        private YelpReviewCrawler crawler = crawlerFactory.getObject();
+//
+//        @Override
+//        public void run() {
+//            log.info("Thread runs with Crawler '{}'", crawler.toString());
+//            while (true) {
+//                Product randomProduct = productDao.getRandomProduct(ProductCategory.RESTAURANT);
+//
+//                if (randomProduct == null)
+//                    break;
+//
+//                lockItem(randomProduct);
+//                crawler.setPage(0);
+//                crawler.crawlReviews(randomProduct);
+//                unlockItem(randomProduct);
+//            }
+//        }
+//
+//        private void lockItem(Product venue) {
+//            log.info("Locking Venue '{}'", venue.getName());
+//            venue.setConcurrentBit(ConcurrentBit.IN_WORK);
+//            productDao.save(venue);
+//        }
+//
+//        private void unlockItem(Product venue) {
+//            log.info("Unlocking Venue '{}'", venue.getName());
+//            venue.setConcurrentBit(ConcurrentBit.PROSSED);
+//            productDao.save(venue);
+//        }
 
-        ExecutorService executor = Executors.newCachedThreadPool();
-        for (Integer i = 1; i <= threads; i++) {
-            log.info("Starting Thread No {}", i);
-            executor.execute(new CrawlerThread());
-        }
-
-    }
-
-    private class CrawlerThread implements Runnable {
-
-        private YelpReviewCrawler crawler = crawlerFactory.getObject();
-
-        @Override
-        public void run() {
-            log.info("Thread runs with Crawler '{}'", crawler.toString());
-            while (true) {
-                Product randomProduct = productDao.getRandomProduct(ProductCategory.RESTAURANT);
-
-                if (randomProduct == null)
-                    break;
-
-                lockItem(randomProduct);
-                crawler.setPage(0);
-                crawler.crawlReviews(randomProduct);
-                unlockItem(randomProduct);
-            }
-        }
-
-        private void lockItem(Product venue) {
-            log.info("Locking Venue '{}'", venue.getName());
-            venue.setConcurrentBit(ConcurrentBit.IN_WORK);
-            productDao.save(venue);
-        }
-
-        private void unlockItem(Product venue) {
-            log.info("Unlocking Venue '{}'", venue.getName());
-            venue.setConcurrentBit(ConcurrentBit.PROSSED);
-            productDao.save(venue);
-        }
-
-    }
+//    }
 
 }

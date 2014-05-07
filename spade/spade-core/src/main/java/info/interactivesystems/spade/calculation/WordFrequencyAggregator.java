@@ -14,7 +14,6 @@
  */
 package info.interactivesystems.spade.calculation;
 
-import info.interactivesystems.spade.dao.ReviewDao;
 import info.interactivesystems.spade.dao.WordFrequencyDao;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.WordFrequency;
@@ -47,9 +46,6 @@ public class WordFrequencyAggregator {
     private static final Pattern wordPattern = Pattern.compile("[\\w']+");
 
     @Resource
-    private ReviewDao reviewDao;
-
-    @Resource
     private WordFrequencyDao wordFrequencyDao;
 
     @Resource
@@ -57,20 +53,25 @@ public class WordFrequencyAggregator {
 
     private Map<String, Integer> wordFrequencies = new HashMap<String, Integer>();
 
-    public void aggregateWordFrequency(Authority authority) {
-        Review currentReview = new Review();
-        for (Integer reviewID = 1; currentReview == null; reviewID++) {
+    public void aggregateWordFrequency(Review currentReview) {
+        extractWordFrequencies(currentReview);
+        logSometimes(currentReview.getId());
+    }
 
-            // Amazon Case currently hard coded
-            currentReview = reviewDao.find(String.format("R%010d", reviewID));
-            if (currentReview != null) {
-                extractWordFrequencies(currentReview);
-                logSometimes(reviewID);
-            }
-        }
+    public void persistFrequencies(Authority authority) {
         log.info("Found '{}' distinct words", wordFrequencies.size());
 
-        persistFrequencies(authority);
+        for (Entry<String, Integer> wordFrequencyPair : wordFrequencies.entrySet()) {
+            WordFrequency wordFrequency = new WordFrequency();
+            wordFrequency.setWord(wordFrequencyPair.getKey());
+            wordFrequency.setFrequency(wordFrequencyPair.getValue());
+            wordFrequency.setAuthority(authority);
+
+            wordFrequencyDao.save(wordFrequency);
+
+            logSometimes(wordFrequencyPair.getKey());
+        }
+
     }
 
     private void extractWordFrequencies(Review currentReview) {
@@ -86,7 +87,7 @@ public class WordFrequencyAggregator {
 
     private void incrementWordCount(String word) {
         word = word.toLowerCase();
-        
+
         // The Key within the database is a varchar(500)
         if (word.length() < 500) {
             Integer frequency = wordFrequencies.get(word);
@@ -101,23 +102,9 @@ public class WordFrequencyAggregator {
     }
 
     private void logSometimes(Object current) {
-        Integer rand = ThreadLocalRandom.current().nextInt(1, 5000);
+        Integer rand = ThreadLocalRandom.current().nextInt(1, 50000);
         if (rand == 2500) {
-            log.info("Current Item '{}'", current);
-        }
-
-    }
-
-    private void persistFrequencies(Authority authority) {
-        for (Entry<String, Integer> wordFrequencyPair : wordFrequencies.entrySet()) {
-            WordFrequency wordFrequency = new WordFrequency();
-            wordFrequency.setWord(wordFrequencyPair.getKey());
-            wordFrequency.setFrequency(wordFrequencyPair.getValue());
-            wordFrequency.setAuthority(authority);
-
-            wordFrequencyDao.save(wordFrequency);
-
-            logSometimes(wordFrequencyPair.getKey());
+            log.info("Size of map: '{}'", wordFrequencies.size());
         }
 
     }

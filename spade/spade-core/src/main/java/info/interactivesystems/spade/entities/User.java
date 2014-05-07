@@ -19,14 +19,15 @@ import info.interactivesystems.spade.util.ConcurrentBit;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * DTO for a UncategorizedReview.
@@ -36,8 +37,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@Entity
-@Table(name = "Users")
+@Document
 public class User extends AbstractTimestampEntity implements Serializable {
 
     private static final long serialVersionUID = 7916895135811744472L;
@@ -60,14 +60,10 @@ public class User extends AbstractTimestampEntity implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Authority authority;
 
-    // Temp
-    private Integer randomID;
+    @Indexed(unique = true)
+    private Long randomID;
 
     @Enumerated(EnumType.ORDINAL)
     private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;
-
-    private String error;
-    
-    private String currentWorker;
 
 }

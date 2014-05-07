@@ -14,6 +14,7 @@
  */
 package info.interactivesystems.spade.importer;
 
+import info.interactivesystems.spade.calculation.WordFrequencyAggregator;
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
@@ -65,8 +66,14 @@ public class AmazonImport {
     @Resource
     private SentenceService sentenceService;
 
+    @Resource
+    private WordFrequencyAggregator wordFrequency;
+
     private Integer reviewCounter = 1;
     private Integer errorCounter = 0;
+
+    private Long productCounter = 1l;
+    private Long userCounter = 1l;
 
     public void importAmazonDataset(File amazondataset) {
 
@@ -93,8 +100,9 @@ public class AmazonImport {
                     extractReviewSummary(line, review);
                     extractReviewText(line, review);
                 } else {
-
+                    review.setProduct(product.getId());
                     calculateMetric(review);
+                    wordFrequency.aggregateWordFrequency(review);
                     try {
                         persist(user, product, review);
                     } catch (Exception e) {
@@ -117,15 +125,18 @@ public class AmazonImport {
         }
 
         log.info("Error counter = '{}'", errorCounter);
+        wordFrequency.persistFrequencies(Authority.AMAZON);
     }
 
     private void persist(User user, Product product, Review review) {
         if (!contentService.checkIfProductExists(product.getId())) {
+            product.setRandomID(productCounter++);
             contentService.saveProduct(product);
         }
 
         if (!contentService.checkIfUserExists(user.getId())) {
             if (!user.getId().equals(UNKNOWN)) {
+                user.setRandomID(userCounter++);
                 contentService.saveUser(user);
             } else if (IMPORT_UNKOWN) {
                 contentService.saveUser(user);
@@ -274,7 +285,6 @@ public class AmazonImport {
         product.setTimestamp(date);
 
         review.setTimestamp(date);
-        review.setProduct(product);
 
         // Reduce output noise
         Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);

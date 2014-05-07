@@ -21,13 +21,13 @@ public class YelpReviewCrawlerTest extends AbstractTestNGSpringContextTests {
     private ProductDao productDao;
     Boolean found = false;
 
-    @Test
-    public void YelpCrawler() {
-        List<Product> yelpVenues = productDao.getYelpVenues();
-        for (Product yelpVenue : yelpVenues) {
-            crawler.crawlReviews(yelpVenue);
-            crawler.setPage(0);
-        }
+//    @Test
+//    public void YelpCrawler() {
+//        List<Product> yelpVenues = productDao.getYelpVenues();
+//        for (Product yelpVenue : yelpVenues) {
+//            crawler.crawlReviews(yelpVenue);
+//            crawler.setPage(0);
+//        }
 
-    }
+//    }
 }
