@@ -50,6 +50,8 @@ public class Product extends AbstractTimestampEntity implements Serializable {
 
     @Enumerated(EnumType.ORDINAL)
     private ProductCategory type;
+    
+    private String category;
 
     private Double rating;
 
