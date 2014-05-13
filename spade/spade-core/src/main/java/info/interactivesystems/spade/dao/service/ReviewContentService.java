@@ -108,9 +108,13 @@ public class ReviewContentService {
     public Review findReview(String id) {
         return reviewDao.find(id);
     }
-    
-    public List<Review> findReviewByProductID(String productID){
-         return reviewDao.findReviewByProductID(productID);
+
+    public List<Review> findReviewByProductID(String productID) {
+        return reviewDao.findReviewByProductID(productID);
+    }
+
+    public List<Review> findReviewFromUser(String userID) {
+        return reviewDao.findReviewFromUser(userID);
     }
 
     /**
@@ -169,6 +173,14 @@ public class ReviewContentService {
      */
     public Boolean checkIfUserExists(String id) {
         return userDao.checkIfAlreadyExists(id);
+    }
+
+    public User findUserByID(Integer id) {
+        return userDao.findByID(id);
+    }
+
+    public List<User> findAllUsers() {
+        return userDao.findAll();
     }
 
 }

@@ -14,11 +14,15 @@
  */
 package info.interactivesystems.spade.dao;
 
+import java.util.List;
+
 import info.interactivesystems.spade.entities.User;
 
 import javax.annotation.Resource;
 
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -47,6 +51,10 @@ public class UserDao implements GenericDao<User> {
         operations.save(t);
     }
 
+    public List<User> findAll() {
+        return operations.findAll(User.class);
+    }
+
     public Boolean checkIfAlreadyExists(String id) {
         User find = find(id);
         if (find == null) {
@@ -54,6 +62,13 @@ public class UserDao implements GenericDao<User> {
         } else {
             return true;
         }
+    }
+
+    public User findByID(Integer id) {
+        Criteria criteria = Criteria.where("randomID").is(id);
+        User user = operations.findOne(Query.query(criteria), User.class);
+
+        return user;
     }
 
 }
