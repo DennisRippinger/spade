@@ -41,8 +41,9 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     @Id
     private String id;
 
+    @Indexed
     private String authorId;
-    
+
     @Indexed
     private String product;
 
@@ -84,5 +85,10 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     private Double density;
 
     private Integer wordCount;
+
+    private String nilsimsa;
+
+    @Indexed
+    private boolean Unique;
 
 }
