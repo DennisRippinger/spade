@@ -21,13 +21,10 @@ import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.Serializable;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -48,9 +45,8 @@ public class Product extends AbstractTimestampEntity implements Serializable {
 
     private String name;
 
-    @Enumerated(EnumType.ORDINAL)
     private ProductCategory type;
-    
+
     private String category;
 
     private Double rating;
@@ -66,17 +62,14 @@ public class Product extends AbstractTimestampEntity implements Serializable {
     // Venues only
     private String location;
 
-    @Enumerated(EnumType.ORDINAL)
     private PriceCategory priceCategory;
 
-    @Enumerated(EnumType.ORDINAL)
     private Authority authority;
 
     // Temp
     @Indexed(unique = true)
     private Long randomID;
 
-    @Enumerated(EnumType.ORDINAL)
     private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;
 
 }

@@ -4,14 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.User;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-@Transactional
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class UserDaoTest extends AbstractTestNGSpringContextTests {
 

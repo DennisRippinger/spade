@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.Review;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -31,7 +30,6 @@ import org.testng.annotations.Test;
  * @author Dennis Rippinger
  * 
  */
-@Transactional
 @Test(groups = { "functionTest" })
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class ReviewDaoTest extends AbstractTestNGSpringContextTests {

@@ -15,10 +15,6 @@
 package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 import lombok.Data;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -36,7 +32,6 @@ public class WordFrequency {
 
     private Integer frequency;
 
-    @Enumerated(EnumType.ORDINAL)
     private Authority authority;
 
 }

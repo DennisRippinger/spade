@@ -75,9 +75,4 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(found).isNull();
     }
 
-    // @Test
-    // public void getRandom() {
-    // Product randomProduct = productDao.getRandomProduct(ProductCategory.RESTAURANT);
-    // assertThat(randomProduct).isNotNull();
-    // }
 }

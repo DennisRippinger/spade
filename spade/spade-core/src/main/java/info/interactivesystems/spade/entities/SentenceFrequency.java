@@ -14,12 +14,11 @@
  */
 package info.interactivesystems.spade.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
-
 import lombok.Data;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * The Class SentenceFrequency.
@@ -27,15 +26,13 @@ import lombok.Data;
  * @author Dennis Rippinger
  */
 @Data
-@Entity
-@Table(name = "Sentence_Frequencies")
-@IdClass(SentenceFrequencyPk.class)
+@Document
 public class SentenceFrequency {
 
     @Id
     private String id;
 
-    @Id
+    @Indexed
     private Integer category;
 
     private String sentence;
