@@ -74,4 +74,13 @@ public class ReviewDao implements GenericDao<Review> {
         return result;
     }
 
+    public List<Review> findAllUniqueReviews() {
+        Criteria criteria = Criteria.where("unique").is(true);
+        Query query = Query.query(criteria);
+        query.fields().include("_id").include("nilsimsa");
+        List<Review> result = operations.find(query, Review.class);
+
+        return result;
+    }
+
 }

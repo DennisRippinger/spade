@@ -125,7 +125,7 @@ public class NilsimsaHash {
         return Hex.encodeHexString(digest);
     }
 
-    public int compare(String nilsimaOne, String nilsimaTwo) {
+    public Integer compare(String nilsimaOne, String nilsimaTwo) {
         byte bits = 0;
         int j;
         byte[] n1 = nilsimaOne.getBytes();

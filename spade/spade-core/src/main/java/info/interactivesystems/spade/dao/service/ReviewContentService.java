@@ -117,6 +117,10 @@ public class ReviewContentService {
         return reviewDao.findReviewFromUser(userID);
     }
 
+    public List<Review> findAllUniqueReviews() {
+        return reviewDao.findAllUniqueReviews();
+    }
+
     /**
      * Deletes a review.
      * 

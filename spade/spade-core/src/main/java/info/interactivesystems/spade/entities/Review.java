@@ -88,6 +88,5 @@ public class Review extends AbstractTimestampEntity implements Serializable {
     private String nilsimsa;
 
     @Indexed
-    private boolean Unique;
-
+    private boolean unique;
 }
