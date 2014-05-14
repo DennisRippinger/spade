@@ -15,9 +15,9 @@
 package info.interactivesystems.spade.similarity;
 
 import info.interactivesystems.spade.dao.NilsimsaSimilarityDao;
-import info.interactivesystems.spade.dao.service.ReviewContentService;
+import info.interactivesystems.spade.dto.Nilsimsa;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
-import info.interactivesystems.spade.entities.Review;
+import info.interactivesystems.spade.util.NilsimsaCsvImport;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * The Class NilsimsaSimilarityCalculator.
@@ -36,9 +37,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class NilsimsaSimilarityCalculator {
-
-    @Resource
-    private ReviewContentService service;
 
     @Resource
     private NilsimsaSimilarityDao nisimsaDao;
@@ -51,22 +49,33 @@ public class NilsimsaSimilarityCalculator {
      */
     public void calculateSimilarityBetweenUniqueReviews() {
 
-        List<Review> uniqueReviews = service.findAllUniqueReviews();
+        NilsimsaCsvImport importer = new NilsimsaCsvImport();
+
+        List<Nilsimsa> uniqueReviews = importer.getReviewsFromCSV("/Users/dennisrippinger/nilsimsa.csv");
         Integer max = uniqueReviews.size() - 1;
-        Integer start = 0;
+        Integer start = 1;
 
-        for (Review outerReview : uniqueReviews) {
+        log.info("Size of uniqueReview: '{}'", uniqueReviews.size());
+
+        for (Nilsimsa outerReview : uniqueReviews) {
+            StopWatch watch = new StopWatch();
+            watch.start();
             for (Integer current = start; current < max; current++) {
-                Review innerReview = uniqueReviews.get(current);
+                Nilsimsa innerReview = uniqueReviews.get(current);
                 Integer sameBits = hash.compare(outerReview.getNilsimsa(), innerReview.getNilsimsa());
+                Double percentage = sameBits / 128.0;
 
-                NilsimsaSimilarity similarity = new NilsimsaSimilarity();
-                similarity.setProductA(outerReview.getId());
-                similarity.setProductB(innerReview.getId());
-                similarity.setSimilarity(sameBits / 128.0);
+                if (percentage >= 80.0) {
+                    NilsimsaSimilarity similarity = new NilsimsaSimilarity();
+                    similarity.setProductA(outerReview.getId());
+                    similarity.setProductB(innerReview.getId());
+                    similarity.setSimilarity(percentage);
 
-                nisimsaDao.save(similarity);
+                    nisimsaDao.save(similarity);
+                }
             }
+            watch.stop();
+            log.info(watch.prettyPrint());
             start++;
 
             // Reduce output noise
