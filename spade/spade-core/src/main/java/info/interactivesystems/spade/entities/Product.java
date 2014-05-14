@@ -47,6 +47,7 @@ public class Product extends AbstractTimestampEntity implements Serializable {
 
     private ProductCategory type;
 
+    @Indexed
     private String category;
 
     private Double rating;

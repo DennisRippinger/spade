@@ -58,22 +58,25 @@ public class Review extends AbstractTimestampEntity implements Serializable {
 
     private String title;
 
-    private Integer comments = 0;
+    private Integer comments;
 
-    private Integer helpfulVotes = 0;
+    private Integer helpfulVotes;
 
-    private Integer totalVotes = 0;
+    private Integer totalVotes;
 
     private Boolean verified = false;
 
+    @Indexed
+    private String category;
+
     // Yelp specific
-    private Integer checkins = 0;
+    private Integer checkins;;
 
-    private Integer voteUseful = 0;
+    private Integer voteUseful;
 
-    private Integer voteFunny = 0;
+    private Integer voteFunny;
 
-    private Integer voteCool = 0;
+    private Integer voteCool;
 
     // Calculation Values
 
