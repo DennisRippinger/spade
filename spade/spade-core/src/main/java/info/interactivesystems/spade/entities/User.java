@@ -55,6 +55,12 @@ public class User extends AbstractTimestampEntity implements Serializable {
     private Integer numberOfReviews = 0;
 
     private Authority authority;
+    
+    @Indexed
+    private Double hIndex;
+    
+    @Indexed
+    private Double recLength;
 
     @Indexed(unique = true)
     private Long randomID;
