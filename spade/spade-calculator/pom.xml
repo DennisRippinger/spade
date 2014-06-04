@@ -7,7 +7,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>spade-calculator</artifactId>
-	<name>Spade Crawler</name>
+	<name>Spade Calculator</name>
 
 	<dependencies>
 

@@ -82,7 +82,7 @@
 	<modules>
 		<module>spade-core</module>
 		<module>spade-ui</module>
-		<module>spade-crawler</module>
+		<module>spade-calculator</module>
 		<module>spade-import</module>
 	</modules>
 </project>
