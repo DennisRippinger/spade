@@ -83,4 +83,11 @@ public class ReviewDao implements GenericDao<Review> {
         return result;
     }
 
+    public List<Review> findReviewsByCategory(String category) {
+        Criteria criteria = Criteria.where("unique").is(true).and("category").is(category);
+        Query query = Query.query(criteria);
+
+        return operations.find(query, Review.class);
+    }
+
 }

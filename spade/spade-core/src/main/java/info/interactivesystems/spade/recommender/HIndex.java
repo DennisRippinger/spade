@@ -54,10 +54,8 @@ public class HIndex {
                 result = 0.0;
             }
 
-            log.info("{} User {}: {} H", counter, currentUser.getName(), result);
-
             currentUser.setHIndex(result);
-
+            
         }
 
     }

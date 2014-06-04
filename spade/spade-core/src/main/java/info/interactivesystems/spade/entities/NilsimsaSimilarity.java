@@ -39,8 +39,7 @@ public class NilsimsaSimilarity {
     @Indexed
     private Double similarity;
 
-    private String categoryA;
-
-    private String categoryB;
+    @Indexed
+    private String category;
 
 }
