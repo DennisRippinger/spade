@@ -1,5 +1,6 @@
 package info.interactivesystems.spade.crawler.amazon;
 
+import info.interactivesystems.spade.crawler.amazon.AmazonProductCrawler;
 import info.interactivesystems.spade.crawler.util.AmazonCategory;
 import info.interactivesystems.spade.util.ProductCategory;
 

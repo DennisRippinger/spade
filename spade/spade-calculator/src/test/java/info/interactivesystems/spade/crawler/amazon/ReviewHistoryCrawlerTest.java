@@ -1,5 +1,7 @@
 package info.interactivesystems.spade.crawler.amazon;
 
+import info.interactivesystems.spade.crawler.amazon.ReviewHistoryCrawler;
+
 import javax.annotation.Resource;
 
 import org.springframework.test.context.ContextConfiguration;

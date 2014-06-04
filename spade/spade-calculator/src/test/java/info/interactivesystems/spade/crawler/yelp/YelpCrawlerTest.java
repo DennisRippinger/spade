@@ -1,5 +1,6 @@
 package info.interactivesystems.spade.crawler.yelp;
 
+import info.interactivesystems.spade.crawler.yelp.YelpVenueCrawler;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.UnsupportedEncodingException;

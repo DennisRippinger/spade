@@ -2,6 +2,7 @@ package info.interactivesystems.spade.crawler.yelp;
 
 import java.util.List;
 
+import info.interactivesystems.spade.crawler.yelp.YelpReviewCrawler;
 import info.interactivesystems.spade.dao.ProductDao;
 import info.interactivesystems.spade.entities.Product;
 

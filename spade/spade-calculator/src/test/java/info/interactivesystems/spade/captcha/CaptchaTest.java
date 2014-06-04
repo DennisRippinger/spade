@@ -1,6 +1,7 @@
 package info.interactivesystems.spade.captcha;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import info.interactivesystems.spade.crawler.captcha.CaptchaService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

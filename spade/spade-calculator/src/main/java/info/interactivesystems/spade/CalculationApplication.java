@@ -12,11 +12,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.crawler;
+package info.interactivesystems.spade;
 
-import info.interactivesystems.spade.crawler.yelp.YelpReverseAggegator;
+import info.interactivesystems.spade.recommender.HIndex;
+import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
 
 import org.apache.catalina.connector.Connector;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.ParseException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -30,7 +35,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 /**
- * The Class CrawlerApplication.
+ * The Class CalculationApplication.
  * 
  * @author Dennis Rippinger
  */
@@ -38,17 +43,55 @@ import org.springframework.context.annotation.ImportResource;
 @ComponentScan
 @EnableAutoConfiguration
 @ImportResource("classpath:beans.xml")
-public class CrawlerApplication {
+public class CalculationApplication {
 
     /**
      * The main method.
      * 
      * @param args the arguments
+     * @throws ParseException
      */
-    public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(CrawlerApplication.class, args);
-        YelpReverseAggegator crawler = context.getBean(YelpReverseAggegator.class);
-//        crawler.startCrawlingThreads();
+    public static void main(String[] args) throws ParseException {
+
+        CommandLineParser parser = new GnuParser();
+        CommandLine line = parser.parse(CliCommands.getCliOptions(), args);
+
+        hIndex(args, line);
+        nilsimsa(args, line);
+
+    }
+
+    private static void nilsimsa(String[] args, CommandLine line) {
+        ConfigurableApplicationContext context;
+        if (line.hasOption(CliCommands.NISLIMSA) && line.hasOption(CliCommands.CATEGORY)) {
+            String category = line.getOptionValue(CliCommands.CATEGORY);
+
+            context = SpringApplication.run(CalculationApplication.class, args);
+            NilsimsaSimilarityCalculator calculator = context.getBean(NilsimsaSimilarityCalculator.class);
+            calculator.calculateSimilarityBetweenUniqueReviews(category);
+
+        }
+    }
+
+    private static void hIndex(String[] args, CommandLine line) {
+        ConfigurableApplicationContext context;
+        if (line.hasOption(CliCommands.HINDEX) && line.hasOption(CliCommands.FROM) && line.hasOption(CliCommands.TO)) {
+            String stringFrom = line.getOptionValue(CliCommands.FROM);
+            String stringTo = line.getOptionValue(CliCommands.TO);
+
+            try {
+                Integer from = Integer.parseInt(stringFrom);
+                Integer to = Integer.parseInt(stringTo);
+
+                context = SpringApplication.run(CalculationApplication.class, args);
+                HIndex hIndex = context.getBean(HIndex.class);
+
+                hIndex.calculateHIndex(from, to);
+            } catch (NumberFormatException e) {
+                return;
+            }
+
+        }
     }
 
     @Bean
