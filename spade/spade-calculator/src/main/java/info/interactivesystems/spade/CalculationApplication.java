@@ -14,6 +14,7 @@
  */
 package info.interactivesystems.spade;
 
+import lombok.extern.slf4j.Slf4j;
 import info.interactivesystems.spade.recommender.HIndex;
 import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
 
@@ -39,6 +40,7 @@ import org.springframework.context.annotation.ImportResource;
  * 
  * @author Dennis Rippinger
  */
+@Slf4j
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
@@ -58,18 +60,17 @@ public class CalculationApplication {
 
         hIndex(args, line);
         nilsimsa(args, line);
-
     }
 
     private static void nilsimsa(String[] args, CommandLine line) {
         ConfigurableApplicationContext context;
         if (line.hasOption(CliCommands.NISLIMSA) && line.hasOption(CliCommands.CATEGORY)) {
-            String category = line.getOptionValue(CliCommands.CATEGORY);
+            String category = line.getOptionValue(CliCommands.CATEGORY).replace("_", " ").replace("*", "&");
+            log.info("CurrentCategory: '{}'", category);
 
             context = SpringApplication.run(CalculationApplication.class, args);
             NilsimsaSimilarityCalculator calculator = context.getBean(NilsimsaSimilarityCalculator.class);
             calculator.calculateSimilarityBetweenUniqueReviews(category);
-
         }
     }
 
