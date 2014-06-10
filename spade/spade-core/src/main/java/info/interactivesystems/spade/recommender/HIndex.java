@@ -5,8 +5,11 @@ import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Resource;
 
@@ -55,8 +58,17 @@ public class HIndex {
             }
 
             currentUser.setHIndex(result);
-            
+            service.saveUser(currentUser);
+
+            // Reduce output noise
+            Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
+            if (rand == 500) {
+                log.info("Current User '{}' has an hIndex of '{}'. Position '{}'", currentUser.getName(), result, counter);
+            }
+
         }
+
+        log.info("FINISHED hIndex on '{}'.", getHostnameSecure());
 
     }
 
@@ -102,5 +114,15 @@ public class HIndex {
         result = result / reviewsFromUser.size();
 
         return result;
+    }
+
+    private String getHostnameSecure() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            log.warn("Could not getHostName");
+        }
+
+        return "Empty";
     }
 }
