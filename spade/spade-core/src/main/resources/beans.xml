@@ -12,7 +12,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 
 	<!-- Persistence Configuration -->
-	<mongo:db-factory id="mongoDbFactory" dbname="Spade" />
+	<mongo:db-factory id="mongoDbFactory" dbname="Spade"
+		host="sally.is.inf.uni-due.de" />
 
 	<mongo:mapping-converter id="mongoConverter"
 		base-package="info.interactivesystems.spade">

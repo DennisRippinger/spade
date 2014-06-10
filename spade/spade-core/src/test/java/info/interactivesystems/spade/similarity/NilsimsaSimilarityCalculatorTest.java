@@ -33,6 +33,6 @@ public class NilsimsaSimilarityCalculatorTest extends AbstractTestNGSpringContex
 
     @Test
     public void calculateSimilarityBetweenUniqueReviews() {
-        calculator.calculateSimilarityBetweenUniqueReviews("All Electronics");
+        calculator.calculateSimilarityBetweenUniqueReviews("Books");
     }
 }
