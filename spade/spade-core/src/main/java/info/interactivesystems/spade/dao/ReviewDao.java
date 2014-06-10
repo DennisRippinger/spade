@@ -86,6 +86,7 @@ public class ReviewDao implements GenericDao<Review> {
     public List<Review> findReviewsByCategory(String category) {
         Criteria criteria = Criteria.where("unique").is(true).and("category").is(category);
         Query query = Query.query(criteria);
+        query.fields().include("_id").include("nilsimsa");
 
         return operations.find(query, Review.class);
     }
