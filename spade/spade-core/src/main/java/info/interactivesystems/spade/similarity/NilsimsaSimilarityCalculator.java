@@ -19,6 +19,8 @@ import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.Review;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -54,14 +56,20 @@ public class NilsimsaSimilarityCalculator {
         Integer start = 0;
         Integer counter = 0;
 
+        log.info("Size of '{}': '{}'", category, uniqueReviews.size());
+
         for (Review outerReview : uniqueReviews) {
 
             for (Integer current = start; current < uniqueReviews.size(); current++) {
                 Review innerReview = uniqueReviews.get(current);
+                if (innerReview.getId().equals(outerReview.getId())) {
+                    continue;
+                }
+
                 Integer sameBits = hash.compare(outerReview.getNilsimsa(), innerReview.getNilsimsa());
                 Double percentage = sameBits / 128.0;
 
-                if (percentage >= 65.0) {
+                if (percentage >= 0.70) {
                     NilsimsaSimilarity similarity = new NilsimsaSimilarity();
                     similarity.setProductA(outerReview.getId());
                     similarity.setProductB(innerReview.getId());
@@ -78,12 +86,22 @@ public class NilsimsaSimilarityCalculator {
             // Reduce output noise
             Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
             if (rand == 500) {
-                log.info("Current Item ID '{}'", start);
+                log.info("Current Item ID of '{}' on '{}': {}'", category, getHostnameSecure(), start);
             }
         }
 
-        log.info("Found '{}' similar items", counter);
+        log.info("FINISHED on '{}'. Found '{}' similar items", getHostnameSecure(), counter);
 
+    }
+
+    private String getHostnameSecure() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            log.warn("Could not getHostName");
+        }
+
+        return "Empty";
     }
 
 }
