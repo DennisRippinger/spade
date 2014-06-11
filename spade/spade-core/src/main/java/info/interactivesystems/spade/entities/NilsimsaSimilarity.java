@@ -42,4 +42,13 @@ public class NilsimsaSimilarity {
     @Indexed
     private String category;
 
+    @Indexed
+    private boolean sameAuthor;
+
+    private Integer dayDistance;
+
+    private Integer wordDistance;
+    
+    @Indexed
+    private boolean proccesed;
 }

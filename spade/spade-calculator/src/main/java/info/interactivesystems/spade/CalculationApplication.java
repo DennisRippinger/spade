@@ -16,6 +16,7 @@ package info.interactivesystems.spade;
 
 import lombok.extern.slf4j.Slf4j;
 import info.interactivesystems.spade.recommender.HIndex;
+import info.interactivesystems.spade.similarity.NilsimsaEnricher;
 import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
 
 import org.apache.catalina.connector.Connector;
@@ -60,6 +61,22 @@ public class CalculationApplication {
 
         hIndex(args, line);
         nilsimsa(args, line);
+        nilsimsaEnriched(args, line);
+    }
+
+    private static void nilsimsaEnriched(String[] args, CommandLine line) {
+        ConfigurableApplicationContext context;
+        if (line.hasOption(CliCommands.NISLIMSA_ENRICHMENT)) {
+            String gteString = line.getOptionValue(CliCommands.NISLIMSA_ENRICHMENT);
+            log.info("Finding Nilsimsa Values greater than: '{}'", gteString);
+
+            Double gte = Double.parseDouble(gteString);
+
+            context = SpringApplication.run(CalculationApplication.class, args);
+            NilsimsaEnricher enricher = context.getBean(NilsimsaEnricher.class);
+            enricher.enrichNilsimsaValues(gte);
+        }
+
     }
 
     private static void nilsimsa(String[] args, CommandLine line) {

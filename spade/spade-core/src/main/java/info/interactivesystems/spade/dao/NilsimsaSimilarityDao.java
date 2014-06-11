@@ -14,16 +14,18 @@
  */
 package info.interactivesystems.spade.dao;
 
-import javax.annotation.Resource;
-
+import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import info.interactivesystems.spade.entities.NilsimsaSimilarity;
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * The Class NilsimsaSimilarityDao.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Repository
@@ -46,6 +48,11 @@ public class NilsimsaSimilarityDao implements GenericDao<NilsimsaSimilarity> {
     @Override
     public void save(NilsimsaSimilarity t) {
         operations.save(t);
+    }
+
+    public List<NilsimsaSimilarity> findWithinRange(Double similarity) {
+        Query query = Query.query(Criteria.where("similarity").gte(similarity));
+        return operations.find(query, NilsimsaSimilarity.class);
     }
 
 }

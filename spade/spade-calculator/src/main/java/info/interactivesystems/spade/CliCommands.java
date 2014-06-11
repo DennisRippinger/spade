@@ -24,6 +24,7 @@ import org.apache.commons.cli.Options;
 public class CliCommands {
 
     public static final String NISLIMSA = "nilsimsa";
+    public static final String NISLIMSA_ENRICHMENT = "nilsimsaenriched";
     public static final String HINDEX = "hindex";
     public static final String FROM = "from";
     public static final String TO = "to";
@@ -41,8 +42,9 @@ public class CliCommands {
         options.addOption("t", TO, true, "To a given value");
         options.addOption("c", CATEGORY, true, "a given category");
 
-        options.addOption("h", HINDEX, true, "Calculates the HIndex");
+        options.addOption("h", HINDEX, false, "Calculates the HIndex");
         options.addOption("n", NISLIMSA, false, "Calculates the nilsimsa simmilarity for a given category");
+        options.addOption("e", NISLIMSA_ENRICHMENT, true, "Enriches the nilsimsa Results");
 
         return options;
     }
