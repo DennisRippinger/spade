@@ -6,12 +6,14 @@
 *.war
 *.ear
 
-# Folder and Eclipse Meta # 
+# Folder and IDEA/Eclipse Meta # 
 **/target/*
 **/.classpath*
 **/.project*
 **/.settings*
 **/test-output*
+**/.idea*
+*.iml
 hibernate.properties
 disco.properties
 derby.log
