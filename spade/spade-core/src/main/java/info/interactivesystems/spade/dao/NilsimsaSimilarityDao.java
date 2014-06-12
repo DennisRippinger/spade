@@ -58,4 +58,13 @@ public class NilsimsaSimilarityDao implements GenericDao<NilsimsaSimilarity> {
         return operations.find(query, NilsimsaSimilarity.class);
     }
 
+    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistnance, Integer limit) {
+        Query query = Query.query(
+            Criteria.where("similarity").gte(similarity)
+                .and("sameAuthor").is(sameAuthor)
+                .and("wordDistance").lte(wordDistnance)
+            ).limit(limit);
+        return operations.find(query, NilsimsaSimilarity.class);
+    }
+
 }
