@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * The Class NilsimsaSimilarityDao.
- *
+ * 
  * @author Dennis Rippinger
  */
 @Repository
@@ -51,7 +51,10 @@ public class NilsimsaSimilarityDao implements GenericDao<NilsimsaSimilarity> {
     }
 
     public List<NilsimsaSimilarity> findWithinRange(Double similarity) {
-        Query query = Query.query(Criteria.where("similarity").gte(similarity));
+        Query query = Query.query(
+            Criteria.where("proccesed").exists(false)
+                .and("similarity").gte(similarity)
+            );
         return operations.find(query, NilsimsaSimilarity.class);
     }
 
