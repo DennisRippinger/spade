@@ -71,4 +71,17 @@ public class UserDao implements GenericDao<User> {
         return user;
     }
 
+    /**
+     * Lists all Users with an Hindex >= the maxIndex parameter.
+     * 
+     * @param maxIndex
+     * @return
+     */
+    public List<User> findUsersWithHIndex(Double maxIndex) {
+        Criteria criteria = Criteria.where("hIndex").gte(maxIndex);
+        List<User> result = operations.find(Query.query(criteria), User.class);
+
+        return result;
+    }
+
 }

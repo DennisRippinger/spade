@@ -16,6 +16,7 @@ package info.interactivesystems.spade;
 
 import lombok.extern.slf4j.Slf4j;
 import info.interactivesystems.spade.recommender.HIndex;
+import info.interactivesystems.spade.recommender.HIndexResolver;
 import info.interactivesystems.spade.similarity.NilsimsaEnricher;
 import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
 
@@ -60,8 +61,23 @@ public class CalculationApplication {
         CommandLine line = parser.parse(CliCommands.getCliOptions(), args);
 
         hIndex(args, line);
+        hIndexResolver(args, line);
         nilsimsa(args, line);
         nilsimsaEnriched(args, line);
+    }
+
+    private static void hIndexResolver(String[] args, CommandLine line) {
+        ConfigurableApplicationContext context;
+        if (line.hasOption(CliCommands.HINDEXRESOLVER)) {
+            String hIndexBoundary = line.getOptionValue(CliCommands.HINDEXRESOLVER);
+            log.info("Finding Index Values greater than: '{}'", hIndexBoundary);
+
+            Double boundary = Double.parseDouble(hIndexBoundary);
+
+            context = SpringApplication.run(CalculationApplication.class, args);
+            HIndexResolver resolver = context.getBean(HIndexResolver.class);
+            resolver.resolveHIndex(boundary);
+        } 
     }
 
     private static void nilsimsaEnriched(String[] args, CommandLine line) {

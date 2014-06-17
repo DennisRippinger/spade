@@ -191,4 +191,14 @@ public class ReviewContentService {
         return userDao.findAll();
     }
 
+    /**
+     * Lists all Users with an Hindex >= the maxIndex parameter.
+     * 
+     * @param maxIndex
+     * @return
+     */
+    public List<User> findUsersWithHIndex(Double maxIndex) {
+        return userDao.findUsersWithHIndex(maxIndex);
+    }
+
 }

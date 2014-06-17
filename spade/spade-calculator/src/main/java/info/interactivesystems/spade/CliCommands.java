@@ -26,6 +26,7 @@ public class CliCommands {
     public static final String NISLIMSA = "nilsimsa";
     public static final String NISLIMSA_ENRICHMENT = "nilsimsaenriched";
     public static final String HINDEX = "hindex";
+    public static final String HINDEXRESOLVER = "hindexResolver";
     public static final String FROM = "from";
     public static final String TO = "to";
     public static final String CATEGORY = "category";
@@ -43,6 +44,7 @@ public class CliCommands {
         options.addOption("c", CATEGORY, true, "a given category");
 
         options.addOption("h", HINDEX, false, "Calculates the HIndex");
+        options.addOption("hr", HINDEXRESOLVER, true, "Calculates the most variant review");
         options.addOption("n", NISLIMSA, false, "Calculates the nilsimsa simmilarity for a given category");
         options.addOption("e", NISLIMSA_ENRICHMENT, true, "Enriches the nilsimsa Results");
 

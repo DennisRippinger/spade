@@ -4,7 +4,6 @@ import info.interactivesystems.spade.dao.NilsimsaSimilarityDao;
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.Review;
-import info.interactivesystems.spade.nlp.SentenceDetector;
 
 import java.util.LinkedList;
 import java.util.List;

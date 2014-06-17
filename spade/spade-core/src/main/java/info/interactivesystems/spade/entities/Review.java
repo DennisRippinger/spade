@@ -90,6 +90,11 @@ public class Review extends AbstractTimestampEntity implements Serializable {
 
     private String nilsimsa;
 
+    private Double variance;
+
+    @Indexed
+    private boolean isMaximumVariance;
+
     @Indexed
     private boolean unique;
 }
