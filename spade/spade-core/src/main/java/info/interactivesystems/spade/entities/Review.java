@@ -19,6 +19,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -42,8 +44,6 @@ public class Review implements Serializable {
     private String id; //a
 
     private String authorId; //a
-
-    private String product; 
 
     private String content; //a
 
@@ -93,4 +93,9 @@ public class Review implements Serializable {
     private String nilsimsa; //a
 
     private Double variance; //a
+    
+    // Key Mapping
+    @ManyToOne
+    @JoinColumn(name = "Product_fk")
+    private Product product;
 }

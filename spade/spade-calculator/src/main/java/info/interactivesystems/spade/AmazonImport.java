@@ -100,7 +100,7 @@ public class AmazonImport {
                     extractReviewSummary(line, review);
                     extractReviewText(line, review);
                 } else {
-                    review.setProduct(product.getId());
+                    review.setProduct(product);
                     calculateMetric(review);
 
                     try {
