@@ -14,15 +14,12 @@
  */
 package info.interactivesystems.spade.dao;
 
-import java.util.List;
-
 import info.interactivesystems.spade.entities.User;
 
-import javax.annotation.Resource;
+import java.util.List;
 
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -31,44 +28,24 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-public class UserDao implements GenericDao<User> {
+public class UserDao extends AbstractDao<User> {
 
-    @Resource
-    private MongoOperations operations;
-
-    @Override
-    public void delete(User obj) {
-        operations.remove(obj);
-    }
-
-    @Override
-    public User find(String id) {
-        return operations.findById(id, User.class);
-    }
-
-    @Override
-    public void save(User t) {
-        operations.save(t);
-    }
-
-    public List<User> findAll() {
-        return operations.findAll(User.class);
+    public UserDao() {
+        super(User.class);
     }
 
     public Boolean checkIfAlreadyExists(String id) {
         User find = find(id);
-        if (find == null) {
-            return false;
-        } else {
-            return true;
-        }
+
+        return find != null;
     }
 
-    public User findByID(Integer id) {
-        Criteria criteria = Criteria.where("randomID").is(id);
-        User user = operations.findOne(Query.query(criteria), User.class);
+    public User findByRandomID(Long id) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(User.class);
+        criteria.add(Restrictions.eq("randomID", id));
 
-        return user;
+        return (User) criteria.uniqueResult();
     }
 
     /**
@@ -77,11 +54,14 @@ public class UserDao implements GenericDao<User> {
      * @param maxIndex
      * @return
      */
+    @SuppressWarnings("unchecked")
     public List<User> findUsersWithHIndex(Double maxIndex) {
-        Criteria criteria = Criteria.where("hIndex").gte(maxIndex);
-        List<User> result = operations.find(Query.query(criteria), User.class);
 
-        return result;
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(User.class);
+        criteria.add(Restrictions.ge("hIndex", maxIndex));
+
+        return criteria.list();
     }
 
 }

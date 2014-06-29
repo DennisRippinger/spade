@@ -29,11 +29,8 @@ public class Denomalization extends AbstractTestNGSpringContextTests {
             List<Review> reviews = service.findReviewByProductID(currentProduct.getId());
 
             for (Review review : reviews) {
-                if (review.isUnique()) {
                     review.setCategory(currentProduct.getCategory());
                     service.saveReview(review);
-                }
-
             }
 
             Integer rand = ThreadLocalRandom.current().nextInt(1, 20000);

@@ -14,11 +14,11 @@
  */
 package info.interactivesystems.spade;
 
-import lombok.extern.slf4j.Slf4j;
+import info.interactivesystems.spade.calculation.UniqueReviewCrystalizer;
 import info.interactivesystems.spade.recommender.HIndex;
 import info.interactivesystems.spade.recommender.HIndexResolver;
-import info.interactivesystems.spade.similarity.NilsimsaEnricher;
 import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.commons.cli.CommandLine;
@@ -63,7 +63,18 @@ public class CalculationApplication {
         hIndex(args, line);
         hIndexResolver(args, line);
         nilsimsa(args, line);
-        nilsimsaEnriched(args, line);
+        unique(args, line);
+    }
+
+    private static void unique(String[] args, CommandLine line) {
+        ConfigurableApplicationContext context;
+        if (line.hasOption(CliCommands.UNIQUE)) {
+            log.info("Removing non-Unique Reviews");
+
+            context = SpringApplication.run(CalculationApplication.class, args);
+            UniqueReviewCrystalizer crystalizer = context.getBean(UniqueReviewCrystalizer.class);
+            crystalizer.removeNonUnique();
+        }
     }
 
     private static void hIndexResolver(String[] args, CommandLine line) {
@@ -77,22 +88,7 @@ public class CalculationApplication {
             context = SpringApplication.run(CalculationApplication.class, args);
             HIndexResolver resolver = context.getBean(HIndexResolver.class);
             resolver.resolveHIndex(boundary);
-        } 
-    }
-
-    private static void nilsimsaEnriched(String[] args, CommandLine line) {
-        ConfigurableApplicationContext context;
-        if (line.hasOption(CliCommands.NISLIMSA_ENRICHMENT)) {
-            String gteString = line.getOptionValue(CliCommands.NISLIMSA_ENRICHMENT);
-            log.info("Finding Nilsimsa Values greater than: '{}'", gteString);
-
-            Double gte = Double.parseDouble(gteString);
-
-            context = SpringApplication.run(CalculationApplication.class, args);
-            NilsimsaEnricher enricher = context.getBean(NilsimsaEnricher.class);
-            enricher.enrichNilsimsaValues(gte);
         }
-
     }
 
     private static void nilsimsa(String[] args, CommandLine line) {
@@ -114,8 +110,8 @@ public class CalculationApplication {
             String stringTo = line.getOptionValue(CliCommands.TO);
 
             try {
-                Integer from = Integer.parseInt(stringFrom);
-                Integer to = Integer.parseInt(stringTo);
+                Long from = Long.parseLong(stringFrom);
+                Long to = Long.parseLong(stringTo);
 
                 context = SpringApplication.run(CalculationApplication.class, args);
                 HIndex hIndex = context.getBean(HIndex.class);

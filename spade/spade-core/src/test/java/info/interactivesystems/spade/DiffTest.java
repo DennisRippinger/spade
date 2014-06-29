@@ -35,8 +35,8 @@ public class DiffTest extends AbstractTestNGSpringContextTests {
         diff_match_patch dmp = getDiffMatcher();
         List<NilsimsaSimilarity> relevantPairs = nilsimsa.find(0.915, false, 20, 30);
         for (NilsimsaSimilarity nilsimsaSimilarity : relevantPairs) {
-            Review reviewA = service.findReview(nilsimsaSimilarity.getProductA());
-            Review reviewB = service.findReview(nilsimsaSimilarity.getProductB());
+            Review reviewA = service.findReview(nilsimsaSimilarity.getReviewA());
+            Review reviewB = service.findReview(nilsimsaSimilarity.getReviewB());
 
             LinkedList<Diff> diff_main = dmp.diff_main(reviewA.getContent(), reviewB.getContent());
             String diff_prettyHtml = dmp.diff_prettyHtml(diff_main);

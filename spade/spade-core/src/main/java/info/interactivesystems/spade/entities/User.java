@@ -15,16 +15,17 @@
 package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
-import info.interactivesystems.spade.util.ConcurrentBit;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * DTO for a UncategorizedReview.
@@ -34,8 +35,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Setter
 @Getter
-@Document
-public class User extends AbstractTimestampEntity implements Serializable {
+@Entity
+@Table(name = "Users")
+public class User implements Serializable {
 
     private static final long serialVersionUID = 7916895135811744472L;
 
@@ -54,17 +56,13 @@ public class User extends AbstractTimestampEntity implements Serializable {
 
     private Integer numberOfReviews = 0;
 
+    @Enumerated(EnumType.ORDINAL)
     private Authority authority;
-    
-    @Indexed
+
     private Double hIndex;
-    
-    @Indexed
-    private Double recLength;
 
-    @Indexed(unique = true)
+    private Double length;
+
     private Long randomID;
-
-    private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;
 
 }

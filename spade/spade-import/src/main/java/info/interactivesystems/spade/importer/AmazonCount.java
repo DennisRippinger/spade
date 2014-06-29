@@ -31,7 +31,6 @@ public class AmazonCount {
             List<Review> reviews = service.findReviewByProductID(currentProduct.getId());
             currentProduct.setNoOfReviews(reviews.size());
             currentProduct.setRating(getAverage(reviews));
-            currentProduct.setConcurrentBit(null);
 
             service.saveProduct(currentProduct);
 

@@ -21,6 +21,7 @@ import info.interactivesystems.spade.entities.Review;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -28,6 +29,8 @@ import javax.annotation.Resource;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.stereotype.Component;
 
 /**
@@ -71,10 +74,19 @@ public class NilsimsaSimilarityCalculator {
 
                 if (percentage >= 0.70) {
                     NilsimsaSimilarity similarity = new NilsimsaSimilarity();
-                    similarity.setProductA(outerReview.getId());
-                    similarity.setProductB(innerReview.getId());
+
+                    similarity.setReviewA(outerReview.getId());
+                    similarity.setReviewB(innerReview.getId());
                     similarity.setSimilarity(percentage);
                     similarity.setCategory(category);
+
+                    Integer daysBetween = calculateDifference(outerReview.getReviewDate(), innerReview.getReviewDate());
+                    Boolean sameAuthor = calculateSameAuthorshit(outerReview, innerReview);
+                    Integer wordDistance = calculateWordDistance(outerReview, innerReview);
+
+                    similarity.setDayDistance(daysBetween);
+                    similarity.setSameAuthor(sameAuthor);
+                    similarity.setWordDistance(wordDistance);
 
                     nisimsaDao.save(similarity);
                     counter++;
@@ -92,6 +104,26 @@ public class NilsimsaSimilarityCalculator {
 
         log.info("FINISHED on '{}'. Found '{}' similar items", getHostnameSecure(), counter);
 
+    }
+
+    private Integer calculateWordDistance(Review reviewA, Review reviewB) {
+        Integer difference = reviewA.getWordCount() - reviewB.getWordCount();
+        if (difference < 0) {
+            difference = difference * -1;
+        }
+        return difference;
+    }
+
+    private Boolean calculateSameAuthorshit(Review reviewA, Review reviewB) {
+        return reviewA.getAuthorId().equals(reviewB.getAuthorId());
+    }
+
+    private Integer calculateDifference(Date reviewDate, Date reviewDate2) {
+        Integer days = Days.daysBetween(new DateTime(reviewDate), new DateTime(reviewDate2)).getDays();
+        if (days < 0) {
+            days = days * -1;
+        }
+        return days;
     }
 
     private String getHostnameSecure() {

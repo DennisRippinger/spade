@@ -15,13 +15,12 @@
 package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 
 /**
  * The Class NilsimsaSimilarityDao.
@@ -29,42 +28,31 @@ import java.util.List;
  * @author Dennis Rippinger
  */
 @Repository
-public class NilsimsaSimilarityDao implements GenericDao<NilsimsaSimilarity> {
+public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
-    @Resource
-    private MongoOperations operations;
-
-    @Override
-    public void delete(NilsimsaSimilarity obj) {
-        operations.remove(obj);
-
+    public NilsimsaSimilarityDao() {
+        super(NilsimsaSimilarity.class);
     }
 
-    @Override
-    public NilsimsaSimilarity find(String id) {
-        return operations.findById(id, NilsimsaSimilarity.class);
-    }
-
-    @Override
-    public void save(NilsimsaSimilarity t) {
-        operations.save(t);
-    }
-
+    @SuppressWarnings("unchecked")
     public List<NilsimsaSimilarity> findWithinRange(Double similarity) {
-        Query query = Query.query(
-            Criteria.where("proccesed").exists(false)
-                .and("similarity").gte(similarity)
-            );
-        return operations.find(query, NilsimsaSimilarity.class);
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+        criteria.add(Restrictions.ge("similarity", similarity));
+
+        return (List<NilsimsaSimilarity>) criteria.list();
     }
 
-    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistnance, Integer limit) {
-        Query query = Query.query(
-            Criteria.where("similarity").gte(similarity)
-                .and("sameAuthor").is(sameAuthor)
-                .and("wordDistance").lte(wordDistnance)
-            ).limit(limit);
-        return operations.find(query, NilsimsaSimilarity.class);
+    @SuppressWarnings("unchecked")
+    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+        criteria.add(Restrictions.ge("similarity", similarity))
+            .add(Restrictions.eq("sameAuthor", sameAuthor))
+            .add(Restrictions.ge("wordDistance", wordDistance));
+        criteria.setMaxResults(limit);
+
+        return criteria.list();
     }
 
 }

@@ -16,9 +16,6 @@ package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.WordFrequency;
 
-import javax.annotation.Resource;
-
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,24 +24,10 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-public class WordFrequencyDao implements GenericDao<WordFrequency> {
+public class WordFrequencyDao extends AbstractDao<WordFrequency> {
 
-    @Resource
-    private MongoOperations operations;
-
-    @Override
-    public void delete(WordFrequency obj) {
-        operations.remove(obj);
-    }
-
-    @Override
-    public WordFrequency find(String id) {
-        return operations.findById(id, WordFrequency.class);
-    }
-
-    @Override
-    public void save(WordFrequency t) {
-        operations.save(t);
+    public WordFrequencyDao() {
+        super(WordFrequency.class);
     }
 
 }

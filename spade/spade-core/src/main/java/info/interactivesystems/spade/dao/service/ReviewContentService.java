@@ -24,6 +24,7 @@ import info.interactivesystems.spade.entities.User;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
+@Transactional
 public class ReviewContentService {
 
     @Resource
@@ -96,7 +98,7 @@ public class ReviewContentService {
      * @param review the review
      */
     public void saveReview(Review review) {
-        reviewDao.save(review);
+        reviewDao.update(review);
     }
 
     /**
@@ -115,10 +117,6 @@ public class ReviewContentService {
 
     public List<Review> findReviewFromUser(String userID) {
         return reviewDao.findReviewFromUser(userID);
-    }
-
-    public List<Review> findAllUniqueReviews() {
-        return reviewDao.findAllUniqueReviews();
     }
 
     public List<Review> findReviewsByCategory(String category) {
@@ -152,7 +150,7 @@ public class ReviewContentService {
      * @param user the user
      */
     public void saveUser(User user) {
-        userDao.save(user);
+        userDao.update(user);
     }
 
     /**
@@ -183,12 +181,8 @@ public class ReviewContentService {
         return userDao.checkIfAlreadyExists(id);
     }
 
-    public User findUserByID(Integer id) {
-        return userDao.findByID(id);
-    }
-
-    public List<User> findAllUsers() {
-        return userDao.findAll();
+    public User findUserByID(Long id) {
+        return userDao.findByRandomID(id);
     }
 
     /**

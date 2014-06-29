@@ -17,12 +17,12 @@ package info.interactivesystems.spade.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Entity for a Review.
@@ -32,69 +32,65 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document
-public class Review extends AbstractTimestampEntity implements Serializable {
+@Entity
+@Table(name = "Reviews")
+public class Review implements Serializable {
 
     private static final long serialVersionUID = -2877180343613831483L;
 
     @Id
-    private String id;
+    private String id; //a
 
-    @Indexed
-    private String authorId;
+    private String authorId; //a
 
-    @Indexed
-    private String product;
+    private String product; 
 
-    private String content;
+    private String content; //a
 
-    private Double rating;
+    private Double rating; //a
 
-    private Date reviewDate;
+    private Date reviewDate; //a
 
-    private String source;
+    private String source; //a
+    
+    private String category;
 
     // Amazon Specific
 
-    private String title;
+    private String title; //a
 
-    private Integer comments;
+    private Integer comments;//a
 
-    private Integer helpfulVotes;
+    private Integer helpfulVotes; //a
 
-    private Integer totalVotes;
+    private Integer totalVotes; //a
 
-    private Boolean verified = false;
+    private Boolean verified = false;  //a
 
-    @Indexed
-    private String category;
+    // private String category;
 
     // Yelp specific
-    private Integer checkins;;
+    private Integer checkins; //a
 
-    private Integer voteUseful;
+    private Integer voteUseful; //a
 
-    private Integer voteFunny;
+    private Integer voteFunny; //a
 
-    private Integer voteCool;
+    private Integer voteCool; //a
 
     // Calculation Values
 
-    private Double ari;
+    private Double ari; //a
 
-    private Double gfi;
+    private Double gfi; //a
 
-    private Double density;
+    private Double density; //a
+    
+    private Double densityRelation;
 
-    private Integer wordCount;
+    private Integer wordCount; //a
 
-    private String nilsimsa;
+    private String nilsimsa; //a
 
-    private Double variance;
-
-    @Indexed
-    private boolean isMaximumVariance;
-
-    @Indexed
-    private boolean unique;
+    private Double variance; //a
 }

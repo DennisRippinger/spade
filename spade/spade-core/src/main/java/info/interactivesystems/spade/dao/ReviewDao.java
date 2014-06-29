@@ -18,11 +18,8 @@ import info.interactivesystems.spade.entities.Review;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -31,64 +28,45 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-public class ReviewDao implements GenericDao<Review> {
+public class ReviewDao extends AbstractDao<Review> {
 
-    @Resource
-    private MongoOperations operations;
-
-    @Override
-    public void delete(Review obj) {
-        operations.remove(obj);
-    }
-
-    @Override
-    public Review find(String id) {
-        return operations.findById(id, Review.class);
-    }
-
-    @Override
-    public void save(Review t) {
-        operations.save(t);
+    public ReviewDao() {
+        super(Review.class);
     }
 
     public Boolean checkIfAlreadyExists(String id) {
         Review find = find(id);
-        if (find == null) {
-            return false;
-        } else {
-            return true;
-        }
+
+        return find != null;
     }
 
+    @SuppressWarnings("unchecked")
     public List<Review> findReviewByProductID(String productID) {
-        Criteria criteria = Criteria.where("product").is(productID);
-        List<Review> result = operations.find(Query.query(criteria), Review.class);
 
-        return result;
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(Review.class);
+        criteria.add(Restrictions.eq("product", productID));
+
+        return (List<Review>) criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Review> findReviewFromUser(String userID) {
-        Criteria criteria = Criteria.where("authorId").is(userID).and("unique").is(true);
-        List<Review> result = operations.find(Query.query(criteria), Review.class);
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(Review.class);
+        criteria.add(Restrictions.eq("authorId", userID));
 
-        return result;
+        return criteria.list();
     }
 
-    public List<Review> findAllUniqueReviews() {
-        Criteria criteria = Criteria.where("unique").is(true);
-        Query query = Query.query(criteria);
-        query.fields().include("_id").include("nilsimsa");
-        List<Review> result = operations.find(query, Review.class);
-
-        return result;
-    }
-
+    @SuppressWarnings("unchecked")
     public List<Review> findReviewsByCategory(String category) {
-        Criteria criteria = Criteria.where("unique").is(true).and("category").is(category);
-        Query query = Query.query(criteria);
-        query.fields().include("_id").include("nilsimsa");
 
-        return operations.find(query, Review.class);
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(Review.class);
+        criteria.add(Restrictions.eq("category", category));
+
+        return criteria.list();
     }
 
 }

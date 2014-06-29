@@ -12,14 +12,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.importer;
+package info.interactivesystems.spade;
 
 import info.interactivesystems.spade.dao.service.ReviewContentService;
-import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.sentence.SentenceService;
+import info.interactivesystems.spade.similarity.NilsimsaHash;
 import info.interactivesystems.spade.util.Authority;
 
 import java.io.BufferedReader;
@@ -46,7 +46,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AmazonImport {
 
-    private static final Boolean IMPORT_UNKOWN = true;
+    private static final Boolean IMPORT_UNKOWN = false;
 
     private static final String UNKNOWN = "unknown";
     private static final String PRODUCT_ID = "product/productId: ";
@@ -65,12 +65,9 @@ public class AmazonImport {
 
     @Resource
     private SentenceService sentenceService;
-    
+
     @Resource
     private NilsimsaHash nilsimsa;
-
-    // @Resource
-    // private WordFrequencyAggregator wordFrequency;
 
     private Integer reviewCounter = 1;
     private Integer errorCounter = 0;
@@ -128,7 +125,6 @@ public class AmazonImport {
         }
 
         log.info("Error counter = '{}'", errorCounter);
-        // wordFrequency.persistFrequencies(Authority.AMAZON);
     }
 
     private void persist(User user, Product product, Review review) {
@@ -169,10 +165,9 @@ public class AmazonImport {
         review.setGfi(calculatedGFIndex);
         review.setDensity(calculatedInformationDensity);
         review.setWordCount(wordCount);
-        
-        String nilsimsaValue = nilsimsa.calculateNilsima(review);
-        review.setNilsimsa(nilsimsaValue);
 
+        String nilsimsaValue = nilsimsa.calculateNilsima(review.getContent());
+        review.setNilsimsa(nilsimsaValue);
     }
 
     private void extractReviewText(String line, Review review) {

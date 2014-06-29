@@ -50,7 +50,6 @@ public class HIndexResolver {
         for (User user : users) {
             List<Review> reviewsFromUser = service.findReviewFromUser(user.getId());
             Review review = getMaximumVariance(reviewsFromUser);
-            review.setMaximumVariance(true);
             service.saveReview(review);
         }
 

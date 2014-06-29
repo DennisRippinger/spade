@@ -16,11 +16,8 @@ package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Product;
 
-import javax.annotation.Resource;
-
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,40 +26,24 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
-public class ProductDao implements GenericDao<Product> {
+public class ProductDao extends AbstractDao<Product> {
 
-    @Resource
-    private MongoOperations operations;
-
-    @Override
-    public void delete(Product obj) {
-        operations.remove(obj);
-    }
-
-    @Override
-    public Product find(String id) {
-        return operations.findById(id, Product.class);
-    }
-
-    @Override
-    public void save(Product t) {
-        operations.save(t);
+    public ProductDao() {
+        super(Product.class);
     }
 
     public Boolean checkIfAlreadyExists(String id) {
         Product find = find(id);
-        if (find == null) {
-            return false;
-        } else {
-            return true;
-        }
+
+        return find != null;
     }
 
     public Product findByID(Integer id) {
-        Criteria criteria = Criteria.where("randomID").is(id);
-        Product product = operations.findOne(Query.query(criteria), Product.class);
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(Product.class);
+        criteria.add(Restrictions.eq("randomID", id));
 
-        return product;
+        return (Product) criteria.uniqueResult();
     }
 
 }

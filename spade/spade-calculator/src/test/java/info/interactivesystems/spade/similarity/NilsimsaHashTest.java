@@ -42,7 +42,7 @@ public class NilsimsaHashTest extends AbstractTestNGSpringContextTests {
         for (Integer reviewCounter = 1; reviewCounter <= 34686770; reviewCounter++) {
             String reviewID = String.format("R%010d", reviewCounter);
             Review currentReview = service.findReview(reviewID);
-            if (currentReview.isUnique()) {
+            if (currentReview != null) {
                 String nilsimsa = hash.calculateNilsima(currentReview.getContent());
                 currentReview.setNilsimsa(nilsimsa);
 

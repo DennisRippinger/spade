@@ -30,9 +30,9 @@ public class HIndex {
     @Resource
     private ReviewContentService service;
 
-    public void calculateHIndex(Integer from, Integer to) {
+    public void calculateHIndex(Long from, Long to) {
 
-        for (Integer counter = from; counter <= to; counter++) {
+        for (Long counter = from; counter <= to; counter++) {
 
             User currentUser = service.findUserByID(counter);
 

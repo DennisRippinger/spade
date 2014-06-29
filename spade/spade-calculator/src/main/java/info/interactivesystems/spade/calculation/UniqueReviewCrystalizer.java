@@ -1,7 +1,7 @@
 /**
  * 
  */
-package info.interactivesystems.spade.importer;
+package info.interactivesystems.spade.calculation;
 
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Review;
@@ -30,10 +30,8 @@ public class UniqueReviewCrystalizer {
 
     private Integer uniqueCounter = 0;
 
-    public void tagUniqueReviews() {
-        for (Long userID = 6l; userID <= 6643669l; userID++) {
-            
-            
+    public void removeNonUnique() {
+        for (Long userID = 1l; userID <= 6643669l; userID++) {
             User currentUser = service.findUserByID(userID);
 
             List<Review> uniqueReviews = new LinkedList<Review>();
@@ -63,17 +61,15 @@ public class UniqueReviewCrystalizer {
             }
 
             service.saveUser(currentUser);
-            
+
             reviews.removeAll(uniqueReviews);
-            
+
             for (Review review : reviews) {
                 service.deleteReview(review);
             }
 
             uniqueCounter += uniqueReviews.size();
 
-            reviews = null;
-            
             Integer rand = ThreadLocalRandom.current().nextInt(1, 500);
             if (rand == 50) {
                 log.info("Current User No '{}', Unique Items so far '{}'", userID, uniqueCounter);

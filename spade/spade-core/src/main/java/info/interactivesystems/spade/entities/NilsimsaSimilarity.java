@@ -14,41 +14,35 @@
  */
 package info.interactivesystems.spade.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * The Class NilsimsaSimilarity.
  * 
  * @author Dennis Rippinger
  */
+@Entity
 @Setter
 @Getter
-@Document
+@Table(name = "Nilsimsa_Similarities")
 public class NilsimsaSimilarity {
 
-    @Indexed
-    private String productA;
+    private String reviewA;
 
-    @Indexed
-    private String productB;
+    private String reviewB;
 
-    @Indexed
     private Double similarity;
 
-    @Indexed
     private String category;
 
-    @Indexed
     private boolean sameAuthor;
 
     private Integer dayDistance;
 
     private Integer wordDistance;
-    
-    @Indexed
-    private boolean proccesed;
+
 }

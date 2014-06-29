@@ -99,7 +99,6 @@ public class ReviewHistoryCrawler {
             extractDate(domReview, review);
             extractAuthorID(domReview, review);
             extractReview(domReview, review);
-            review.setTimestamp(new Date());
 
             reviewDao.save(review);
         }

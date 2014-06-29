@@ -1,7 +1,6 @@
 package info.interactivesystems.spade.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import info.interactivesystems.spade.ApplicationConfig;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.util.ProductCategory;
 
@@ -13,7 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 // @Test(groups = { "FunctionTest" })
-@ContextConfiguration(classes = { ApplicationConfig.class })
+@ContextConfiguration(locations = { "classpath:beans.xml" })
 public class ProductDaoTest extends AbstractTestNGSpringContextTests {
 
     @Resource

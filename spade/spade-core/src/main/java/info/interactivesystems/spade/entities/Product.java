@@ -15,18 +15,22 @@
 package info.interactivesystems.spade.entities;
 
 import info.interactivesystems.spade.util.Authority;
-import info.interactivesystems.spade.util.ConcurrentBit;
 import info.interactivesystems.spade.util.PriceCategory;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Entitiy for a Product.
@@ -35,8 +39,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Getter
 @Setter
-@Document
-public class Product extends AbstractTimestampEntity implements Serializable {
+@Entity
+@Table(name = "Products")
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 7936029047258589542L;
 
@@ -45,9 +50,9 @@ public class Product extends AbstractTimestampEntity implements Serializable {
 
     private String name;
 
+    @Enumerated(EnumType.ORDINAL)
     private ProductCategory type;
 
-    @Indexed
     private String category;
 
     private Double rating;
@@ -63,14 +68,16 @@ public class Product extends AbstractTimestampEntity implements Serializable {
     // Venues only
     private String location;
 
+    @Enumerated(EnumType.ORDINAL)
     private PriceCategory priceCategory;
 
+    @Enumerated(EnumType.ORDINAL)
     private Authority authority;
 
     // Temp
-    @Indexed(unique = true)
     private Long randomID;
-
-    private ConcurrentBit concurrentBit = ConcurrentBit.UNPROCESSED;
+    
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private Set<Review> reviews;
 
 }

@@ -127,7 +127,6 @@ public class AmazonProductCrawler {
 
                 product.setAuthority(Authority.AMAZON);
                 product.setType(productCategory);
-                product.setTimestamp(new Date());
 
                 extractName(productContainer, product);
                 extractRating(productContainer, product);
