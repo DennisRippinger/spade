@@ -252,6 +252,8 @@ public class ImportDataProducer implements Callable<Boolean> {
         user.setAuthority(Authority.AMAZON);
         product.setAuthority(Authority.AMAZON);
 
+        reviewCounter++;
+        
         // Reduce output noise
         Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
         if (rand == 500) {

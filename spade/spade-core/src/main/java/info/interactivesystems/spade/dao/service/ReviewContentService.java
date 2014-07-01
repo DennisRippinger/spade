@@ -29,7 +29,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 /**
- * Service for Review, Product and User Dao layer.
+ * Service for Review, Product and User DAO layer.
  * 
  * @author Dennis Rippinger
  */
@@ -76,6 +76,12 @@ public class ReviewContentService {
         productDao.delete(product);
     }
 
+    /**
+     * Selects a Product by a incremented number.
+     * 
+     * @param id the unique number.
+     * @return a product.
+     */
     public Product findByID(Integer id) {
         return productDao.findByID(id);
     }
