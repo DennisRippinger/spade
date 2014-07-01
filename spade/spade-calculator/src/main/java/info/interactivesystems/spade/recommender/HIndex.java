@@ -99,7 +99,7 @@ public class HIndex {
     private List<Product> findAllProducts(List<Review> reviewsFromUser) {
         List<Product> result = new ArrayList<Product>();
         for (Review review : reviewsFromUser) {
-            Product product = service.findProduct(review.getProduct());
+            Product product = review.getProduct();
             result.add(product);
         }
         return result;

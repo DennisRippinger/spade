@@ -118,7 +118,7 @@ public class ReviewHistoryCrawler {
         userID = userID.replace("/gp/pdp/profile/", "");
         userID = userID.replace("/ref=cm_cr_pr_pdp", "");
 
-        review.setAuthorId(userID);
+        //review.setAuthorId(userID);
     }
 
     private void extractDate(DomElement domReview, Review review) {

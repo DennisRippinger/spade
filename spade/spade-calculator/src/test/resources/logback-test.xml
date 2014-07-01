@@ -7,7 +7,7 @@
 		</layout>
 	</appender>
 
-	<logger name="info.interactivesystems" level="ALL" />
+	<logger name="info.interactivesystems" level="INFO" />
 
 	<!-- Reduce Noise -->
 	<logger name="org.hibernate" level="ERROR" />

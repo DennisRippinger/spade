@@ -14,6 +14,8 @@
  */
 package info.interactivesystems.spade.importer;
 
+import info.interactivesystems.spade.AmazonImport;
+
 import java.io.File;
 
 import javax.annotation.Resource;
@@ -30,14 +32,14 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations = { "classpath:beans.xml" })
 public class AmazonImportTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private AmazonImport importer;
+	@Resource
+	private AmazonImport importer;
 
-    @Test
-    public void amazonImporterTest() {
-        File amazonFile = new File("/Volumes/Extended/Thesis/all.txt");
+	@Test
+	public void amazonImporterTest() {
+		File amazonFile = new File("E:\\all.txt");
 
-        importer.importAmazonDataset(amazonFile);
-    }
+		importer.importAmazonDataset(amazonFile);
+	}
 
 }

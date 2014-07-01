@@ -26,6 +26,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -40,44 +42,45 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Products")
+@Table(name = "Products", indexes = { @Index(columnList = "randomID") })
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 7936029047258589542L;
+	private static final long serialVersionUID = 7936029047258589542L;
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    private String name;
+	@Lob
+	private String name;
 
-    @Enumerated(EnumType.ORDINAL)
-    private ProductCategory type;
+	@Enumerated(EnumType.ORDINAL)
+	private ProductCategory type;
 
-    private String category;
+	private String category;
 
-    private Double rating;
+	private Double rating;
 
-    private String imageUrl;
+	private String imageUrl;
 
-    private String source;
+	private String source;
 
-    private Double price;
+	private Double price;
 
-    private Integer noOfReviews;
+	private Integer noOfReviews;
 
-    // Venues only
-    private String location;
+	// Venues only
+	private String location;
 
-    @Enumerated(EnumType.ORDINAL)
-    private PriceCategory priceCategory;
+	@Enumerated(EnumType.ORDINAL)
+	private PriceCategory priceCategory;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Authority authority;
+	@Enumerated(EnumType.ORDINAL)
+	private Authority authority;
 
-    // Temp
-    private Long randomID;
-    
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Review> reviews;
+	// Temp
+	private Long randomID;
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	private Set<Review> reviews;
 
 }

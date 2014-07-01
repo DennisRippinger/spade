@@ -17,9 +17,11 @@ package info.interactivesystems.spade.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -41,61 +43,62 @@ public class Review implements Serializable {
     private static final long serialVersionUID = -2877180343613831483L;
 
     @Id
-    private String id; //a
+    private String id; 
 
-    private String authorId; //a
+    @Lob
+    private String content; 
 
-    private String content; //a
+    private Double rating; 
 
-    private Double rating; //a
+    private Date reviewDate; 
 
-    private Date reviewDate; //a
-
-    private String source; //a
-    
-    private String category;
+    private String source; 
 
     // Amazon Specific
 
-    private String title; //a
+    @Lob
+    private String title; 
 
-    private Integer comments;//a
+    private Integer comments;
 
-    private Integer helpfulVotes; //a
+    private Integer helpfulVotes; 
 
-    private Integer totalVotes; //a
-
-    private Boolean verified = false;  //a
-
-    // private String category;
+    private Integer totalVotes; 
 
     // Yelp specific
-    private Integer checkins; //a
+    private Integer checkins; 
 
-    private Integer voteUseful; //a
+    private Integer voteUseful; 
 
-    private Integer voteFunny; //a
+    private Integer voteFunny; 
 
-    private Integer voteCool; //a
+    private Integer voteCool; 
 
     // Calculation Values
 
-    private Double ari; //a
+    private Double ari; 
 
-    private Double gfi; //a
+    private Double gfi; 
 
-    private Double density; //a
+    private Double density; 
     
     private Double densityRelation;
 
-    private Integer wordCount; //a
+    private Integer wordCount; 
 
-    private String nilsimsa; //a
+    private String nilsimsa; 
 
-    private Double variance; //a
+    private Double variance; 
     
-    // Key Mapping
+    @Column(name="uniquee")
+    private boolean unique;
+    
+    // Key Mappings
     @ManyToOne
     @JoinColumn(name = "Product_fk")
     private Product product;
+    
+    @ManyToOne
+    @JoinColumn(name = "User_fk")
+    private User user;
 }

@@ -18,48 +18,45 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 import javax.persistence.PersistenceException;
-import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
 
 /**
  * The Interface GenericDao. Offers generic methods for all entities.
  * 
- * @param <T> the desired type.
+ * @param <T>
+ *            the desired type.
  * @author Dennis Rippinger
  */
 public abstract class AbstractDao<T> {
 
-    @Resource
-    protected SessionFactory sessionFactory;
+	@Resource
+	protected SessionFactory sessionFactory;
 
-    protected Class<T> entityClass;
+	protected Class<T> entityClass;
 
-    public AbstractDao(Class<T> clazz) {
-        this.entityClass = clazz;
-    }
+	public AbstractDao(Class<T> clazz) {
+		this.entityClass = clazz;
+	}
 
-    @SuppressWarnings("unchecked")
-    public T find(Serializable id) {
-        if (id == null) {
-            throw new PersistenceException("ID must not be null");
-        }
-        return (T) sessionFactory.getCurrentSession().get(entityClass, id);
-    }
+	@SuppressWarnings("unchecked")
+	public T find(Serializable id) {
+		if (id == null) {
+			throw new PersistenceException("ID must not be null");
+		}
+		return (T) sessionFactory.getCurrentSession().get(entityClass, id);
+	}
 
-    @Transactional
-    public void save(T entity) {
-        sessionFactory.getCurrentSession().save(entity);
-    }
+	public void save(T entity) {
+		sessionFactory.getCurrentSession().saveOrUpdate(entity);
+	}
 
-    @Transactional
-    public void update(T entity) {
-        sessionFactory.getCurrentSession().update(entity);
-    }
+	public void update(T entity) {
+		sessionFactory.getCurrentSession().saveOrUpdate(entity);
+	}
 
-    @Transactional
-    public void delete(T entity) {
-        sessionFactory.getCurrentSession().delete(entity);
-    }
+	public void delete(T entity) {
+		sessionFactory.getCurrentSession().delete(entity);
+	}
 
 }

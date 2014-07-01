@@ -62,7 +62,7 @@ public class HIndexResolver {
         Review mostVarianceReview = null;
 
         for (Review review : reviewsFromUser) {
-            Product currentProduct = service.findProduct(review.getProduct());
+            Product currentProduct = review.getProduct();
             Double tmp = review.getRating() - currentProduct.getRating();
             tmp = Math.abs(tmp);
             review.setVariance(tmp);

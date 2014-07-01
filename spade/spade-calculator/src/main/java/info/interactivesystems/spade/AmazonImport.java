@@ -128,6 +128,7 @@ public class AmazonImport {
     }
 
     private void persist(User user, Product product, Review review) {
+    	
         if (!contentService.checkIfProductExists(product.getId())) {
             product.setRandomID(productCounter++);
             contentService.saveProduct(product);
@@ -168,9 +169,17 @@ public class AmazonImport {
 
         String nilsimsaValue = nilsimsa.calculateNilsima(review.getContent());
         review.setNilsimsa(nilsimsaValue);
+        
+        Double densityRelation = calclateDensity(review);
+        review.setDensityRelation(densityRelation);
+        
     }
 
-    private void extractReviewText(String line, Review review) {
+    private Double calclateDensity(Review review) {
+		return review.getDensity() * Math.log(review.getWordCount());
+	}
+
+	private void extractReviewText(String line, Review review) {
         if (line.startsWith(REVIEW_TEXT)) {
             try {
                 String text = line.replaceFirst(REVIEW_TEXT, "");
@@ -244,8 +253,8 @@ public class AmazonImport {
         if (line.startsWith(REVIEW_USERID)) {
             String userID = line.replaceFirst(REVIEW_USERID, "");
 
-            review.setAuthorId(userID);
             user.setId(userID);
+            review.setUser(user);
         }
     }
 

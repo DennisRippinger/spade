@@ -42,7 +42,6 @@ public class ReviewDaoTest extends AbstractTestNGSpringContextTests {
     @BeforeTest
     private void getDemoReview() {
         Review result = new Review();
-        result.setAuthorId("12345ABC");
         result.setContent("Text String");
         result.setHelpfulVotes(5);
         result.setId("AED12345");

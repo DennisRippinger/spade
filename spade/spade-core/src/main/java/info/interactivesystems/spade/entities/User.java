@@ -17,11 +17,16 @@ package info.interactivesystems.spade.entities;
 import info.interactivesystems.spade.util.Authority;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -36,7 +41,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "Users")
+@Table(name = "Users", indexes = { @Index(columnList = "randomID") })
 public class User implements Serializable {
 
     private static final long serialVersionUID = 7916895135811744472L;
@@ -44,6 +49,7 @@ public class User implements Serializable {
     @Id
     private String id;
 
+    @Lob
     private String name;
 
     private Integer ranking;
@@ -64,5 +70,8 @@ public class User implements Serializable {
     private Double length;
 
     private Long randomID;
+    
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private Set<Review> reviews;
 
 }

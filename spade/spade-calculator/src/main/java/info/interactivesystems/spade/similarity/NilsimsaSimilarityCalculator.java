@@ -115,7 +115,7 @@ public class NilsimsaSimilarityCalculator {
     }
 
     private Boolean calculateSameAuthorshit(Review reviewA, Review reviewB) {
-        return reviewA.getAuthorId().equals(reviewB.getAuthorId());
+        return reviewA.getUser().equals(reviewB.getUser());
     }
 
     private Integer calculateDifference(Date reviewDate, Date reviewDate2) {
