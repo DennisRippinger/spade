@@ -14,9 +14,8 @@
  */
 package info.interactivesystems.spade.importer;
 
-import info.interactivesystems.spade.AmazonImport;
-
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Resource;
 
@@ -36,8 +35,8 @@ public class AmazonImportTest extends AbstractTestNGSpringContextTests {
 	private AmazonImport importer;
 
 	@Test
-	public void amazonImporterTest() {
-		File amazonFile = new File("E:\\all.txt");
+	public void amazonImporterTest() throws InterruptedException, ExecutionException {
+		File amazonFile = new File("/Volumes/Extended/Thesis/all.txt");
 
 		importer.importAmazonDataset(amazonFile);
 	}

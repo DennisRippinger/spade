@@ -37,7 +37,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Reviews")
+@Table(name = "reviews")
 public class Review implements Serializable {
 
     private static final long serialVersionUID = -2877180343613831483L;

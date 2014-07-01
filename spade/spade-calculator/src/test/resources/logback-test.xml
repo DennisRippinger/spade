@@ -10,9 +10,9 @@
 	<logger name="info.interactivesystems" level="INFO" />
 
 	<!-- Reduce Noise -->
-	<logger name="org.hibernate" level="ERROR" />
+	<logger name="org.hibernate" level="INFO" />
 	<logger name="com.gargoylesoftware" level="ERROR" />
-	<logger name="com.mchange.v2.c3p0" level="ERROR" />
+	<logger name="com.mchange.v2.c3p0" level="INFO" />
 
 	<root level="OFF">
 		<appender-ref ref="STDOUT" />

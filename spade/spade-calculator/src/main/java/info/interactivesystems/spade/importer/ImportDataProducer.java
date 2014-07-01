@@ -1,20 +1,9 @@
 /**
- * Copyright 2014 Dennis Rippinger
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 
  */
-package info.interactivesystems.spade;
+package info.interactivesystems.spade.importer;
 
-import info.interactivesystems.spade.dao.service.ReviewContentService;
+import info.interactivesystems.spade.dto.CombinedData;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
@@ -29,24 +18,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.concurrent.Callable;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Component;
+
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.stereotype.Service;
-
 /**
- * The Class AmazonImport.
- * 
  * @author Dennis Rippinger
+ * 
  */
 @Slf4j
-@Service
-public class AmazonImport {
-
-    private static final Boolean IMPORT_UNKOWN = false;
+@Component
+public class ImportDataProducer implements Callable<Boolean> {
 
     private static final String UNKNOWN = "unknown";
     private static final String PRODUCT_ID = "product/productId: ";
@@ -61,21 +50,26 @@ public class AmazonImport {
     private static final String REVIEW_TEXT = "review/text: ";
 
     @Resource
-    private ReviewContentService contentService;
-
-    @Resource
     private SentenceService sentenceService;
 
     @Resource
     private NilsimsaHash nilsimsa;
 
-    private Integer reviewCounter = 1;
+    @Setter
+    private Integer reviewCounter;
     private Integer errorCounter = 0;
 
-    private Long productCounter = 1l;
-    private Long userCounter = 1l;
+    @Setter
+    private File amazonDataset;
+    
+    @Setter
+    private Boolean hasMore;
 
-    public void importAmazonDataset(File amazondataset) {
+    @Setter
+    private static LinkedBlockingQueue<CombinedData> queue;
+
+    @Override
+    public Boolean call() throws Exception {
 
         User user = new User();
         Product product = new Product();
@@ -83,7 +77,7 @@ public class AmazonImport {
 
         initialize(user, product, review);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(amazondataset))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(amazonDataset))) {
 
             for (String line; (line = br.readLine()) != null;) {
                 if (!line.isEmpty()) {
@@ -103,12 +97,7 @@ public class AmazonImport {
                     review.setProduct(product);
                     calculateMetric(review);
 
-                    try {
-                        persist(user, product, review);
-                    } catch (Exception e) {
-                        errorCounter++;
-                        log.error("Data somehow not parseable", e);
-                    }
+                    queue.put(new CombinedData(user, review, product));
 
                     user = new User();
                     product = new Product();
@@ -125,35 +114,8 @@ public class AmazonImport {
         }
 
         log.info("Error counter = '{}'", errorCounter);
-    }
-
-    private void persist(User user, Product product, Review review) {
-    	
-        if (!contentService.checkIfProductExists(product.getId())) {
-            product.setRandomID(productCounter++);
-            contentService.saveProduct(product);
-        }
-
-        if (!contentService.checkIfUserExists(user.getId())) {
-            if (!user.getId().equals(UNKNOWN)) {
-                user.setRandomID(userCounter++);
-                contentService.saveUser(user);
-            } else if (IMPORT_UNKOWN) {
-                contentService.saveUser(user);
-            } else {
-                log.trace("Skipping unknown user");
-            }
-        }
-
-        if (!user.getId().equals(UNKNOWN)) {
-            String id = String.format("R%010d", reviewCounter++);
-            review.setId(id);
-            contentService.saveReview(review);
-        } else if (IMPORT_UNKOWN) {
-            String id = String.format("R%010d", reviewCounter++);
-            review.setId(id);
-            contentService.saveReview(review);
-        }
+        hasMore = false;
+        return hasMore;
     }
 
     private void calculateMetric(Review review) {
@@ -169,17 +131,17 @@ public class AmazonImport {
 
         String nilsimsaValue = nilsimsa.calculateNilsima(review.getContent());
         review.setNilsimsa(nilsimsaValue);
-        
+
         Double densityRelation = calclateDensity(review);
         review.setDensityRelation(densityRelation);
-        
+
     }
 
     private Double calclateDensity(Review review) {
-		return review.getDensity() * Math.log(review.getWordCount());
-	}
+        return review.getDensity() * Math.log(review.getWordCount());
+    }
 
-	private void extractReviewText(String line, Review review) {
+    private void extractReviewText(String line, Review review) {
         if (line.startsWith(REVIEW_TEXT)) {
             try {
                 String text = line.replaceFirst(REVIEW_TEXT, "");
@@ -297,5 +259,6 @@ public class AmazonImport {
         }
 
     }
+
 
 }
