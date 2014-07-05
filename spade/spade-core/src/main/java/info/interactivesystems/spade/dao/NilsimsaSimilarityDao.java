@@ -18,6 +18,8 @@ import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Repository;
  * @author Dennis Rippinger
  */
 @Repository
+@Transactional
 public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
     public NilsimsaSimilarityDao() {

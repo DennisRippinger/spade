@@ -45,7 +45,7 @@ public class ReviewDao extends AbstractDao<Review> {
 
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(Review.class);
-        criteria.add(Restrictions.eq("product", productID));
+        criteria.add(Restrictions.eq("review.Product_fk", productID));
 
         return (List<Review>) criteria.list();
     }
@@ -54,8 +54,9 @@ public class ReviewDao extends AbstractDao<Review> {
     public List<Review> findReviewFromUser(String userID) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(Review.class);
-        criteria.add(Restrictions.eq("authorId", userID));
-
+        criteria.add(Restrictions.eq("user.id", userID));
+        criteria.add(Restrictions.eq("unique", true));
+        
         return criteria.list();
     }
 

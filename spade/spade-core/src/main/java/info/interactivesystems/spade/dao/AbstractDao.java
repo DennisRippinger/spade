@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import javax.annotation.Resource;
 import javax.persistence.PersistenceException;
+import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
 
@@ -28,6 +29,7 @@ import org.hibernate.SessionFactory;
  *            the desired type.
  * @author Dennis Rippinger
  */
+@Transactional
 public abstract class AbstractDao<T> {
 
 	@Resource

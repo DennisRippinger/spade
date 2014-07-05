@@ -58,14 +58,21 @@ public class AmazonCategoryImport {
         try (BufferedReader br = new BufferedReader(new FileReader(amazondataset))) {
             Product product = null;
             for (String line; (line = br.readLine()) != null;) {
+                if (logCounter <= 4810641) {
+                    logCounter++;
+                    continue;
+                }
+
                 if (line.startsWith("  ") && idGathered) {
 
                     String category = extractProductCategory(line);
 
                     incrementCategoryCount(category);
 
-                    product.setCategory(category);
-                    contentService.saveProduct(product);
+                    if (product != null) {
+                        product.setCategory(category);
+                        contentService.saveProduct(product);
+                    }
 
                     idGathered = false;
                 } else if (!line.startsWith("  ") && !idGathered) {

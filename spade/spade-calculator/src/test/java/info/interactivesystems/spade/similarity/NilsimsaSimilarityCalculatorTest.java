@@ -31,8 +31,30 @@ public class NilsimsaSimilarityCalculatorTest extends AbstractTestNGSpringContex
     @Resource
     private NilsimsaSimilarityCalculator calculator;
 
+    private String[] categories = {
+        "Furniture & Décor",
+        "Collectibles",
+        "Car Electronics",
+        "Purchase Circles",
+        "Camera & Photo",
+        "Office & School Supplies",
+        "GPS & Navigation",
+        "MP3 Players & Accessories",
+        "Computers",
+        "Home Improvement",
+        "Miscellaneous",
+        "Appliances",
+        "Kitchen & Dining",
+        "All Electronics",
+        "Magazine Subscriptions",
+        "Arts"
+    };
+
     @Test
     public void calculateSimilarityBetweenUniqueReviews() {
-        calculator.calculateSimilarityBetweenUniqueReviews("Books");
+        for (String category : categories) {
+            calculator.calculateSimilarityBetweenUniqueReviews(category);
+        }
+
     }
 }

@@ -55,7 +55,8 @@ public class NilsimsaSimilarityCalculator {
      * Calculate similarity between unique reviews.
      */
     public void calculateSimilarityBetweenUniqueReviews(String category) {
-        List<Review> uniqueReviews = service.findReviewsByCategory(category);
+        List<Review> uniqueReviews = service.findProductsByCategory(category);
+
         Integer start = 0;
         Integer counter = 0;
 
@@ -64,6 +65,7 @@ public class NilsimsaSimilarityCalculator {
         for (Review outerReview : uniqueReviews) {
 
             for (Integer current = start; current < uniqueReviews.size(); current++) {
+
                 Review innerReview = uniqueReviews.get(current);
                 if (innerReview.getId().equals(outerReview.getId())) {
                     continue;
@@ -72,11 +74,11 @@ public class NilsimsaSimilarityCalculator {
                 Integer sameBits = hash.compare(outerReview.getNilsimsa(), innerReview.getNilsimsa());
                 Double percentage = sameBits / 128.0;
 
-                if (percentage >= 0.70) {
+                if (percentage >= 0.80) {
                     NilsimsaSimilarity similarity = new NilsimsaSimilarity();
 
-                    similarity.setReviewA(outerReview.getId());
-                    similarity.setReviewB(innerReview.getId());
+                    similarity.setReviewA(outerReview);
+                    similarity.setReviewB(innerReview);
                     similarity.setSimilarity(percentage);
                     similarity.setCategory(category);
 
@@ -87,6 +89,9 @@ public class NilsimsaSimilarityCalculator {
                     similarity.setDayDistance(daysBetween);
                     similarity.setSameAuthor(sameAuthor);
                     similarity.setWordDistance(wordDistance);
+
+                    similarity.setUserA(outerReview.getUser());
+                    similarity.setUserB(innerReview.getUser());
 
                     nisimsaDao.save(similarity);
                     counter++;

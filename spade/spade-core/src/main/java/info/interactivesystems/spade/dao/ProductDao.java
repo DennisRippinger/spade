@@ -15,6 +15,10 @@
 package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Product;
+import info.interactivesystems.spade.entities.Review;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -38,12 +42,29 @@ public class ProductDao extends AbstractDao<Product> {
         return find != null;
     }
 
-    public Product findByID(Integer id) {
+    public Product findByID(Long id) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(Product.class);
         criteria.add(Restrictions.eq("randomID", id));
 
         return (Product) criteria.uniqueResult();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Review> findReviewsByCategory(String category) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(Product.class);
+        criteria.add(Restrictions.eq("category", category));
+
+        List<Review> result = new LinkedList<>();
+        for (Product product : (List<Product>) criteria.list()) {
+            for (Review review : product.getReviews())
+                if (review.isUnique()) {
+                    result.add(review);
+                }
+        }
+
+        return result;
     }
 
 }

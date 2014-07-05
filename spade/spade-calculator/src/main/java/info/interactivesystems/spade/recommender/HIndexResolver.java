@@ -15,6 +15,7 @@
 package info.interactivesystems.spade.recommender;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Product;
@@ -35,6 +36,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class HIndexResolver {
 
+    private static final Integer MAXSIZE = 2441053;
+
     @Resource
     private ReviewContentService service;
 
@@ -43,23 +46,24 @@ public class HIndexResolver {
      * 
      * @param maxIndex the max index
      */
-    public void resolveHIndex(Double maxIndex) {
-        List<User> users = service.findUsersWithHIndex(maxIndex);
-        log.info("Found '{}' Users with an hIndex higher than '{}'", users.size(), maxIndex);
+    public void resolveHIndex() {
+        for (Long count = 1l; count <= MAXSIZE; count++) {
+            User user = service.findUserByID(count);
 
-        for (User user : users) {
             List<Review> reviewsFromUser = service.findReviewFromUser(user.getId());
-            Review review = getMaximumVariance(reviewsFromUser);
-            service.saveReview(review);
+            calculateMaximumVariance(reviewsFromUser);
+            
+            Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
+            if (rand == 500) {
+                log.info("Current Item ID '{}'", count);
+            }
         }
 
-        log.info("Finished calculating relevant reviews of HIndex");
+        log.info("Finished calculating Variances related to HIndex");
 
     }
 
-    private Review getMaximumVariance(List<Review> reviewsFromUser) {
-        Double variance = 0.0;
-        Review mostVarianceReview = null;
+    private void calculateMaximumVariance(List<Review> reviewsFromUser) {
 
         for (Review review : reviewsFromUser) {
             Product currentProduct = review.getProduct();
@@ -67,15 +71,9 @@ public class HIndexResolver {
             tmp = Math.abs(tmp);
             review.setVariance(tmp);
 
-            if (tmp > variance) {
-                variance = tmp;
-                mostVarianceReview = review;
-            }
-
             service.saveReview(review);
         }
 
-        return mostVarianceReview;
     }
 
 }

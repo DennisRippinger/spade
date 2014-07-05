@@ -14,6 +14,6 @@ public class HIndexResolverTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void resolveHIndex() {
-        resolver.resolveHIndex(5.0);
+        resolver.resolveHIndex();
     }
 }

@@ -4,7 +4,7 @@ import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
 
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Resource;
@@ -25,14 +25,16 @@ public class AmazonCount {
     private ReviewContentService service;
 
     public void countNumberOfReviews() {
-        for (Integer count = 1; count <= MAXSIZE; count++) {
+        for (Long count = 1l; count <= MAXSIZE; count++) {
             Product currentProduct = service.findByID(count);
+            
+            if(currentProduct != null){
+                Set<Review> reviews = currentProduct.getReviews();
+                currentProduct.setNoOfReviews(reviews.size());
+                currentProduct.setRating(getAverage(reviews));
 
-            List<Review> reviews = service.findReviewByProductID(currentProduct.getId());
-            currentProduct.setNoOfReviews(reviews.size());
-            currentProduct.setRating(getAverage(reviews));
-
-            service.saveProduct(currentProduct);
+                service.saveProduct(currentProduct); 
+            }
 
             Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
             if (rand == 500) {
@@ -47,7 +49,7 @@ public class AmazonCount {
      * @param reviews
      * @return
      */
-    public Double getAverage(List<Review> reviews) {
+    public Double getAverage(Set<Review> reviews) {
         Double numberOfStars = 0.0;
 
         for (Review review : reviews) {

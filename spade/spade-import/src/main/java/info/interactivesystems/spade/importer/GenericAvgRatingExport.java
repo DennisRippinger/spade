@@ -42,7 +42,7 @@ public class GenericAvgRatingExport {
 
     public void exportAvgRating() {
 
-        for (Integer count = 1; count <= MAXSIZE; count++) {
+        for (Long count = 1l; count <= MAXSIZE; count++) {
             Product currentProduct = service.findByID(count);
             String rating = df.format(currentProduct.getRating());
             incrementRatingCount(rating);

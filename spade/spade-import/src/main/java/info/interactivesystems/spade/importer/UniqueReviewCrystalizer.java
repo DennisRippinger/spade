@@ -9,6 +9,7 @@ import info.interactivesystems.spade.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Resource;
@@ -31,16 +32,15 @@ public class UniqueReviewCrystalizer {
     private Integer uniqueCounter = 0;
 
     public void tagUniqueReviews() {
-        for (Long userID = 6l; userID <= 6643669l; userID++) {
-            
-            
+        for (Long userID = 1l; userID <= 6643623; userID++) {
             User currentUser = service.findUserByID(userID);
 
             List<Review> uniqueReviews = new LinkedList<Review>();
 
-            List<Review> reviews = service.findReviewFromUser(currentUser.getId());
+            Set<Review> reviews = currentUser.getReviews();
             for (Review review : reviews) {
                 if (isNew(review, uniqueReviews)) {
+                    review.setUnique(true);
                     uniqueReviews.add(review);
                 }
             }
@@ -63,17 +63,9 @@ public class UniqueReviewCrystalizer {
             }
 
             service.saveUser(currentUser);
-            
-            reviews.removeAll(uniqueReviews);
-            
-            for (Review review : reviews) {
-                service.deleteReview(review);
-            }
 
             uniqueCounter += uniqueReviews.size();
 
-            reviews = null;
-            
             Integer rand = ThreadLocalRandom.current().nextInt(1, 500);
             if (rand == 50) {
                 log.info("Current User No '{}', Unique Items so far '{}'", userID, uniqueCounter);

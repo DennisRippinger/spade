@@ -82,8 +82,12 @@ public class ReviewContentService {
      * @param id the unique number.
      * @return a product.
      */
-    public Product findByID(Integer id) {
+    public Product findByID(Long id) {
         return productDao.findByID(id);
+    }
+
+    public List<Review> findProductsByCategory(String category) {
+        return productDao.findReviewsByCategory(category);
     }
 
     /**
