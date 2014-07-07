@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
+	template="/WEB-INF/templates/error-template.xhtml">
+	<ui:define name="content">
+	
+	<layout:box size="large" title="#{messages['info.error.title']}">
+		<p>
+			#{messages['info.error.explanation']}
+		</p>
+		
+		<p:button outcome="/home.xhtml" value="#{messages['info.error.button.home']}"/>
+	</layout:box>
+	
+		
+	
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>#{pageTitle} - SPADE - Spam Detection and Analysis</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" type="image/png"
+		href="#{request.contextPath}/resources/img/favicon.png" />
+
+	<h:outputStylesheet name="css/style.css" />
+	<h:outputStylesheet name="css/style_text.css" />
+	<h:outputStylesheet name="css/menu.css" />
+	<h:outputStylesheet name="css/prime-addons.css" />
+
+	<ui:insert name="customhead" />
+</h:head>
+<h:body>
+
+	<div class="container">
+
+		<div class="header">
+			<h1>
+				<h:link outcome="/home.xhtml"
+					title="SPADE - Spam Detection and Analysis">
+					SPADE - Spam Detection and Analysis
+				</h:link>
+			</h1>
+		</div>
+
+		<div class="nav">
+			<ul>
+				<li class="current"><h:link outcome="/home.xhtml"
+						styleClass="#{parentId == 'dashboard' ? 'active' : ''}">
+						Dashboard
+					</h:link></li>
+				<li><h:link outcome="/similarities.xhtml"
+						styleClass="#{parentId == 'similarities' ? 'active' : ''}">
+						Similarities
+					</h:link></li>
+				<li><h:link outcome="/about.xhtml"
+						styleClass="#{parentId == 'about' ? 'active' : ''}">
+						About
+					</h:link></li>
+			</ul>
+		</div>
+
+		<div style="clear: both" />
+
+		<div class="content">
+			<ui:insert name="content">
+				Main Content
+			</ui:insert>
+		</div>
+
+
+		<div style="clear: both" />
+
+
+		<div class="footer">
+			<div class="footer-content">
+				<div class="version">
+					SPADE - Spam Detection and Analysis<br />
+					#{version['build.version']} - #{version['build.timestamp']}
+				</div>
+				<div style="clear: both" />
+			</div>
+		</div>
+	</div>
+
+</h:body>
+</html>

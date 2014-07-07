@@ -1,0 +1,213 @@
+/** Adjusted layout of dialogs. */
+.ui-widget-overlay {
+	opacity: 0.6;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-title {
+	font-size: 16px;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar {
+	padding: 4px;
+	padding-left: 9px;
+	background: #F5F5F5;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar-close {
+	margin-top: 0;
+	padding: 5px !important;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-content {
+	padding: 1em;
+}
+
+.ui-dialog .ui-panel .ui-panel-content {
+	padding: 5px;
+}
+
+/** Highlight Color. */
+.ui-inputfield.ui-state-focus,.ui-widget-content .ui-inputfield.ui-state-focus,.ui-widget-header .ui-inputfield.ui-state-focus {
+	border-color: #4e8ab2;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #4e8ab2;
+}
+
+p.actions {
+	text-align: right;
+	margin-top: 1em;
+}
+
+.ui-datatable .ui-datatable-header {
+	padding: 0;
+}
+
+/** Fixes layout of dialog. */
+.ui-dialog-content {
+	width: 100%
+}
+
+.ui-wizard .ui-state-highlight {
+	color: #000;
+}
+
+.ui-paginator {
+	width: 781px !important;
+}
+
+.filter-panel {
+	margin: 0;
+	margin-bottom: 20px;
+	background: #F9FAFB;
+}
+
+.filter-scrollpanel {
+	height: 400px;
+	width: 109%;
+	background: none;
+	border: none;
+	margin-left: -9px;
+}
+
+.filter-tree {
+	width: 100%;
+	height: 95%;
+	background: none;
+	border: none;
+}
+
+.vocabularyTable {
+	margin-top: 8px;
+}
+
+.annotationPropertyTable {
+	margin-top: 20px;
+	padding-bottom: 30px;
+}
+
+.annotationPropertyTable {
+	background-color: #F9FAFB;
+}
+
+.annotationPropertyTable tbody td input {
+	min-width: 80px;
+	max-width: 120px;
+}
+
+.annotationPropertyTable tbody tr.odd {
+	background-color: #FBFCFD;
+}
+
+.annotationPropertyTable tbody tr.even {
+	background-color: #F2F5F7;
+}
+
+.annotationPropertyTable tbody td {
+	padding: 3px;
+}
+
+/** disable overflow to show rotated headers. */
+.annotationPropertyTable thead tr th {
+	padding-left: 20px;
+	background-color: #F9FAFB;
+	overflow: visible;
+	position: relative;
+	min-width: 140px;
+	max-width: 200px;
+	text-align: left;
+	padding: 3px;
+}
+
+.annotationPropertyTable thead tr th span {
+
+}
+
+.annotationPropertyTable thead th, .annotationPropertyTable tbody td, .annotationPropertyTable tfoot td {
+    border: none !important;
+}
+
+/** Extra styling for category browsing */
+#box2\:ontologyCategoryTreeForm\:tabView\:categoryTreeTab1,#box2\:ontologyCategoryTreeForm\:tabView\:categoryTreeTab2 {
+	padding: 0;
+	padding-top: 0.5em;
+}
+
+.redColoredPanel .ui-panel-titlebar {
+	color: red;
+}
+
+.conflict-panel {
+	height: 150px;
+}
+
+.conflict-scrollpanel {
+	height: 120px;
+	width: 106%;
+	background: none;
+	border: none;
+	margin-left: -9px;
+	margin-top: -7px;
+}
+
+.ic-tooltip {
+	margin-left: 5px;
+}
+
+.product-instance-conflict {
+	list-style: none;
+	padding-left: 0;
+}
+
+.product-instance-conflict li {
+	padding: 4px;
+	border-bottom: 1px solid #ededed;
+}
+
+.product-instance-conflict li.even {
+	background-color: #EDEDED
+}
+
+.conflict {
+	color: #da1c1c;
+}
+
+/* remove padding from datatable headers with invisible content. */
+#browseForm\:instanceTable th.ui-datatable-header {
+	padding: 0;
+}
+
+#ontologyBrowseForm\:ontologyTable th.ui-datatable-header {
+	padding: 0;
+}
+
+.dq-iframe {
+	border: 0;
+	overflow: hidden;
+}
+
+/** a little bit more contrast to input boxes. */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.35);
+}
+
+/** Contrast for checkbox. */
+.ui-datatable-data .ui-chkbox .ui-state-active, .ui-datatable-data .ui-radiobutton .ui-state-active{
+	background-color: #757575;
+}
+
+/** Correct font size in todo box. */
+.ui-scrollpanel-content {
+    font-size: 0.9em;
+}
+
+/** Fixes data table column width. */
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    white-space: normal !important;
+}
+
+.checkLabel{
+	margin-left: 3px;
+}
+
+.ui-tabs .ui-tabs-panel {
+	padding: 0 !important;
+}

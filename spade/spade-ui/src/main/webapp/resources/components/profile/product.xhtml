@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<body>
+
+<composite:interface>
+	<composite:attribute name="dialogIdDeleteSheet" required="true" type="java.lang.String" />
+	<composite:attribute name="dialogIdEdit" required="true" type="java.lang.String" />
+	<composite:attribute name="dialogIdX" required="true" type="java.lang.String" />
+	<composite:attribute name="language" required="true" type="java.lang.String" />
+	<composite:attribute name="productSheet" required="true" type="org.opdm.semantic.web.model.ProductSheetModel" />
+</composite:interface>
+
+<composite:implementation>
+	
+	<p:panel widgetVar="#{cc.attrs.productSheet.viewId}" id="#{cc.attrs.productSheet.viewId}id" styleClass="productSheet" style="width: 97%">
+	
+			<h2>
+				#{cc.attrs.productSheet.product.getLabel(cc.attrs.language).value}
+			</h2>
+
+			<div class="productSheet-image-vertical">
+				<p:lightBox>
+					<h:outputLink value="#{cc.attrs.productSheet.relativeDepictionForLightBox}" title="#{cc.attrs.productSheet.product.getLabel(cc.attrs.language).value}">    
+						<h:graphicImage value="#{cc.attrs.productSheet.relativeDepiction}" alt="#{cc.attrs.productSheet.product.getLabel(cc.attrs.language).value}"  />
+					</h:outputLink>
+				</p:lightBox>
+			</div>
+			
+			<h3>#{messages['info.productSheet.field.title.productType']}</h3>
+			<div class="fieldSmall">
+				<div class="fieldControl">
+				</div>
+				<div class="fieldContent">
+					#{cc.attrs.productSheet.getLabel(cc.attrs.language).value}
+				</div>
+			</div>
+			
+			
+			<h3>#{messages['info.productSheet.field.title.description']}</h3>
+			<div class="fieldSmall">
+				<div class="fieldContent">
+					#{cc.attrs.productSheet.getComment(cc.attrs.language).value}
+				</div>
+				<div class="fieldControl">
+				</div>
+			</div>
+			<!--  
+			<h3>#{messages['info.productSheet.field.title.synonyms']}</h3>
+			<div class="field">
+				<div class="fieldContent">
+					<ui:repeat var="label" value="#{cc.attrs.productSheet.getAltLabels(cc.attrs.language).toArray()}" varStatus="count">
+						#{label.value}<h:outputText value=", " rendered="#{!count.last}" />
+					</ui:repeat>
+				</div>
+				<div class="fieldControl">
+				</div>
+			</div>
+
+
+			<h3>#{messages['info.productSheet.field.title.category']}</h3>
+			<div class="field">
+				<div class="fieldContent">
+					<h:outputText value="#{cc.attrs.productSheet.categoryString}" />
+				</div>
+				<div class="fieldControl">
+				</div>
+			</div> 
+			-->
+			<div data-step="2/2" data-intro="#{messages['info.profile.editor.tour2']}" data-position="top">
+			<h3>Annotation Properties:</h3>
+			
+			
+			<p:messages autoUpdate="true" />
+			
+			<p:scrollPanel style="width:100%" scrollMode="native" id="propertyScrollPanel">  
+			<div class="ui-datatable ui-widget annotationPropertyTable">
+			<table class="annotationPropertyTable">
+				<thead>
+					<tr>
+						<th style="width: 150px">
+							<span>Property</span>
+						</th>
+						<ui:repeat value="#{cc.attrs.productSheet.usedAnnotations}" var="annotation">
+							<th style="border: none !important;">
+								<span>#{annotation.getLabel('en').value}</span>
+							</th>
+						</ui:repeat>
+						<td>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+				<ui:repeat value="#{cc.attrs.productSheet.rowModel}" var="row" varStatus="status">
+						<tr class="#{status.index mod 2 == 0 ? 'odd' : 'even'}">
+							<td>
+								#{row.property.getLabel('en').value}
+							</td>
+							<ui:repeat value="#{row.orderedAnnotations}" var="annotation">
+								<td>
+									<p:inputText value="#{annotation.value}" 
+												 style="width: #{annotation.value.length() lt 5 ? '50' : '120' }px" 
+												 rendered="#{annotation['class'].name != 'org.opdm.semantic.web.util.AnnotationPropertyStub' }"
+												 onchange="wasChanged = true; updateForm();">
+									</p:inputText>
+									
+									<p:commandButton action="#{profileEditorBean.showAnnotationPropertyDialog(row, annotation)}" 
+												rendered="#{annotation['class'].name eq 'org.opdm.semantic.web.util.AnnotationPropertyStub' }"
+												icon="ui-icon ui-icon-plus" update=":editAreaForm"/>
+												  
+									<p:commandButton action="#{profileEditorBean.showDeleteAnnotationPropertyDialog(row, annotation)}" 
+												rendered="#{annotation['class'].name != 'org.opdm.semantic.web.util.AnnotationPropertyStub' }"
+												icon="ui-icon ui-icon-trash" update=":editAreaForm"/>
+								</td>
+							</ui:repeat>
+							<td style="width: 56px">
+								<p:commandButton action="#{profileEditorBean.showAnnotationPropertyDialog(row)}"  value="Add" icon="ui-icon ui-icon-plus" />
+							</td>
+						</tr>
+				</ui:repeat>
+				</tbody>
+			</table>
+							
+			<p></p>
+			</div>
+			</p:scrollPanel>
+			</div>
+			<!-- 
+			<p>
+				<em>Note: due some technical restrictions usability features like row sorting will be adder in later prototypes.</em>		
+			</p>
+			 -->
+
+			
+			
+	</p:panel>
+
+</composite:implementation>
+
+</body>
+</html>
