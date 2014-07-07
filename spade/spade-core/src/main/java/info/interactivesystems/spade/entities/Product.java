@@ -42,7 +42,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Products", indexes = { @Index(columnList = "randomID"), @Index(columnList = "category") })
+@Table(name = "products", indexes = { @Index(columnList = "randomID"), @Index(columnList = "category") })
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 7936029047258589542L;
