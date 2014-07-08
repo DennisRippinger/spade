@@ -14,6 +14,6 @@ public class HIndexTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void calculateHIndex() {
-        hIndex.calculateHIndex(1l, 2441053L);
+        hIndex.calculateHIndex(2441053L, 6643623L);
     }
 }
