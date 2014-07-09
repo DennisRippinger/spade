@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
 /**
  * @author Dennis Rippinger
@@ -35,23 +34,15 @@ import org.aspectj.lang.annotation.Before;
 @Aspect
 public class SimilaritySorterAspect {
 
-    @Before("execution(* info.interactivesystems.spade.dao.NilsimsaSimilarityDao.find(..))")
-    public void logBefore(JoinPoint joinPoint) {
-        log.info("Before Nilsimsa Find: '{}'", joinPoint.getSignature().getName());
-    }
-
     @SuppressWarnings("unchecked")
     @AfterReturning(pointcut = "execution(* info.interactivesystems.spade.dao.NilsimsaSimilarityDao.find(..))", returning = "result")
     public Object sortAfterReturn(JoinPoint joinPoint, Object result) {
 
-        if (!joinPoint.getSignature().getName().equals("getCategories")) {
-            List<NilsimsaSimilarity> similarities = (List<NilsimsaSimilarity>) result;
+        List<NilsimsaSimilarity> similarities = (List<NilsimsaSimilarity>) result;
 
-            return orderSimilarities(similarities);
-        }
+        log.debug("Sorting '{}' similarities", similarities.size());
 
-        return result;
-
+        return orderSimilarities(similarities);
     }
 
     /**
@@ -61,6 +52,7 @@ public class SimilaritySorterAspect {
      * @return the list
      */
     public List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> list) {
+        Integer counter = 0;
         for (NilsimsaSimilarity nilsimsaSimilarity : list) {
             if (nilsimsaSimilarity.getReviewA().getReviewDate().after(nilsimsaSimilarity.getReviewB().getReviewDate())) {
                 Review first = nilsimsaSimilarity.getReviewB();
@@ -73,9 +65,13 @@ public class SimilaritySorterAspect {
                 nilsimsaSimilarity.setUserB(lastUser);
                 nilsimsaSimilarity.setReviewA(first);
                 nilsimsaSimilarity.setReviewB(last);
+
+                counter++;
             }
 
         }
+
+        log.debug("Sorted '{}' items", counter);
 
         return list;
     }
