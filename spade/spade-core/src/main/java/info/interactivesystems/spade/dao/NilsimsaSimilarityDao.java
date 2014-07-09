@@ -39,14 +39,6 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         super(NilsimsaSimilarity.class);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<NilsimsaSimilarity> findWithinRange(Double similarity) {
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(NilsimsaSimilarity.class);
-        criteria.add(Restrictions.ge("similarity", similarity));
-
-        return (List<NilsimsaSimilarity>) criteria.list();
-    }
 
     @SuppressWarnings("unchecked")
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
