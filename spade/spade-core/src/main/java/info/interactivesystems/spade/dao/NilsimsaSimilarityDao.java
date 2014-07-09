@@ -16,11 +16,13 @@ package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -52,10 +54,54 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
             .createCriteria(NilsimsaSimilarity.class);
         criteria.add(Restrictions.ge("similarity", similarity))
             .add(Restrictions.eq("sameAuthor", sameAuthor))
-            .add(Restrictions.ge("wordDistance", wordDistance));
+            .add(Restrictions.le("wordDistance", wordDistance));
         criteria.setMaxResults(limit);
 
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
+    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer limit) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+        criteria.add(Restrictions.ge("similarity", similarity))
+            .add(Restrictions.eq("sameAuthor", sameAuthor));
+        criteria.setMaxResults(limit);
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<NilsimsaSimilarity> find(Double similarity, String category, Integer limit) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+        criteria.add(Restrictions.ge("similarity", similarity))
+            .add(Restrictions.eq("category", category));
+        criteria.setMaxResults(limit);
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<NilsimsaSimilarity> find(Double similarity, Integer limit) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+        criteria.add(Restrictions.ge("similarity", similarity));
+        criteria.setMaxResults(limit);
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> getCategories() {
+        List<String> result = new ArrayList<>();
+        result.add("All");
+
+        SQLQuery distinctQuery = sessionFactory.getCurrentSession()
+            .createSQLQuery("SELECT DISTINCT(category) FROM spade.similarities;");
+
+        result.addAll(distinctQuery.list());
+
+        return result;
+    }
 }

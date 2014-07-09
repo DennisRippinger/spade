@@ -17,6 +17,11 @@ img {
 	margin-bottom: 20px;
 }
 
+#reviewBox {
+	font-size: medium;
+	font-family: Bitter;
+}
+
 .header {
 	width: 100%;
 	background: #fff;

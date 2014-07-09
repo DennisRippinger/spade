@@ -27,7 +27,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-
 		<!-- Primefaces -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
@@ -42,6 +41,12 @@
 		</dependency>
 
 		<!-- Servlet Specific -->
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.7</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.el</groupId>

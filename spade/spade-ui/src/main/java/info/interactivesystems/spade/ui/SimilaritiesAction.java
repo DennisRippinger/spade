@@ -14,18 +14,21 @@
  */
 package info.interactivesystems.spade.ui;
 
-import java.util.List;
-
 import info.interactivesystems.spade.dao.NilsimsaSimilarityDao;
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.dto.DiffContainer;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.util.DiffCreator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.faces.model.SelectItem;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -35,11 +38,13 @@ import org.springframework.stereotype.Controller;
  * 
  * @author Dennis Rippinger
  */
-@Controller("similaritiesAction")
+@Controller
 @Scope("session")
 public class SimilaritiesAction {
 
     // Resources
+
+    private static final Double SIMILARITY_LIMIT = 0.90;
 
     @Resource
     private ReviewContentService service;
@@ -61,17 +66,55 @@ public class SimilaritiesAction {
     @Getter
     private NilsimsaSimilarity similarPair;
 
+    @Getter
+    @Setter
+    private String currentCategory;
+
+    @Getter
+    private List<SelectItem> categories;
+
     private Integer counter = 0;
 
     @PostConstruct
     private void init() {
-        currentSimilarItem = similarityDao.find(0.85, false, 20, 30);
+        currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, 30);
+
+        categories = new ArrayList<>();
+        for (String category : similarityDao.getCategories()) {
+            SelectItem categoryItem = new SelectItem();
+            categoryItem.setLabel(category);
+            categoryItem.setValue(category);
+            categories.add(categoryItem);
+        }
+
+        next();
+    }
+
+    public void updateCategory() {
+
+        if (currentCategory.equals("All")) {
+            currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, 30);
+        } else {
+            currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, currentCategory, 30);
+        }
+
+        counter = 0;
         next();
     }
 
     public void next() {
-        similarPair = currentSimilarItem.get(counter++);
-        diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
+        if (counter < currentSimilarItem.size()) {
+            similarPair = currentSimilarItem.get(counter++);
+            diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
+        }
+    }
+
+    public void previous() {
+        if (counter > 1) {
+            similarPair = currentSimilarItem.get(--counter);
+            diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
+        }
+
     }
 
 }

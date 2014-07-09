@@ -11,13 +11,101 @@
 
 	<ui:define name="content">
 
-		<div>
-		#{similaritiesAction.
-		
-		
-		</div>
+		<h:form>
 
+			<p:hotkey bind="left" update="@all"
+				actionListener="#{similaritiesAction.previous}" />
+			<p:hotkey bind="right" update="@all"
+				actionListener="#{similaritiesAction.next}" />
 
+			<div>
+				<p:commandButton value="Previous"
+					actionListener="#{similaritiesAction.previous()}" update="@all" />
+				<p:commandButton value="Next"
+					actionListener="#{similaritiesAction.next()}" update="@all" />
+			</div>
+
+			<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel for="categories" value="Category:" />
+				<p:selectOneMenu id="categories"
+					value="#{similaritiesAction.currentCategory}">
+					<f:selectItems value="#{similaritiesAction.categories}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Select Category"
+					actionListener="#{similaritiesAction.updateCategory()}"
+					update="@all" />
+			</h:panelGrid>
+
+			<div>
+				<p>
+					<h:outputText id="category"
+						value="Category: #{similaritiesAction.similarPair.category}" />
+				</p>
+			</div>
+			<div>
+				<p>
+					<h:outputText id="authorA"
+						value="Author A: #{similaritiesAction.similarPair.userA.name}" />
+				</p>
+
+				<p>
+					Product A: <a
+						href="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}"
+						target="_blank"> <h:outputText id="productA"
+							value="#{similaritiesAction.similarPair.reviewA.product.name}" />
+					</a>
+				</p>
+				<p>
+					<h:outputText id="ratingA"
+						value="Rating A: #{similaritiesAction.similarPair.reviewA.rating}" />
+				</p>
+				<p>
+					<h:outputText id="titleA"
+						value="Title A: #{similaritiesAction.similarPair.reviewA.title}" />
+				</p>
+				<p>
+					Date A:
+					<h:outputText id="dateA"
+						value="#{similaritiesAction.similarPair.reviewA.reviewDate}">
+						<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p>
+				<p>
+					<h:outputText id="authorB"
+						value="Author A: #{similaritiesAction.similarPair.userB.name}" />
+				</p>
+				<p>
+					Product B: <a
+						href="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewB.product.id}"
+						target="_blank"> <h:outputText id="productB"
+							value="#{similaritiesAction.similarPair.reviewB.product.name}" />
+					</a>
+				</p>
+				<p>
+					<h:outputText id="ratingB"
+						value="Rating B: #{similaritiesAction.similarPair.reviewB.rating}" />
+				</p>
+				<p>
+					<h:outputText id="titleB"
+						value="Title B: #{similaritiesAction.similarPair.reviewB.title}" />
+				</p>
+				<p>
+					Date B:
+					<h:outputText id="dateB"
+						value="#{similaritiesAction.similarPair.reviewB.reviewDate}">
+						<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+					</h:outputText>
+				</p>
+			</div>
+
+			<p:separator />
+
+			<div id="reviewBox">
+				<h:outputText id="output"
+					value="#{similaritiesAction.diffContainer.html}" escape="false" />
+			</div>
+
+		</h:form>
 	</ui:define>
 
 </ui:composition>
