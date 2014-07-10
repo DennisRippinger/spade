@@ -8,8 +8,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" type="image/png"
 		href="#{request.contextPath}/resources/img/favicon.png" />
-	<h:link href='http://fonts.googleapis.com/css?family=Bitter'
-		rel='stylesheet' type='text/css' />
 
 	<h:outputStylesheet name="css/style.css" />
 	<h:outputStylesheet name="css/style_text.css" />
@@ -38,7 +36,7 @@
 						styleClass="#{parentId == 'dashboard' ? 'active' : ''}">
 						Dashboard
 					</h:link></li>
-				<li><h:link outcome="/similarities.xhtml"
+				<li><h:link outcome="similarity/similarities.xhtml"
 						styleClass="#{parentId == 'similarities' ? 'active' : ''}">
 						Similarities
 					</h:link></li>

@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<center>
+		<h1>
+			<h:outputText id="category"
+				value="#{similaritiesAction.similarPair.category}" />
+		</h1>
+	</center>
+
+	<p:panel id="authors" header="Authors"
+		styleClass="#{similaritiesAction.similarPair.userA.name == similaritiesAction.similarPair.userB.name ? 'same' : 'different'}">
+		<h:panelGrid columns="2" cellspacing="10">
+			<h:outputLabel for="authorA" value="Author A:" />
+			<h:outputText id="authorA"
+				value="#{similaritiesAction.similarPair.userA.name}" />
+
+
+			<h:outputLabel for="authorB" value="Author B:" />
+			<h:outputText id="authorB"
+				value="#{similaritiesAction.similarPair.userB.name}" />
+		</h:panelGrid>
+
+	</p:panel>
+
+	<p:panel id="products" header="Products">
+		<h:panelGrid columns="2" cellspacing="10">
+
+			<h:outputLabel for="productA" value="Product A:" />
+			<h:outputLink id="productA"
+				value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}"
+				title="#{similaritiesAction.similarPair.reviewA.product.name}"
+				target="_blank">
+				<h:outputText
+					value="#{similaritiesAction.similarPair.reviewA.product.name}"
+					converter="converter.longName" />
+			</h:outputLink>
+
+
+			<h:outputLabel for="productB" value="Product B:" />
+			<h:outputLink id="productB"
+				value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewB.product.id}"
+				target="_blank">
+				<h:outputText
+					value="#{similaritiesAction.similarPair.reviewB.product.name}"
+					converter="converter.longName" />
+			</h:outputLink>
+
+		</h:panelGrid>
+	</p:panel>
+
+	<p:panel id="ratings" header="Ratings">
+		<h:panelGrid columns="2" cellspacing="10">
+
+			<h:outputLabel for="ratingA" value="Rating A:" />
+			<h:outputText id="ratingA"
+				value="#{similaritiesAction.similarPair.reviewA.rating}" />
+
+			<h:outputLabel for="ratingB" value="Rating B:" />
+			<h:outputText id="ratingB"
+				value="#{similaritiesAction.similarPair.reviewB.rating}" />
+
+		</h:panelGrid>
+	</p:panel>
+
+	<p:panel id="titles" header="Titles">
+		<h:panelGrid columns="2" cellspacing="10">
+
+			<h:outputLabel for="titleA" value="Title A:" />
+			<h:outputText id="titleA"
+				value="#{similaritiesAction.similarPair.reviewA.title}"
+				converter="converter.longName" />
+
+			<h:outputLabel for="titleB" value="Title B:" />
+			<h:outputText id="titleB"
+				value="#{similaritiesAction.similarPair.reviewB.title}"
+				converter="converter.longName" />
+
+		</h:panelGrid>
+	</p:panel>
+
+	<p:panel id="dates" header="Review Dates">
+		<h:panelGrid columns="2" cellspacing="10">
+
+			<h:outputLabel for="dateA" value="Date A:" />
+			<h:outputText id="dateA"
+				value="#{similaritiesAction.similarPair.reviewA.reviewDate}">
+				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+			</h:outputText>
+
+			<c:if test="#{similaritiesAction.similarPair.dayDistance gt 0}">
+				<h:outputLabel for="difference" value="Differences:" />
+				<h:outputText id="difference"
+					value="#{similaritiesAction.similarPair.dayDistance} Days" />
+			</c:if>
+
+			<h:outputLabel for="dateB" value="Date B:" />
+			<h:outputText id="dateB"
+				value="#{similaritiesAction.similarPair.reviewB.reviewDate}">
+				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+			</h:outputText>
+
+
+
+		</h:panelGrid>
+	</p:panel>
+
+
+</ui:composition>

@@ -42,9 +42,9 @@ import org.springframework.stereotype.Controller;
 @Scope("session")
 public class SimilaritiesAction {
 
-    // Resources
-
     private static final Double SIMILARITY_LIMIT = 0.90;
+
+    // Resources
 
     @Resource
     private ReviewContentService service;
