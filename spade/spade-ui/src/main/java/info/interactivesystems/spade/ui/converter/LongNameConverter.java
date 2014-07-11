@@ -1,4 +1,4 @@
-package info.interactivesystems.spade.ui;
+package info.interactivesystems.spade.ui.converter;
 
 import java.io.Serializable;
 

@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
-	template="/WEB-INF/templates/template.xhtml">
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<ui:param name="parentId" value="similarities" />
 	<ui:param name="pageTitle" value="Similarities" />
@@ -46,26 +47,36 @@
 			</p:layoutUnit>
 
 			<p:layoutUnit position="center">
+				<c:choose>
+					<c:when test="#{!similaritiesAction.userView}">
+						<p:tabView>
+							<p:tab title="Differences">
+								<div id="reviewBox">
+									<div class="reviewText">
+										<h:outputText id="output"
+											value="#{similaritiesAction.diffContainer.html}"
+											escape="false" />
+									</div>
+								</div>
+							</p:tab>
+							<p:tab title="Side-by-Side">
+								<div style="width: 100%; overflow: auto;">
+									<div style="float: left; width: 48%">
+										#{similaritiesAction.similarPair.reviewA.content}</div>
+									<div style="float: right; width: 48%">
+										#{similaritiesAction.similarPair.reviewB.content}</div>
+								</div>
+								<div style="clear: both"></div>
+							</p:tab>
+						</p:tabView>
+					</c:when>
+					<c:otherwise>
+						<ui:include src="/similarity/user.xhtml" />
+					</c:otherwise>
 
-				<p:tabView>
-					<p:tab title="Differences">
-						<div id="reviewBox">
-							<div class="reviewText">
-								<h:outputText id="output"
-									value="#{similaritiesAction.diffContainer.html}" escape="false" />
-							</div>
-						</div>
-					</p:tab>
-					<p:tab title="Side-by-Side">
-						<div style="width: 100%; overflow: auto;">
-							<div style="float: left; width: 48%">
-								#{similaritiesAction.similarPair.reviewA.content}</div>
-							<div style="float: right; width: 48%">
-								#{similaritiesAction.similarPair.reviewB.content}</div>
-						</div>
-						<div style="clear: both"></div>
-					</p:tab>
-				</p:tabView>
+				</c:choose>
+
+
 
 
 			</p:layoutUnit>

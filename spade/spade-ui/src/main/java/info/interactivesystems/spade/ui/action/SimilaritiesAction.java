@@ -12,12 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.ui;
+package info.interactivesystems.spade.ui.action;
 
 import info.interactivesystems.spade.dao.NilsimsaSimilarityDao;
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.dto.DiffContainer;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
+import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.util.DiffCreator;
 
 import java.util.ArrayList;
@@ -26,19 +27,19 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 /**
  * The Class SimilaritiesAction.
  * 
  * @author Dennis Rippinger
  */
-@Controller
+@Named
 @Scope("session")
 public class SimilaritiesAction {
 
@@ -55,6 +56,9 @@ public class SimilaritiesAction {
     @Resource
     private DiffCreator diffCreator;
 
+    @Resource
+    private UserAction userAction;
+
     // Variables
 
     @Getter
@@ -69,6 +73,10 @@ public class SimilaritiesAction {
     @Getter
     @Setter
     private String currentCategory;
+
+    @Setter
+    @Getter
+    private boolean userView = false;
 
     @Getter
     private List<SelectItem> categories;
@@ -88,6 +96,15 @@ public class SimilaritiesAction {
         }
 
         next();
+    }
+
+    public void switchUserView(User user) {
+        userView = true;
+        userAction.setUser(user);
+    }
+
+    public void switchUserViewBack() {
+        userView = false;
     }
 
     public void updateCategory() {

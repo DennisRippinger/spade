@@ -12,20 +12,21 @@
 		</h1>
 	</center>
 
-	<p:panel id="authors" header="Authors"
-		styleClass="#{similaritiesAction.similarPair.userA.name == similaritiesAction.similarPair.userB.name ? 'same' : 'different'}">
-		<h:panelGrid columns="2" cellspacing="10">
-			<h:outputLabel for="authorA" value="Author A:" />
-			<h:outputText id="authorA"
-				value="#{similaritiesAction.similarPair.userA.name}" />
+	<h:form>
+		<p:panel id="authors" header="Authors"
+			styleClass="#{similaritiesAction.similarPair.userA.name == similaritiesAction.similarPair.userB.name ? 'same' : 'different'}">
+			<h:panelGrid columns="2" cellspacing="10">
+				<h:outputLabel for="authorA" value="Author A:" />
+				<h:commandLink id="authorA"
+					action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}"
+					value="#{similaritiesAction.similarPair.userA.name}" />
 
-
-			<h:outputLabel for="authorB" value="Author B:" />
-			<h:outputText id="authorB"
-				value="#{similaritiesAction.similarPair.userB.name}" />
-		</h:panelGrid>
-
-	</p:panel>
+				<h:outputLabel for="authorB" value="Author B:" />
+				<h:outputText id="authorB"
+					value="#{similaritiesAction.similarPair.userB.name}" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
 
 	<p:panel id="products" header="Products">
 		<h:panelGrid columns="2" cellspacing="10">

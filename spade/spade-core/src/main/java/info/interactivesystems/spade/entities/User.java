@@ -71,7 +71,7 @@ public class User implements Serializable {
 
     private Long randomID;
     
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<Review> reviews;
 
 }
