@@ -4,7 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>#{pageTitle} - SPADE - Spam Detection and Analysis</title>
+	<title>#{pageTitle} - SPADE</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" type="image/png"
 		href="#{request.contextPath}/resources/img/favicon.png" />
@@ -32,18 +32,30 @@
 
 		<div class="nav">
 			<ul>
-				<li class="current"><h:link outcome="/home.xhtml"
+				<li class="current">
+					<h:link outcome="/home.xhtml"
 						styleClass="#{parentId == 'dashboard' ? 'active' : ''}">
 						Dashboard
-					</h:link></li>
-				<li><h:link outcome="similarity/similarities.xhtml"
+					</h:link>
+				</li>
+				<li>
+					<h:link outcome="/similarity/similarities.xhtml"
 						styleClass="#{parentId == 'similarities' ? 'active' : ''}">
 						Similarities
-					</h:link></li>
-				<li><h:link outcome="/about.xhtml"
+					</h:link>
+				</li>
+				<li>
+					<h:link outcome="/recommender/recommender.xhtml"
+						styleClass="#{parentId == 'recommender' ? 'active' : ''}">
+						Recommender
+					</h:link>
+				</li>
+				<li>
+					<h:link outcome="/about.xhtml"
 						styleClass="#{parentId == 'about' ? 'active' : ''}">
 						About
-					</h:link></li>
+					</h:link>
+				</li>
 			</ul>
 		</div>
 

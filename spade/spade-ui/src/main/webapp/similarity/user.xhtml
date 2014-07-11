@@ -20,10 +20,10 @@
 		<h:outputText id="overall"
 			value="#{userAction.user.helpfulOverallVotes}" />
 
-		<c:if test="userAction.user.helpfulOverallVotes > 0">
-			<h:outputLabel for="helpfulnes" value="Helpfulnes:" />
-			<h:outputText id="overall"
-				value="#{userAction.user.helpfulOverallVotes / userAction.user.helpfulVotes}">
+		<c:if test="#{userAction.user.helpfulOverallVotes > 0}">
+			<h:outputLabel for="overallPercent" value="Helpfulnes:" />
+			<h:outputText id="overallPercent"
+				value="#{userAction.user.helpfulVotes / userAction.user.helpfulOverallVotes}">
 				<f:convertNumber type="percent" />
 			</h:outputText>
 		</c:if>
@@ -57,6 +57,10 @@
 				</h:outputLink>
 			</p:column>
 
+			<p:column headerText="Category" sortBy="#{category}">
+				<h:outputText value="#{review.product.category}" />
+			</p:column>
+
 			<p:column headerText="Date" sortBy="#{reviewDate}">
 				<h:outputText value="#{review.reviewDate}">
 					<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
@@ -84,8 +88,8 @@
 	</h:form>
 
 	<h:form id="dlgForm">
-		<p:dialog id="dialog" header="Document Detail" showEffect="fade"
-			widgetVar="documentDialog" modal="false" resizable="true">
+		<p:dialog id="dialog" header="Review" showEffect="fade"
+			widgetVar="documentDialog" modal="false" resizable="true" width="600">
 			<h:outputText value="#{userAction.reviewForDialog}" />
 		</p:dialog>
 	</h:form>
