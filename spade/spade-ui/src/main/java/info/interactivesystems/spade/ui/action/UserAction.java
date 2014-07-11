@@ -21,6 +21,10 @@ public class UserAction {
     @Getter
     private User user;
 
+    @Getter
+    @Setter
+    private Review selectedReview;
+
     public Set<Review> getReviews() {
         if (user != null) {
             return user.getReviews();
@@ -30,5 +34,12 @@ public class UserAction {
         reviews.add(tempReview);
 
         return reviews;
+    }
+
+    public String getReviewForDialog() {
+        if (selectedReview != null) {
+            return selectedReview.getContent();
+        }
+        return "";
     }
 }

@@ -22,7 +22,8 @@
 					value="#{similaritiesAction.similarPair.userA.name}" />
 
 				<h:outputLabel for="authorB" value="Author B:" />
-				<h:outputText id="authorB"
+				<h:commandLink id="authorB"
+					action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}"
 					value="#{similaritiesAction.similarPair.userB.name}" />
 			</h:panelGrid>
 		</p:panel>
@@ -55,15 +56,19 @@
 	</p:panel>
 
 	<p:panel id="ratings" header="Ratings">
-		<h:panelGrid columns="2" cellspacing="10">
+		<h:panelGrid columns="3" cellspacing="10">
 
 			<h:outputLabel for="ratingA" value="Rating A:" />
 			<h:outputText id="ratingA"
 				value="#{similaritiesAction.similarPair.reviewA.rating}" />
+			<h:outputText id="ratingAOverall"
+				value="(#{similaritiesAction.similarPair.reviewA.product.rating})" />
 
 			<h:outputLabel for="ratingB" value="Rating B:" />
 			<h:outputText id="ratingB"
 				value="#{similaritiesAction.similarPair.reviewB.rating}" />
+			<h:outputText id="ratingBOverall"
+				value="(#{similaritiesAction.similarPair.reviewB.product.rating})" />
 
 		</h:panelGrid>
 	</p:panel>

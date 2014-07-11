@@ -37,11 +37,17 @@
 	</h:panelGrid>
 
 	<h:form>
+		<a
+			href="http://www.amazon.com/gp/cdp/member-reviews/#{userAction.user.id}"
+			target="_blank"> <input type="button"
+			value="User Page on Amazon.com" />
+		</a>
+
 		<h:commandButton action="#{similaritiesAction.switchUserViewBack()}"
 			value="Back to Overview" />
 	</h:form>
 
-	<h:form>
+	<h:form id="form">
 		<p:dataTable var="review" value="#{userAction.reviews}">
 
 			<p:column headerText="Product" sortBy="#{product.name}">
@@ -65,7 +71,23 @@
 				<h:outputText value="#{review.product.rating}" />
 			</p:column>
 
+			<p:column style="width:24px">
+				<p:commandLink update=":dlgForm:dialog"
+					oncomplete="PF('documentDialog').show()" title="Review"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{review}"
+						target="#{userAction.selectedReview}" />
+				</p:commandLink>
+			</p:column>
+
 		</p:dataTable>
+	</h:form>
+
+	<h:form id="dlgForm">
+		<p:dialog id="dialog" header="Document Detail" showEffect="fade"
+			widgetVar="documentDialog" modal="false" resizable="true">
+			<h:outputText value="#{userAction.reviewForDialog}" />
+		</p:dialog>
 	</h:form>
 
 </ui:composition>
