@@ -1,39 +1,74 @@
-<ui:composition
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
-	template="/WEB-INF/templates/template.xhtml"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:layout="http://java.sun.com/jsf/composite/components/layout" template="/WEB-INF/templates/template.xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<ui:param
-		name="parentId"
-		value="recommender" />
-	<ui:param
-		name="pageTitle"
-		value="Recommender" />
+	<ui:param name="parentId" value="recommender" />
+	<ui:param name="pageTitle" value="Recommender" />
 
-	<ui:define
-		name="content">
+	<ui:define name="content">
 
-		<p:layout>
-			<p:layoutUnit
-				position="north"
-				resizable="true"
-				size="400"
-				minSize="40"
-				maxSize="500">
-		        top
-		    </p:layoutUnit>
-			<p:layoutUnit
-				position="center"
-				resizable="true"
-				minSize="40">
-       			 Center
-    		</p:layoutUnit>
-		</p:layout>
+		<h:form>
+			<p:layout>
+				<p:layoutUnit position="north">
+					<p:dataTable var="user" value="#{recommenderAction.users}" scrollable="true" scrollHeight="200" paginator="">
+
+						<p:column headerText="Name" sortBy="#{name}">
+							<h:outputLink value="http://www.amazon.com/gp/cdp/member-reviews/#{user.id}" target="_blank">
+								<h:outputText value="#{user.name}" />
+							</h:outputLink>
+						</p:column>
+
+						<p:column headerText="# Reviews" sortBy="#{numberOfReviews}">
+							<h:outputText value="#{user.numberOfReviews}" />
+						</p:column>
+
+						<p:column headerText="Helpful" sortBy="#{helpfulVotes}">
+							<h:outputText value="#{user.helpfulVotes}" />
+						</p:column>
+
+						<p:column headerText="Overall" sortBy="#{helpfulOverallVotes}">
+							<h:outputText value="#{user.helpfulOverallVotes}" />
+						</p:column>
+
+						<p:column headerText="% Helpfull">
+							<c:choose>
+								<c:when test="#{user.helpfulOverallVotes != 0}">
+									<h:outputText value="#{user.helpfulVotes / user.helpfulOverallVotes}">
+										<f:convertNumber type="percent" />
+									</h:outputText>
+								</c:when>
+								<c:otherwise>
+									<h:outputText value="0.0 %" />
+								</c:otherwise>
+							</c:choose>
+						</p:column>
+
+						<p:column headerText="hIndex">
+							<h:outputText id="hIndex" value="#{user.HIndex}">
+								<f:convertNumber minFractionDigits="1" />
+							</h:outputText>
+						</p:column>
+
+						<p:column style="width:24px">
+							<p:commandLink update="@all" title="Review" styleClass="ui-icon ui-icon-search">
+								<f:setPropertyActionListener value="#{user}" target="#{recommenderAction.currentUser}" />
+							</p:commandLink>
+						</p:column>
+
+					</p:dataTable>
+				</p:layoutUnit>
+
+				<p:layoutUnit id="centerLayout" position="center">
+
+					<ui:include src="/recommender/reviewOverview.xhtml" />
+
+				</p:layoutUnit>
+			</p:layout>
+		</h:form>
+
+		<h:form id="dlgForm">
+			<p:dialog id="dialog" header="Review" showEffect="fade" widgetVar="documentDialog" modal="false" resizable="true" width="600">
+				<h:outputText value="#{recommenderAction.selectedReview.content}" />
+			</p:dialog>
+		</h:form>
 
 	</ui:define>
 

@@ -17,7 +17,7 @@ package info.interactivesystems.spade.entities;
 import info.interactivesystems.spade.util.Authority;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -71,7 +71,7 @@ public class User implements Serializable {
 
     private Long randomID;
     
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<Review> reviews;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Review> reviews;
 
 }

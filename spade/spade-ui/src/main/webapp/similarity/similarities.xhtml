@@ -1,11 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
-	template="/WEB-INF/templates/template.xhtml"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:layout="http://java.sun.com/jsf/composite/components/layout" template="/WEB-INF/templates/template.xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<ui:param name="parentId" value="similarities" />
 	<ui:param name="pageTitle" value="Similarities" />
@@ -14,33 +7,25 @@
 
 		<h:form>
 
-			<p:hotkey bind="left" update="@all"
-				actionListener="#{similaritiesAction.previous}" />
-			<p:hotkey bind="right" update="@all"
-				actionListener="#{similaritiesAction.next}" />
+			<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
+			<p:hotkey bind="right" update="@all" actionListener="#{similaritiesAction.next}" />
 
 			<div>
-				<p:commandButton value="Previous"
-					actionListener="#{similaritiesAction.previous()}" update="@all" />
-				<p:commandButton value="Next"
-					actionListener="#{similaritiesAction.next()}" update="@all" />
+				<p:commandButton value="Previous" actionListener="#{similaritiesAction.previous()}" update="@all" />
+				<p:commandButton value="Next" actionListener="#{similaritiesAction.next()}" update="@all" />
 			</div>
 
 			<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel for="categories" value="Category:" />
-				<p:selectOneMenu id="categories"
-					value="#{similaritiesAction.currentCategory}">
+				<p:selectOneMenu id="categories" value="#{similaritiesAction.currentCategory}">
 					<f:selectItems value="#{similaritiesAction.categories}" />
 				</p:selectOneMenu>
-				<p:commandButton value="Select Category"
-					actionListener="#{similaritiesAction.updateCategory()}"
-					update="@all" />
+				<p:commandButton value="Select Category" actionListener="#{similaritiesAction.updateCategory()}" update="@all" />
 			</h:panelGrid>
 		</h:form>
 
 		<p:layout>
-			<p:layoutUnit position="east" resizable="true" size="330"
-				minSize="200" maxSize="400">
+			<p:layoutUnit position="east">
 
 				<ui:include src="/similarity/sidebar.xhtml" />
 
@@ -53,18 +38,14 @@
 							<p:tab title="Differences">
 								<div id="reviewBox">
 									<div class="reviewText">
-										<h:outputText id="output"
-											value="#{similaritiesAction.diffContainer.html}"
-											escape="false" />
+										<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}" escape="false" />
 									</div>
 								</div>
 							</p:tab>
 							<p:tab title="Side-by-Side">
 								<div style="width: 100%; overflow: auto;">
-									<div style="float: left; width: 48%">
-										#{similaritiesAction.similarPair.reviewA.content}</div>
-									<div style="float: right; width: 48%">
-										#{similaritiesAction.similarPair.reviewB.content}</div>
+									<div style="float: left; width: 48%">#{similaritiesAction.similarPair.reviewA.content}</div>
+									<div style="float: right; width: 48%">#{similaritiesAction.similarPair.reviewB.content}</div>
 								</div>
 								<div style="clear: both"></div>
 							</p:tab>
@@ -76,14 +57,9 @@
 
 				</c:choose>
 
-
-
-
 			</p:layoutUnit>
 
 		</p:layout>
-
-
 
 	</ui:define>
 

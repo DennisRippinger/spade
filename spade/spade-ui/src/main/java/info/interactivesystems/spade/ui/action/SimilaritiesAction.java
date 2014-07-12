@@ -121,16 +121,20 @@ public class SimilaritiesAction {
 
     public void next() {
         if (counter < currentSimilarItem.size()) {
-            similarPair = currentSimilarItem.get(counter++);
+            counter++;
+            similarPair = currentSimilarItem.get(counter);
             diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
         }
+        switchUserViewBack();
     }
 
     public void previous() {
         if (counter > 1) {
-            similarPair = currentSimilarItem.get(--counter);
+            counter--;
+            similarPair = currentSimilarItem.get(counter);
             diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
         }
+        switchUserViewBack();
 
     }
 

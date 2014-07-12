@@ -198,11 +198,22 @@ public class ReviewContentService {
     /**
      * Lists all Users with an Hindex >= the maxIndex parameter.
      * 
-     * @param maxIndex
+     * @param minIndex
      * @return
      */
-    public List<User> findUsersWithHIndex(Double maxIndex) {
-        return userDao.findUsersWithHIndex(maxIndex);
+    public List<User> findUsersWithHIndex(Double minIndex) {
+        return userDao.findUsersWithHIndex(minIndex);
+    }
+
+    /**
+     * Lists all Users with an Hindex >= the maxIndex parameter.
+     * 
+     * @param minIndex the minimum index value.
+     * @param limit maximum amount of users returned.
+     * @return the User list
+     */
+    public List<User> findUsersWithHIndex(Double minIndex, Integer limit) {
+        return userDao.findUsersWithHIndex(minIndex, limit);
     }
 
 }

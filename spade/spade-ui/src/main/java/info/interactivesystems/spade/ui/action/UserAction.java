@@ -3,8 +3,8 @@ package info.interactivesystems.spade.ui.action;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Named;
 
@@ -25,11 +25,11 @@ public class UserAction {
     @Setter
     private Review selectedReview;
 
-    public Set<Review> getReviews() {
+    public List<Review> getReviews() {
         if (user != null) {
             return user.getReviews();
         }
-        Set<Review> reviews = new HashSet<>();
+        List<Review> reviews = new ArrayList<>();
         Review tempReview = new Review();
         reviews.add(tempReview);
 

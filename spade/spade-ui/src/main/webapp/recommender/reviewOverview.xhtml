@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:dataTable id="reviewTable" var="review" value="#{recommenderAction.currentReviews}">
+		<p:column headerText="Product" sortBy="#{product.name}">
+			<h:outputLink value="http://amazon.com/dp/#{review.product.id}" target="_blank">
+				<h:outputText value="#{review.product.name}" />
+			</h:outputLink>
+		</p:column>
+
+		<p:column headerText="Category" sortBy="#{category}">
+			<h:outputText value="#{review.product.category}" />
+		</p:column>
+
+		<p:column headerText="Date" sortBy="#{reviewDate}">
+			<h:outputText value="#{review.reviewDate}">
+				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+			</h:outputText>
+		</p:column>
+		<p:column headerText="User Rating" sortBy="#{rating}">
+			<h:outputText value="#{review.rating}" />
+		</p:column>
+
+		<p:column headerText="Rating" sortBy="#{product.rating}">
+			<h:outputText value="#{review.product.rating}" />
+		</p:column>
+
+		<p:column style="width:24px">
+			<p:commandLink update=":dlgForm:dialog" oncomplete="PF('documentDialog').show()" title="Review" styleClass="ui-icon ui-icon-search">
+				<f:setPropertyActionListener value="#{review}" target="#{recommenderAction.selectedReview}" />
+			</p:commandLink>
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

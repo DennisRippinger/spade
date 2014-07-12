@@ -19,6 +19,7 @@ import info.interactivesystems.spade.entities.User;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -49,19 +50,58 @@ public class UserDao extends AbstractDao<User> {
     }
 
     /**
-     * Lists all Users with an Hindex >= the maxIndex parameter.
+     * Lists all Users with an Hindex >= the minIndex parameter.
      * 
-     * @param maxIndex
+     * @param minIndex
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<User> findUsersWithHIndex(Double maxIndex) {
+    public List<User> findUsersWithHIndex(Double minIndex) {
 
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(User.class);
-        criteria.add(Restrictions.ge("hIndex", maxIndex));
+        criteria.add(Restrictions.ge("hIndex", minIndex));
 
         return criteria.list();
     }
 
+    /**
+     * Lists all Users with an Hindex >= the maxIndex parameter.
+     * 
+     * @param minIndex the minimum index value.
+     * @param limit maximum amount of users returned.
+     * @return the User list
+     */
+    public List<User> findUsersWithHIndex(Double minIndex, Integer limit) {
+
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(User.class);
+        criteria.add(Restrictions.ge("hIndex", minIndex));
+
+        // TODO Topmost hIndex user has 21k reviews.
+        criteria.add(Restrictions.le("hIndex", 20.0));
+
+        criteria.addOrder(Order.desc("hIndex"));
+        criteria.setMaxResults(limit);
+
+        List<User> result = initialize(criteria);
+
+        return result;
+    }
+
+    /**
+     * In this case EAGER loading will result in the n+1 error. touching the collection tells Hibernate to collect the
+     * information in a proper way.
+     * 
+     * @param criteria
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private List<User> initialize(Criteria criteria) {
+        List<User> result = criteria.list();
+        for (User user : result) {
+            user.getReviews().size();
+        }
+        return result;
+    }
 }

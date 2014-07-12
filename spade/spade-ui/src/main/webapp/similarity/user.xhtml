@@ -17,8 +17,7 @@
 		<h:outputText id="helpful" value="#{userAction.user.helpfulVotes}" />
 
 		<h:outputLabel for="overall" value="Overall Votes:" />
-		<h:outputText id="overall"
-			value="#{userAction.user.helpfulOverallVotes}" />
+		<h:outputText id="overall" value="#{userAction.user.helpfulOverallVotes}" />
 
 		<c:if test="#{userAction.user.helpfulOverallVotes > 0}">
 			<h:outputLabel for="overallPercent" value="Helpfulnes:" />
@@ -47,7 +46,7 @@
 			value="Back to Overview" />
 	</h:form>
 
-	<h:form id="form">
+	<h:form>
 		<p:dataTable var="review" value="#{userAction.reviews}">
 
 			<p:column headerText="Product" sortBy="#{product.name}">
