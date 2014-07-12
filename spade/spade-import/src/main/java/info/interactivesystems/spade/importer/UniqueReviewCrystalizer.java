@@ -9,7 +9,6 @@ import info.interactivesystems.spade.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Resource;
@@ -37,7 +36,7 @@ public class UniqueReviewCrystalizer {
 
             List<Review> uniqueReviews = new LinkedList<Review>();
 
-            Set<Review> reviews = currentUser.getReviews();
+            List<Review> reviews = currentUser.getReviews();
             for (Review review : reviews) {
                 if (isNew(review, uniqueReviews)) {
                     review.setUnique(true);
