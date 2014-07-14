@@ -12,7 +12,7 @@ public class LongNameConverter implements Converter, Serializable {
 
     private static final long serialVersionUID = 2479669304984009829L;
 
-    private static final int MAXIMUM = 28;
+    private static final int MAXIMUM = 35;
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {

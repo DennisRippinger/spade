@@ -32,7 +32,7 @@
 		<h:commandButton action="#{similaritiesAction.switchUserViewBack()}" value="Back to Overview" />
 	</h:form>
 
-<p></p>
+	<p></p>
 
 	<h:form>
 		<p:dataTable var="review" value="#{userAction.reviews}">
@@ -71,8 +71,10 @@
 	</h:form>
 
 	<h:form id="dlgForm">
-		<p:dialog id="dialog" header="Review" showEffect="fade" widgetVar="documentDialog" modal="false" resizable="true" width="600">
-			<h:outputText value="#{userAction.reviewForDialog}" />
+		<p:dialog id="dialog" header="Review: #{userAction.selectedReview.title}" showEffect="fade" widgetVar="documentDialog" modal="false" resizable="true" width="60em">
+			<div class="reviewDialog">
+				<h:outputText value="#{userAction.reviewForDialog}" />
+			</div>
 		</p:dialog>
 	</h:form>
 
