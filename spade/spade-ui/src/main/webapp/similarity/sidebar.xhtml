@@ -7,21 +7,20 @@
 	</center>
 
 	<h:form>
-		<p:panel id="authors" header="Authors" >
-			<h:panelGrid columns="3" cellspacing="10">
+		<p:panel id="authors" header="Authors" styleClass="#{similaritiesAction.sameAuthor()}">
+			<h:panelGrid columns="2" cellspacing="8">
 				<h:outputLabel for="authorA" value="Author A:" />
 				<h:commandLink id="authorA" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}" value="#{similaritiesAction.similarPair.userA.name}" />
-				<i class="fa fa-sliders"></i>
 
 				<h:outputLabel for="authorB" value="Author B:" />
 				<h:commandLink id="authorB" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}" value="#{similaritiesAction.similarPair.userB.name}" />
-				<i class="fa fa-sliders"></i>
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
 
-	<p:panel id="products" header="Products">
-		<h:panelGrid columns="2" cellspacing="10">
+	<p:panel id="products" header="Products" styleClass="#{similaritiesAction.sameProduct()}">
+
+		<h:panelGrid columns="2" cellspacing="6">
 
 			<h:outputLabel for="productA" value="Product A:" />
 			<h:outputLink id="productA" value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}" title="#{similaritiesAction.similarPair.reviewA.product.name}" target="_blank">
@@ -37,8 +36,8 @@
 		</h:panelGrid>
 	</p:panel>
 
-	<p:panel id="ratings" header="Ratings">
-		<h:panelGrid columns="2" cellspacing="10">
+	<p:panel id="ratings" header="Ratings" styleClass="#{similaritiesAction.sameRating()}">
+		<h:panelGrid columns="2" cellspacing="8">
 
 			<h:outputLabel value="From User A:" />
 			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.rating)}" />
@@ -53,8 +52,8 @@
 		</h:panelGrid>
 	</p:panel>
 
-	<p:panel id="titles" header="Titles">
-		<h:panelGrid columns="2" cellspacing="10">
+	<p:panel id="titles" header="Titles" styleClass="#{similaritiesAction.sameTitle()}">
+		<h:panelGrid columns="2" cellspacing="8">
 
 			<h:outputLabel for="titleA" value="Title A:" />
 			<h:outputText id="titleA" value="#{similaritiesAction.similarPair.reviewA.title}" converter="converter.longName" />
@@ -65,8 +64,8 @@
 		</h:panelGrid>
 	</p:panel>
 
-	<p:panel id="dates" header="Review Dates">
-		<h:panelGrid columns="2" cellspacing="10">
+	<p:panel id="dates" header="Review Dates" styleClass="#{similaritiesAction.sameDate()}">
+		<h:panelGrid columns="2" cellspacing="8">
 
 			<h:outputLabel for="dateA" value="Date A:" />
 			<h:outputText id="dateA" value="#{similaritiesAction.similarPair.reviewA.reviewDate}">

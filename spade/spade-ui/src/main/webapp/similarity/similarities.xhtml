@@ -6,7 +6,7 @@
 	<ui:define name="content">
 		<p:layout>
 			<p:layoutUnit position="north">
-			
+
 				<h:form>
 
 					<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
@@ -27,7 +27,7 @@
 				</h:form>
 
 			</p:layoutUnit>
-			
+
 			<p:layoutUnit position="east">
 
 				<ui:include src="/similarity/sidebar.xhtml" />
@@ -47,8 +47,8 @@
 							</p:tab>
 							<p:tab title="Side-by-Side">
 								<div style="width: 100%; overflow: auto;">
-									<div style="float: left; width: 48%">#{similaritiesAction.similarPair.reviewA.content}</div>
-									<div style="float: right; width: 48%">#{similaritiesAction.similarPair.reviewB.content}</div>
+									<div style="float: left; width: 48%; text-align: justify;">#{similaritiesAction.similarPair.reviewA.content}</div>
+									<div style="float: right; width: 48%; text-align: justify;">#{similaritiesAction.similarPair.reviewB.content}</div>
 								</div>
 								<div style="clear: both"></div>
 							</p:tab>

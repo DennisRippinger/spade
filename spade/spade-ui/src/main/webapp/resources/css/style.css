@@ -20,6 +20,8 @@ img {
 #reviewBox {
 	background-color: #CCC3F3;
 	font-size: medium;
+	margin-left: 16px;
+	margin-right: 16px;
 }
 
 .reviewText {
@@ -51,7 +53,8 @@ img {
 
 .header h1 a,.header h1 a:link,.header h1 a:visited,.header h1 a:active
 	{
-	background-image: url(../../resources/img/logo.png);
+	background-image: url(../../resources/img/logo.svg);
+	background-size: 57px 57px;
 	background-repeat: no-repeat;
 	height: 45px;
 	display: block;
@@ -101,6 +104,7 @@ img {
 
 .content {
 	padding: 1em;
+	position: relative;
 }
 
 .footer {
@@ -345,6 +349,33 @@ img {
 .content-right .box {
 	margin-bottom: 5%;
 }
+
+.sameContent {
+    position:relative;
+}    
+.sameContent:before {
+		color: green;
+		float: right;
+		margin-right: 7px;
+		margin-top: 9px;
+		margin-bottom: 3px;
+        font-family: FontAwesome;
+        font-size: xx-large;
+        content: "\f14a";
+    }
+    
+.differentContent {
+}    
+.differentContent:before {
+		color: #adadad;
+		float: right;
+		margin-right: 7px;
+		margin-top: 9px;
+		margin-bottom: 3px;
+        font-family: FontAwesome;
+        font-size: xx-large;
+        content: "\f14a";
+    }
 
 /** Box in exploration. */
 #treeBox .content {

@@ -22,6 +22,7 @@ import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.util.DiffCreator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -138,4 +139,48 @@ public class SimilaritiesAction {
 
     }
 
+    public String sameProduct() {
+        String reviewIdA = similarPair.getReviewA().getProduct().getId();
+        String reviewIdB = similarPair.getReviewB().getProduct().getId();
+
+        return getCssForContentFlag(reviewIdA, reviewIdB);
+    }
+
+    public String sameAuthor() {
+        String userIdA = similarPair.getUserA().getId();
+        String userIdB = similarPair.getUserB().getId();
+
+        return getCssForContentFlag(userIdA, userIdB);
+    }
+
+    public String sameRating() {
+        Double ratingA = similarPair.getReviewA().getRating();
+        Double ratingB = similarPair.getReviewB().getRating();
+
+        return getCssForContentFlag(ratingA, ratingB);
+    }
+
+    public String sameDate() {
+        
+        // Date equals doesn't check the fields.
+        
+        Date dateA = similarPair.getReviewA().getReviewDate();
+        Date dateB = similarPair.getReviewB().getReviewDate();
+
+        return getCssForContentFlag(dateA, dateB);
+    }
+
+    public String sameTitle() {
+        String titleA = similarPair.getReviewA().getTitle();
+        String titleB = similarPair.getReviewB().getTitle();
+
+        return getCssForContentFlag(titleA, titleB);
+    }
+
+    private String getCssForContentFlag(Object idA, Object idB) {
+        if (idA.equals(idB)) {
+            return "sameContent";
+        }
+        return "differentContent";
+    }
 }
