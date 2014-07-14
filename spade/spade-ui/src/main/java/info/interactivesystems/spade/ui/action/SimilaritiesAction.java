@@ -84,7 +84,7 @@ public class SimilaritiesAction {
     private Integer counter = 0;
 
     @PostConstruct
-    private void init() {
+    public void init() {
         currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, 30);
 
         categories = new ArrayList<>();
@@ -109,7 +109,7 @@ public class SimilaritiesAction {
 
     public void updateCategory() {
 
-        if (currentCategory.equals("All")) {
+        if ("All".equals(currentCategory)) {
             currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, 30);
         } else {
             currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, currentCategory, 30);

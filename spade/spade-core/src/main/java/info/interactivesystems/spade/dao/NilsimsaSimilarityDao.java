@@ -15,6 +15,7 @@
 package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
+import info.interactivesystems.spade.entities.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
+    private static final String SIMILARITY = "similarity";
+
     public NilsimsaSimilarityDao() {
         super(NilsimsaSimilarity.class);
     }
@@ -43,7 +46,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
-        criteria.add(Restrictions.ge("similarity", similarity))
+        criteria.add(Restrictions.ge(SIMILARITY, similarity))
             .add(Restrictions.eq("sameAuthor", sameAuthor))
             .add(Restrictions.le("wordDistance", wordDistance));
         criteria.setMaxResults(limit);
@@ -54,7 +57,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
-        criteria.add(Restrictions.ge("similarity", similarity))
+        criteria.add(Restrictions.ge(SIMILARITY, similarity))
             .add(Restrictions.eq("sameAuthor", sameAuthor));
         criteria.setMaxResults(limit);
 
@@ -67,8 +70,19 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     private List<NilsimsaSimilarity> initialize(Criteria criteria) {
         List<NilsimsaSimilarity> result = criteria.list();
         for (NilsimsaSimilarity nilsimsaSimilarity : result) {
-            nilsimsaSimilarity.getUserA().getReviews().size();
-            nilsimsaSimilarity.getUserB().getReviews().size();
+            nilsimsaSimilarity.getUserA().setReviews(getUniqueReviews(nilsimsaSimilarity.getUserA().getReviews()));
+            nilsimsaSimilarity.getUserB().setReviews(getUniqueReviews(nilsimsaSimilarity.getUserB().getReviews()));
+        }
+        return result;
+    }
+
+    private List<Review> getUniqueReviews(List<Review> reviews) {
+        List<Review> result = new ArrayList<>();
+
+        for (Review review : reviews) {
+            if (review.isUnique()) {
+                result.add(review);
+            }
         }
         return result;
     }
@@ -77,7 +91,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     public List<NilsimsaSimilarity> find(Double similarity, String category, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
-        criteria.add(Restrictions.ge("similarity", similarity))
+        criteria.add(Restrictions.ge(SIMILARITY, similarity))
             .add(Restrictions.eq("category", category));
         criteria.setMaxResults(limit);
 
@@ -88,7 +102,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     public List<NilsimsaSimilarity> find(Double similarity, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
-        criteria.add(Restrictions.ge("similarity", similarity));
+        criteria.add(Restrictions.ge(SIMILARITY, similarity));
         criteria.setMaxResults(limit);
 
         return criteria.list();

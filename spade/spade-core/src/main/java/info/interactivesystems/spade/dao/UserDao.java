@@ -14,8 +14,10 @@
  */
 package info.interactivesystems.spade.dao;
 
+import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -30,6 +32,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserDao extends AbstractDao<User> {
+
+    private static final String HINDEX = "hIndex";
 
     public UserDao() {
         super(User.class);
@@ -60,7 +64,7 @@ public class UserDao extends AbstractDao<User> {
 
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(User.class);
-        criteria.add(Restrictions.ge("hIndex", minIndex));
+        criteria.add(Restrictions.ge(HINDEX, minIndex));
 
         return criteria.list();
     }
@@ -76,12 +80,12 @@ public class UserDao extends AbstractDao<User> {
 
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(User.class);
-        criteria.add(Restrictions.ge("hIndex", minIndex));
+        criteria.add(Restrictions.ge(HINDEX, minIndex));
 
         // TODO Topmost hIndex user has 21k reviews.
-        criteria.add(Restrictions.le("hIndex", 20.0));
+        criteria.add(Restrictions.le(HINDEX, 20.0));
 
-        criteria.addOrder(Order.desc("hIndex"));
+        criteria.addOrder(Order.desc(HINDEX));
         criteria.setMaxResults(limit);
 
         List<User> result = initialize(criteria);
@@ -100,7 +104,18 @@ public class UserDao extends AbstractDao<User> {
     private List<User> initialize(Criteria criteria) {
         List<User> result = criteria.list();
         for (User user : result) {
-            user.getReviews().size();
+            user.setReviews(getUniqueReviews(user.getReviews()));
+        }
+        return result;
+    }
+
+    private List<Review> getUniqueReviews(List<Review> reviews) {
+        List<Review> result = new ArrayList<>();
+
+        for (Review review : reviews) {
+            if (review.isUnique()) {
+                result.add(review);
+            }
         }
         return result;
     }
