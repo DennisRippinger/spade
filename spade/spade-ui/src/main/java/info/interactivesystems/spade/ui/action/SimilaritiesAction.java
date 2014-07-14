@@ -161,9 +161,6 @@ public class SimilaritiesAction {
     }
 
     public String sameDate() {
-        
-        // Date equals doesn't check the fields.
-        
         Date dateA = similarPair.getReviewA().getReviewDate();
         Date dateB = similarPair.getReviewB().getReviewDate();
 
