@@ -7,13 +7,15 @@
 	</center>
 
 	<h:form>
-		<p:panel id="authors" header="Authors" styleClass="#{similaritiesAction.similarPair.userA.name == similaritiesAction.similarPair.userB.name ? 'same' : 'different'}">
-			<h:panelGrid columns="2" cellspacing="10">
+		<p:panel id="authors" header="Authors" >
+			<h:panelGrid columns="3" cellspacing="10">
 				<h:outputLabel for="authorA" value="Author A:" />
 				<h:commandLink id="authorA" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}" value="#{similaritiesAction.similarPair.userA.name}" />
+				<i class="fa fa-sliders"></i>
 
 				<h:outputLabel for="authorB" value="Author B:" />
 				<h:commandLink id="authorB" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}" value="#{similaritiesAction.similarPair.userB.name}" />
+				<i class="fa fa-sliders"></i>
 			</h:panelGrid>
 		</p:panel>
 	</h:form>

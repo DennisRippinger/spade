@@ -23,9 +23,6 @@
 		<h:outputLabel for="hIndex" value="hIndex:" />
 		<h:outputText id="hIndex" value="#{userAction.user.HIndex}" />
 
-		<h:outputLabel for="length" value="Length:" />
-		<h:outputText id="length" value="#{userAction.user.length}" />
-
 	</h:panelGrid>
 
 	<h:form>
@@ -34,6 +31,8 @@
 
 		<h:commandButton action="#{similaritiesAction.switchUserViewBack()}" value="Back to Overview" />
 	</h:form>
+
+<p></p>
 
 	<h:form>
 		<p:dataTable var="review" value="#{userAction.reviews}">

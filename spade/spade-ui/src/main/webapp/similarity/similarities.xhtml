@@ -4,27 +4,30 @@
 	<ui:param name="pageTitle" value="Similarities" />
 
 	<ui:define name="content">
-
-		<h:form>
-
-			<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
-			<p:hotkey bind="right" update="@all" actionListener="#{similaritiesAction.next}" />
-
-			<div>
-				<p:commandButton value="Previous" actionListener="#{similaritiesAction.previous()}" update="@all" />
-				<p:commandButton value="Next" actionListener="#{similaritiesAction.next()}" update="@all" />
-			</div>
-
-			<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
-				<p:outputLabel for="categories" value="Category:" />
-				<p:selectOneMenu id="categories" value="#{similaritiesAction.currentCategory}">
-					<f:selectItems value="#{similaritiesAction.categories}" />
-				</p:selectOneMenu>
-				<p:commandButton value="Select Category" actionListener="#{similaritiesAction.updateCategory()}" update="@all" />
-			</h:panelGrid>
-		</h:form>
-
 		<p:layout>
+			<p:layoutUnit position="north">
+			
+				<h:form>
+
+					<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
+					<p:hotkey bind="right" update="@all" actionListener="#{similaritiesAction.next}" />
+
+					<div>
+						<p:commandButton value="Previous" actionListener="#{similaritiesAction.previous()}" update="@all" />
+						<p:commandButton value="Next" actionListener="#{similaritiesAction.next()}" update="@all" />
+					</div>
+
+					<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+						<p:outputLabel for="categories" value="Category:" />
+						<p:selectOneMenu id="categories" value="#{similaritiesAction.currentCategory}">
+							<f:selectItems value="#{similaritiesAction.categories}" />
+						</p:selectOneMenu>
+						<p:commandButton value="Select Category" actionListener="#{similaritiesAction.updateCategory()}" update="@all" />
+					</h:panelGrid>
+				</h:form>
+
+			</p:layoutUnit>
+			
 			<p:layoutUnit position="east">
 
 				<ui:include src="/similarity/sidebar.xhtml" />
