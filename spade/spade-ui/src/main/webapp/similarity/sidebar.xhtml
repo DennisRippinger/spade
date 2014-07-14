@@ -1,30 +1,19 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<center>
 		<h1>
-			<h:outputText id="category"
-				value="#{similaritiesAction.similarPair.category}" />
+			<h:outputText id="category" value="#{similaritiesAction.similarPair.category}" />
 		</h1>
 	</center>
 
 	<h:form>
-		<p:panel id="authors" header="Authors"
-			styleClass="#{similaritiesAction.similarPair.userA.name == similaritiesAction.similarPair.userB.name ? 'same' : 'different'}">
+		<p:panel id="authors" header="Authors" styleClass="#{similaritiesAction.similarPair.userA.name == similaritiesAction.similarPair.userB.name ? 'same' : 'different'}">
 			<h:panelGrid columns="2" cellspacing="10">
 				<h:outputLabel for="authorA" value="Author A:" />
-				<h:commandLink id="authorA"
-					action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}"
-					value="#{similaritiesAction.similarPair.userA.name}" />
+				<h:commandLink id="authorA" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}" value="#{similaritiesAction.similarPair.userA.name}" />
 
 				<h:outputLabel for="authorB" value="Author B:" />
-				<h:commandLink id="authorB"
-					action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}"
-					value="#{similaritiesAction.similarPair.userB.name}" />
+				<h:commandLink id="authorB" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}" value="#{similaritiesAction.similarPair.userB.name}" />
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
@@ -33,42 +22,31 @@
 		<h:panelGrid columns="2" cellspacing="10">
 
 			<h:outputLabel for="productA" value="Product A:" />
-			<h:outputLink id="productA"
-				value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}"
-				title="#{similaritiesAction.similarPair.reviewA.product.name}"
-				target="_blank">
-				<h:outputText
-					value="#{similaritiesAction.similarPair.reviewA.product.name}"
-					converter="converter.longName" />
+			<h:outputLink id="productA" value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}" title="#{similaritiesAction.similarPair.reviewA.product.name}" target="_blank">
+				<h:outputText value="#{similaritiesAction.similarPair.reviewA.product.name}" converter="converter.longName" />
 			</h:outputLink>
 
 
 			<h:outputLabel for="productB" value="Product B:" />
-			<h:outputLink id="productB"
-				value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewB.product.id}"
-				target="_blank">
-				<h:outputText
-					value="#{similaritiesAction.similarPair.reviewB.product.name}"
-					converter="converter.longName" />
+			<h:outputLink id="productB" value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewB.product.id}" target="_blank">
+				<h:outputText value="#{similaritiesAction.similarPair.reviewB.product.name}" converter="converter.longName" />
 			</h:outputLink>
 
 		</h:panelGrid>
 	</p:panel>
 
 	<p:panel id="ratings" header="Ratings">
-		<h:panelGrid columns="3" cellspacing="10">
+		<h:panelGrid columns="2" cellspacing="10">
 
-			<h:outputLabel for="ratingA" value="Rating A:" />
-			<h:outputText id="ratingA"
-				value="#{similaritiesAction.similarPair.reviewA.rating}" />
-			<h:outputText id="ratingAOverall"
-				value="(#{similaritiesAction.similarPair.reviewA.product.rating})" />
+			<h:outputLabel value="From User A:" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.rating)}" />
+			<h:outputLabel value="Product A:" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.product.rating)}" />
 
-			<h:outputLabel for="ratingB" value="Rating B:" />
-			<h:outputText id="ratingB"
-				value="#{similaritiesAction.similarPair.reviewB.rating}" />
-			<h:outputText id="ratingBOverall"
-				value="(#{similaritiesAction.similarPair.reviewB.product.rating})" />
+			<h:outputLabel value="From User B:" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewB.rating)}" />
+			<h:outputLabel value="Product B:" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewB.product.rating)}" />
 
 		</h:panelGrid>
 	</p:panel>
@@ -77,14 +55,10 @@
 		<h:panelGrid columns="2" cellspacing="10">
 
 			<h:outputLabel for="titleA" value="Title A:" />
-			<h:outputText id="titleA"
-				value="#{similaritiesAction.similarPair.reviewA.title}"
-				converter="converter.longName" />
+			<h:outputText id="titleA" value="#{similaritiesAction.similarPair.reviewA.title}" converter="converter.longName" />
 
 			<h:outputLabel for="titleB" value="Title B:" />
-			<h:outputText id="titleB"
-				value="#{similaritiesAction.similarPair.reviewB.title}"
-				converter="converter.longName" />
+			<h:outputText id="titleB" value="#{similaritiesAction.similarPair.reviewB.title}" converter="converter.longName" />
 
 		</h:panelGrid>
 	</p:panel>
@@ -93,20 +67,17 @@
 		<h:panelGrid columns="2" cellspacing="10">
 
 			<h:outputLabel for="dateA" value="Date A:" />
-			<h:outputText id="dateA"
-				value="#{similaritiesAction.similarPair.reviewA.reviewDate}">
+			<h:outputText id="dateA" value="#{similaritiesAction.similarPair.reviewA.reviewDate}">
 				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
 			</h:outputText>
 
 			<c:if test="#{similaritiesAction.similarPair.dayDistance gt 0}">
 				<h:outputLabel for="difference" value="Differences:" />
-				<h:outputText id="difference"
-					value="#{similaritiesAction.similarPair.dayDistance} Days" />
+				<h:outputText id="difference" value="#{similaritiesAction.similarPair.dayDistance} Days" />
 			</c:if>
 
 			<h:outputLabel for="dateB" value="Date B:" />
-			<h:outputText id="dateB"
-				value="#{similaritiesAction.similarPair.reviewB.reviewDate}">
+			<h:outputText id="dateB" value="#{similaritiesAction.similarPair.reviewB.reviewDate}">
 				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
 			</h:outputText>
 

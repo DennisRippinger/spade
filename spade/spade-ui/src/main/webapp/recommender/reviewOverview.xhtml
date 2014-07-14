@@ -17,11 +17,11 @@
 			</h:outputText>
 		</p:column>
 		<p:column headerText="User Rating" sortBy="#{rating}">
-			<h:outputText value="#{review.rating}" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(review.rating)}" />
 		</p:column>
 
 		<p:column headerText="Rating" sortBy="#{product.rating}">
-			<h:outputText value="#{review.product.rating}" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(review.product.rating)}" />
 		</p:column>
 
 		<p:column style="width:24px">
