@@ -54,7 +54,7 @@ public final class SemanticFactory {
         try {
             return WordNetDatabase.getFileInstance();
         } catch (Exception e) {
-            log.error("Could not load Wordnet Database");
+            log.error("Could not load Wordnet Database", e);
         }
         return null;
     }

@@ -39,20 +39,14 @@ public class Tesseract {
 
         try {
             Runtime runtime = Runtime.getRuntime();
-            // ProcessBuilder pb = new ProcessBuilder("tesseract", createCommand(tiffImage));
-            //
-            // pb.redirectErrorStream(true);
-            //
-            // Process process = pb.start();
             Process exec = runtime.exec(createCommand(tiffImage));
 
             Integer returnValue = exec.waitFor();
 
-            tiffImage.delete();
+            boolean delete = tiffImage.delete();
 
-            if (returnValue.equals(0)) {
-                String result = readTesseractOutput();
-                return result;
+            if (delete && returnValue.equals(0)) {
+                return readTesseractOutput();
             } else {
                 log.warn("Tesseract couldn't process the CAPTCHA, return code '{}'", returnValue);
             }
@@ -70,7 +64,7 @@ public class Tesseract {
      * @return the list
      */
     private String createCommand(File tiffImage) {
-        StringBuffer cmd = new StringBuffer();
+        StringBuilder cmd = new StringBuilder();
         if (!TESSERACT_LOCATION.isEmpty()) {
             // On a mac installed with brew a location is needed (or seems to be).
             cmd.append(TESSERACT_LOCATION);
@@ -89,10 +83,10 @@ public class Tesseract {
         try {
             List<String> readLines = Files.readLines(outputFile, Charsets.UTF_8);
             if (!readLines.isEmpty()) {
-                outputFile.delete();
 
-                String result = readLines.get(0);
-                return result;
+                if (outputFile.delete()) {
+                    return readLines.get(0);
+                }
             }
         } catch (IOException e) {
             log.error("Could not find or read Tesseract Output File", e);

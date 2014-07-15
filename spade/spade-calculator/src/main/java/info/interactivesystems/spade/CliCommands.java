@@ -21,7 +21,7 @@ import org.apache.commons.cli.Options;
  * 
  * @author Dennis Rippinger
  */
-public class CliCommands {
+public final class CliCommands {
 
     public static final String NISLIMSA = "nilsimsa";
     public static final String HINDEX = "hindex";
@@ -49,6 +49,13 @@ public class CliCommands {
         options.addOption("n", NISLIMSA, false, "Calculates the nilsimsa simmilarity for a given category");
 
         return options;
+    }
+
+    /**
+     * Private Constructor.
+     */
+    private CliCommands() {
+
     }
 
 }

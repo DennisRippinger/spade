@@ -1,3 +1,17 @@
+/**
+ * Copyright 2014 Dennis Rippinger
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package info.interactivesystems.spade.crawler.util;
 
 import info.interactivesystems.spade.exception.CrawlerException;
@@ -18,9 +32,9 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
- * 
+ * The Class CrawlerUtil.
+ *
  * @author Dennis Rippinger
- * 
  */
 @Slf4j
 public final class CrawlerUtil {
@@ -67,7 +81,7 @@ public final class CrawlerUtil {
             try {
                 page = client.getPage(url);
             } catch (FailingHttpStatusCodeException | IOException e1) {
-                throw new CrawlerException("HTTP Error", e);
+                throw new CrawlerException("HTTP Error", e1);
             }
 
         }
@@ -90,6 +104,13 @@ public final class CrawlerUtil {
         } catch (InterruptedException e) {
             log.error("Error interrupting sleep time", e);
         }
+    }
+
+    /**
+     * PRivate Constructor.
+     */
+    private CrawlerUtil() {
+
     }
 
 }

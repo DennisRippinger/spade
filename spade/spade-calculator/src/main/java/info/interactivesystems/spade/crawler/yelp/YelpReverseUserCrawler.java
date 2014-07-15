@@ -120,8 +120,8 @@ public class YelpReverseUserCrawler {
 
             try {
                 Tuple<Product, Review> tmp = extractRestaurantAndID(domReview, yelpVenue, yelpReview);
-                yelpVenue = tmp.x;
-                yelpReview = tmp.y;
+                yelpVenue = tmp.getX();
+                yelpReview = tmp.getY();
 
                 extractReviewText(domReview, yelpReview);
                 extractReviewRating(domReview, yelpReview);

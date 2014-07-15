@@ -47,7 +47,7 @@ public class HIndexResolver {
      * @param maxIndex the max index
      */
     public void resolveHIndex() {
-        for (Long count = 1l; count <= MAXSIZE; count++) {
+        for (Long count = 1L; count <= MAXSIZE; count++) {
             User user = service.findUserByID(count);
 
             List<Review> reviewsFromUser = service.findReviewFromUser(user.getId());

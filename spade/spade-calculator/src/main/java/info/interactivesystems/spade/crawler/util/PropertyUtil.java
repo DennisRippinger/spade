@@ -43,4 +43,11 @@ public final class PropertyUtil {
         return defaultValue;
     }
 
+    /**
+     * Private Constructor.
+     */
+    private PropertyUtil() {
+
+    }
+
 }

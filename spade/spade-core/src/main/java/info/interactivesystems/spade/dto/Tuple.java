@@ -14,15 +14,20 @@
  */
 package info.interactivesystems.spade.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The Class Tuple contains a simple tuple.
  * 
  * @param <X> the generic type
  * @param <Y> the generic type
  */
+@Getter
+@Setter
 public class Tuple<X, Y> {
-    public final X x;
-    public final Y y;
+    private final X x;
+    private final Y y;
 
     /**
      * Instantiates a new tuple.

@@ -41,7 +41,7 @@ public class CaptchaService {
             return result;
 
         } catch (NullPointerException e) {
-            log.error("TIFF does not exist");
+            log.error("TIFF does not exist", e);
         } catch (IOException e) {
             log.error("Could not save/find the image file from file system", e);
         }
@@ -57,16 +57,15 @@ public class CaptchaService {
             // File captchaImage = tiffConverter.saveTiff(getOutputName("tiff"), imageCaptcha);
 
             File captchaImage = tiffConverter.saveAsJPEG(FileNamer.getOutputName("jpeg"), captchaStream);
-            String result = tesseract.recognizeCaptcha(captchaImage);
 
-            return result;
+            return tesseract.recognizeCaptcha(captchaImage);
 
         } catch (MalformedURLException e) {
             log.error("URL to Captcha is malformed", e);
         } catch (IOException e) {
             log.error("Could not find or download the Captcha", e);
         } catch (NullPointerException e) {
-            log.error("TIFF does not exist");
+            log.error("TIFF does not exist", e);
         }
         return null;
     }

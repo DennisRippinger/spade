@@ -72,8 +72,15 @@ public final class RenewIP {
         try {
             TimeUnit.MINUTES.sleep(1);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("Interruped", e);
         }
+
+    }
+
+    /**
+     * Private Constructor.
+     */
+    private RenewIP() {
 
     }
 }

@@ -44,9 +44,8 @@ public class ReviewHistoryCrawler {
     private static final SimpleDateFormat AMAZON_DATE = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
     private static final SimpleDateFormat EXPORT_DATE = new SimpleDateFormat("dd-MM-yyyy");
     private final WebClient webClient = CrawlerUtil.getChrome(false, false);
-    // private final String BASE_URL =
-    // "http://www.amazon.com/Medialink-Wireless-N-Broadband-Internal-Antennas/product-reviews/B00A3YN0Z0/?filterBy=addFiveStar&pageNumber=%s&sortBy=bySubmissionDateDescending";
-    private final String BASE_URL =
+    
+    private static final String BASE_URL =
         "http://www.amazon.com/RT-N66U-Dual-Band-Wireless-N900-Gigabit-Router/product-reviews/B006QB1RPY/?filterBy=addFiveStar&pageNumber=%s&showViewpoints=0";
 
     private final File reviewFrequency = new File("reviewFrequencyASUS.csv");
@@ -118,7 +117,7 @@ public class ReviewHistoryCrawler {
         userID = userID.replace("/gp/pdp/profile/", "");
         userID = userID.replace("/ref=cm_cr_pr_pdp", "");
 
-        //review.setAuthorId(userID);
+        // review.setAuthorId(userID);
     }
 
     private void extractDate(DomElement domReview, Review review) {

@@ -43,10 +43,10 @@ public class RecommenderAction implements Serializable {
     private static final long serialVersionUID = 7260210638792959399L;
 
     @Resource
-    private ReviewContentService service;
+    private transient ReviewContentService service;
 
     @Resource
-    private NilsimsaSimilarityDao nilsimsaDao;
+    private transient NilsimsaSimilarityDao nilsimsaDao;
 
     @Getter
     private List<User> users;
