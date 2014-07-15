@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>info.interactivesystems</groupId>
 		<artifactId>spade</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>spade-core</artifactId>
 	<name>Spade Core</name>
