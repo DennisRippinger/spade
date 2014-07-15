@@ -44,10 +44,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * The Class YelpCrawler.
  * 
  * @author Dennis Rippinger
+ * @deprecated Entities not current state.
  */
 @Slf4j
 @Component
-@Scope(value="prototype")
+@Scope(value = "prototype")
 public class YelpVenueCrawler {
 
     private static final String YELP_URL = "http://www.yelp.com/search?cflt=%s&find_loc=%s&start=%s";

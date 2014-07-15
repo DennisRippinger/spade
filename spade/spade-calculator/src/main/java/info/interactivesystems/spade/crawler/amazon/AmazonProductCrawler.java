@@ -23,7 +23,6 @@ import info.interactivesystems.spade.util.Authority;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -142,12 +141,12 @@ public class AmazonProductCrawler {
     }
 
     private Boolean hasReviews(DomElement productContainer, Product product) {
-        // System.out.println(productContainer.asXml());
         DomElement domNoOfReviews = productContainer.getFirstByXPath(".//span[@class='rvwCnt']/a");
         if (domNoOfReviews != null) {
             String stringNoOfReviews = domNoOfReviews.asText().replace(",", "");
             Integer noOfReviews = Integer.parseInt(stringNoOfReviews);
             product.setNoOfReviews(noOfReviews);
+
             log.info("Product '{}' has {}' Reviews", product.getId(), noOfReviews);
             return true;
         }
@@ -191,9 +190,7 @@ public class AmazonProductCrawler {
     }
 
     private String getASIN(DomElement productContainer) {
-        String asin = productContainer.getAttribute("name");
-
-        return asin;
+        return productContainer.getAttribute("name");
     }
 
     private void extractName(DomElement productContainer, Product product) {
@@ -232,9 +229,7 @@ public class AmazonProductCrawler {
     }
 
     private String getURL(Integer page, AmazonCategory category) {
-        String url = String.format(AMAZON_URL, category.getId(), page);
-
-        return url;
+        return String.format(AMAZON_URL, category.getId(), page);
     }
 
 }

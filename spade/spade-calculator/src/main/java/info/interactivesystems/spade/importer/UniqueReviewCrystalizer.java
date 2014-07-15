@@ -31,7 +31,7 @@ public class UniqueReviewCrystalizer {
     private Integer uniqueCounter = 0;
 
     public void tagUniqueReviews() {
-        for (Long userID = 1l; userID <= 6643623; userID++) {
+        for (Long userID = 1L; userID <= 6643623; userID++) {
             User currentUser = service.findUserByID(userID);
 
             List<Review> uniqueReviews = new LinkedList<Review>();

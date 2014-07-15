@@ -23,6 +23,8 @@ import org.testng.annotations.Test;
 
 /**
  * The Class TanimotoResemblanceTest.
+ * 
+ * @author Dennis Rippinger
  */
 @Test(groups = { "functionTest" })
 public class TanimotoResemblanceTest extends SimilarityTest {

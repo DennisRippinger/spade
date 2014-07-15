@@ -23,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class InfoDensityIndex provides methods to calculate the information density of a review.
+ * Calculates the information density of a review. The information density is defined by the relation of the size of the GZIP
+ * compressed review to its original length.
  * 
  * @author Dennis Rippinger
  */
@@ -41,7 +42,7 @@ public class InfoDensityIndex {
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();) {
             GZIPOutputStream gzip = new GZIPOutputStream(out);
-            gzip.write(review.getBytes());
+            gzip.write(review.getBytes("UTF-8"));
             gzip.close();
 
             Double compressed = out.size() * 1.0;

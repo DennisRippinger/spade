@@ -23,12 +23,12 @@ import de.linguatools.disco.DISCO;
 import de.linguatools.disco.ReturnDataBN;
 
 /**
- * The Class SemanticResemblance. TODO Comment
+ * The Class SemanticResemblance.
  * 
  * @author Dennis Rippinger
  */
 @Slf4j
-//@Service
+// @Service
 public class DiscoResemblance implements SemanticResemblance {
 
     private DISCO disco;

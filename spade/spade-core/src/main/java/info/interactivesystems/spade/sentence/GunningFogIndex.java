@@ -23,15 +23,16 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class GunningFogIndex.
+ * The Gunning fog index measures the readability of English writing. The index estimates the years of formal education needed
+ * to understand the text on a first reading.
  * 
  * @author Dennis Rippinger
  */
 @Component
 public class GunningFogIndex {
 
-    private static final char[] vowels = { 'a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y' };
-    private static final String[] commonSuffixes = { "es", "ed", "ing", "ic", "er", "en",
+    private static final char[] VOWELS = { 'a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y' };
+    private static final String[] COMMON_SUFFIXES = { "es", "ed", "ing", "ic", "er", "en",
         "al", "est", "ity", "ty", "less", "ly", "ment" };
     private static final Double GFI_MULT = 0.4;
     private static final Double GFI_PERC = 100.0;
@@ -56,9 +57,7 @@ public class GunningFogIndex {
             }
         }
 
-        Double result = GFI_MULT * ((countWords / countSentences) + (GFI_PERC * (countComplexWords / countWords)));
-
-        return result;
+        return GFI_MULT * ((countWords / countSentences) + (GFI_PERC * (countComplexWords / countWords)));
     }
 
     private Boolean isCompexWord(String word) {
@@ -77,20 +76,21 @@ public class GunningFogIndex {
     }
 
     private String removeCommonSuffixes(String word) {
+        String result = "";
         if (word.length() > 6) {
-            for (String suffix : commonSuffixes) {
+            for (String suffix : COMMON_SUFFIXES) {
                 if (word.endsWith(suffix)) {
-                    word = word.substring(0, word.lastIndexOf(suffix));
+                    result = word.substring(0, word.lastIndexOf(suffix));
                     continue;
                 }
             }
         }
-        return word;
+        return result;
     }
 
     private Boolean isVowel(char input) {
 
-        for (char ch : vowels) {
+        for (char ch : VOWELS) {
             if (input == ch) {
                 return true;
             }

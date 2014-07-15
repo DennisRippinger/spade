@@ -1,3 +1,17 @@
+/**
+ * Copyright 2014 Dennis Rippinger
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package info.interactivesystems.spade.importer;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -15,6 +29,9 @@ import org.springframework.stereotype.Component;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The Class ImportDataConsumer.
+ */
 @Slf4j
 @Component
 public class ImportDataConsumer implements Runnable {
@@ -22,15 +39,15 @@ public class ImportDataConsumer implements Runnable {
     private static final Boolean IMPORT_UNKOWN = false;
     private static final String UNKNOWN = "unknown";
 
-    private Long productCounter = 1l;
-    private Long userCounter = 1l;
+    private Long productCounter = 1L;
+    private Long userCounter = 1L;
 
     @Setter
     private Integer reviewCounter;
 
     @Setter
     private static LinkedBlockingQueue<CombinedData> queue;
-    
+
     @Setter
     private Boolean hasMore;
 
@@ -39,13 +56,11 @@ public class ImportDataConsumer implements Runnable {
 
     @Override
     public void run() {
-        while(true){
+        while (true) {
             try {
                 CombinedData combined = queue.take();
 
                 persist(combined.getUser(), combined.getProduct(), combined.getReview());
-
-            } catch (InterruptedException e) {
 
             } catch (Exception e) {
                 log.error("Error Persisting Data '{}'", e);

@@ -58,10 +58,12 @@ public class ProductDao extends AbstractDao<Product> {
 
         List<Review> result = new LinkedList<>();
         for (Product product : (List<Product>) criteria.list()) {
-            for (Review review : product.getReviews())
+            for (Review review : product.getReviews()) {
                 if (review.isUnique()) {
                     result.add(review);
                 }
+            }
+
         }
 
         return result;

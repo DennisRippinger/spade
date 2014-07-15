@@ -23,6 +23,8 @@ import org.testng.annotations.Test;
 
 /**
  * Tests similarity for the Levenshtein Similarity.
+ * 
+ * @author Dennis Rippinger
  */
 @Test(groups = { "functionTest" })
 public class LevenshteinSimilarityTest extends SimilarityTest {

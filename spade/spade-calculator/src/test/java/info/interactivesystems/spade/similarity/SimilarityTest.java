@@ -23,8 +23,9 @@ import java.util.List;
 import org.apache.commons.configuration.XMLConfiguration;
 
 /**
- * @author Dennis Rippinger
+ * The Class SimilarityTest.
  * 
+ * @author Dennis Rippinger
  */
 public abstract class SimilarityTest {
     protected SimilarityCalculator calculator;

@@ -120,7 +120,7 @@ public class HIndex {
         try {
             return InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
-            log.warn("Could not getHostName");
+            log.warn("Could not getHostName", e);
         }
 
         return "Empty";

@@ -37,7 +37,7 @@ public final class HashUtil {
     public static String sha1(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
         byte[] result = mDigest.digest(input.getBytes("UTF-8"));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < result.length; i++) {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
         }

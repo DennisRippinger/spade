@@ -18,6 +18,7 @@ import info.interactivesystems.spade.dto.DiffContainer;
 import info.interactivesystems.spade.entities.Review;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -49,11 +50,11 @@ public class DiffCreator {
      * @return the differences in a {@link DiffContainer}
      */
     public DiffContainer getDifferences(Review one, Review two) {
-        LinkedList<Diff> differences = diff.diff_main(one.getContent(), two.getContent());
+        List<Diff> differences = diff.diff_main(one.getContent(), two.getContent());
 
         log.debug("Found '{}' differences.", differences.size());
 
-        String html = diff.diff_prettyHtml(differences);
+        String html = diff.diff_prettyHtml((LinkedList<Diff>) differences);
 
         DiffContainer result = new DiffContainer();
         result.setHtml(html);
@@ -63,11 +64,16 @@ public class DiffCreator {
     }
 
     @PostConstruct
-    private void init() {
+    public void init() {
         log.debug("Create new DiffMatcher with a Break Score of '{}'", BREAK_SCORE);
         diff = getDiffMatcher();
     }
 
+    /**
+     * Factory Methods for own Score Breaker.
+     * 
+     * @return own Score Breaker
+     */
     private diff_match_patch getDiffMatcher() {
         SemanticBreakScorer scorer = new SemanticBreakScorer() {
 
@@ -77,8 +83,7 @@ public class DiffCreator {
             }
         };
 
-        diff_match_patch dmp = new diff_match_patch(scorer);
-        return dmp;
+        return new diff_match_patch(scorer);
     }
 
 }

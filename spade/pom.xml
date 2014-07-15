@@ -126,6 +126,6 @@
 		<module>spade-core</module>
 		<module>spade-ui</module>
 		<module>spade-calculator</module>
-		<module>spade-import</module>
+		
 	</modules>
 </project>

@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class AutomatedReadabilityIndex.
+ * The Automated Readability Index (ARI) is a readability test designed to gauge the understandability of a text.
  * 
  * @author Dennis Rippinger
  */
@@ -55,9 +55,7 @@ public class AutomatedReadabilityIndex {
         Double pairOne = ARI_CONSTANT_ONE * (countCharacters / countWords);
         Double pairTwo = ARI_CONSTANT_TWO * (countWords / countSentences);
 
-        Double result = pairOne + pairTwo + ARI_CONSTANT_THREE;
-
-        return result;
+        return pairOne + pairTwo + ARI_CONSTANT_THREE;
     }
 
 }

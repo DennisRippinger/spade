@@ -23,13 +23,13 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * @author Dennis Rippinger
+ * Aspect to sort incoming {@link NilsimsaSimilarity} elements.
  * 
+ * @author Dennis Rippinger
  */
 @Slf4j
 @Aspect
@@ -37,7 +37,7 @@ public class SimilaritySorterAspect {
 
     @SuppressWarnings("unchecked")
     @AfterReturning(pointcut = "execution(* info.interactivesystems.spade.dao.NilsimsaSimilarityDao.find(..))", returning = "result")
-    public Object sortAfterReturn(JoinPoint joinPoint, Object result) {
+    public Object sortAfterReturn(Object result) {
 
         List<NilsimsaSimilarity> similarities = (List<NilsimsaSimilarity>) result;
 
@@ -47,14 +47,14 @@ public class SimilaritySorterAspect {
     }
 
     /**
-     * Order similarities.
+     * Order similarities. This ensures that the First Review (Review A) is the youngest one.
      * 
-     * @param list the list
-     * @return the list
+     * @param similarities the incoming similarities.
+     * @return the ordered similarities.
      */
-    private List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> list) {
+    private List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> similarities) {
         Integer counter = 0;
-        for (NilsimsaSimilarity nilsimsaSimilarity : list) {
+        for (NilsimsaSimilarity nilsimsaSimilarity : similarities) {
             if (nilsimsaSimilarity.getReviewA().getReviewDate().after(nilsimsaSimilarity.getReviewB().getReviewDate())) {
                 Review first = nilsimsaSimilarity.getReviewB();
                 Review last = nilsimsaSimilarity.getReviewA();
@@ -77,7 +77,7 @@ public class SimilaritySorterAspect {
 
         log.debug("Sorted '{}' items", counter);
 
-        return list;
+        return similarities;
     }
 
     private void unescapeContent(Review first) {

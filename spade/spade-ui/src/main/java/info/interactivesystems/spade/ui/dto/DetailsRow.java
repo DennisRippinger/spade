@@ -20,7 +20,7 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * The Class DetailsRow.
+ * Simple bean to store row content.
  * 
  * @author Dennis Rippinger
  */
@@ -44,7 +44,7 @@ public class DetailsRow implements Serializable {
     private boolean similar;
 
     private String reviewTitle;
-    
+
     private String reviewText;
 
     private Long similarityId;
