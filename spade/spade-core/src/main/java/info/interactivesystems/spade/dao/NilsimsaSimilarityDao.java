@@ -50,9 +50,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
             .add(Restrictions.eq("sameAuthor", sameAuthor));
         criteria.setMaxResults(limit);
 
-        List<NilsimsaSimilarity> result = initialize(criteria);
-
-        return result;
+        return initialize(criteria);
     }
 
     @SuppressWarnings("unchecked")
@@ -101,6 +99,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     public NilsimsaSimilarity findSimilarityByReviewId(String reviewId) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
@@ -111,9 +110,13 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
             );
         criteria.addOrder(Order.desc("similarity"));
 
-        NilsimsaSimilarity result = (NilsimsaSimilarity) criteria.uniqueResult();
+        List<NilsimsaSimilarity> resultList = criteria.list();
 
-        return result;
+        if (!resultList.isEmpty()) {
+            return resultList.get(0);
+        }
+
+        return null;
     }
 
     private List<Review> getUniqueReviews(List<Review> reviews) {
