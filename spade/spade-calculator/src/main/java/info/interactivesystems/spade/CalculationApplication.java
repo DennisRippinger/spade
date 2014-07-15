@@ -14,7 +14,7 @@
  */
 package info.interactivesystems.spade;
 
-import info.interactivesystems.spade.calculation.UniqueReviewCrystalizer;
+import info.interactivesystems.spade.importer.UniqueReviewCrystalizer;
 import info.interactivesystems.spade.recommender.HIndex;
 import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +71,8 @@ public class CalculationApplication {
 
             context = SpringApplication.run(CalculationApplication.class, args);
             UniqueReviewCrystalizer crystalizer = context.getBean(UniqueReviewCrystalizer.class);
-            crystalizer.removeNonUnique();
+            
+            crystalizer.tagUniqueReviews();
         }
     }
 
