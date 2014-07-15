@@ -102,6 +102,7 @@ public class SimilaritiesAction {
     public void switchUserView(User user) {
         userView = true;
         userAction.setUser(user);
+        userAction.init();
     }
 
     public void switchUserViewBack() {

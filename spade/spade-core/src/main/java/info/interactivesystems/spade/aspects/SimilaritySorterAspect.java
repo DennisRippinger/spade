@@ -22,6 +22,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -51,12 +52,15 @@ public class SimilaritySorterAspect {
      * @param list the list
      * @return the list
      */
-    public List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> list) {
+    private List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> list) {
         Integer counter = 0;
         for (NilsimsaSimilarity nilsimsaSimilarity : list) {
             if (nilsimsaSimilarity.getReviewA().getReviewDate().after(nilsimsaSimilarity.getReviewB().getReviewDate())) {
                 Review first = nilsimsaSimilarity.getReviewB();
                 Review last = nilsimsaSimilarity.getReviewA();
+
+                unescapeContent(first);
+                unescapeContent(last);
 
                 User firstUser = nilsimsaSimilarity.getUserB();
                 User lastUser = nilsimsaSimilarity.getUserA();
@@ -74,6 +78,11 @@ public class SimilaritySorterAspect {
         log.debug("Sorted '{}' items", counter);
 
         return list;
+    }
+
+    private void unescapeContent(Review first) {
+        String content = StringEscapeUtils.unescapeHtml4(first.getContent());
+        first.setContent(content);
     }
 
 }

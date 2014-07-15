@@ -42,6 +42,21 @@ img {
 	text-align: justify;
 }
 
+.sameTable {
+	color: green;
+	margin-left: auto;
+	margin-right: auto;
+	display: table !important;
+	font-size: x-large;
+}
+
+.differentTable {
+	margin-left: auto;
+	margin-right: auto;
+	display: table !important;
+	font-size: x-large;
+}
+
 .header {
 	width: 100%;
 	background: #fff;
@@ -357,31 +372,34 @@ img {
 }
 
 .sameContent {
-    position:relative;
-}    
+	position: relative;
+}
+
 .sameContent:before {
-		color: green;
-		float: right;
-		margin-right: 7px;
-		margin-top: 9px;
-		margin-bottom: 3px;
-        font-family: FontAwesome;
-        font-size: xx-large;
-        content: "\f14a";
-    }
-    
+	color: green;
+	float: right;
+	margin-right: 7px;
+	margin-top: 9px;
+	margin-bottom: 3px;
+	font-family: FontAwesome;
+	font-size: xx-large;
+	content: "\f14a";
+}
+
 .differentContent {
-}    
+	
+}
+
 .differentContent:before {
-		color: #adadad;
-		float: right;
-		margin-right: 7px;
-		margin-top: 9px;
-		margin-bottom: 3px;
-        font-family: FontAwesome;
-        font-size: xx-large;
-        content: "\f14a";
-    }
+	color: #adadad;
+	float: right;
+	margin-right: 7px;
+	margin-top: 9px;
+	margin-bottom: 3px;
+	font-family: FontAwesome;
+	font-size: xx-large;
+	content: "\f14a";
+}
 
 /** Box in exploration. */
 #treeBox .content {

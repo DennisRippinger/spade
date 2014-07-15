@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -42,18 +43,6 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         super(NilsimsaSimilarity.class);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(NilsimsaSimilarity.class);
-        criteria.add(Restrictions.ge(SIMILARITY, similarity))
-            .add(Restrictions.eq("sameAuthor", sameAuthor))
-            .add(Restrictions.le("wordDistance", wordDistance));
-        criteria.setMaxResults(limit);
-
-        return criteria.list();
-    }
-
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
@@ -67,32 +56,12 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     }
 
     @SuppressWarnings("unchecked")
-    private List<NilsimsaSimilarity> initialize(Criteria criteria) {
-        List<NilsimsaSimilarity> result = criteria.list();
-        for (NilsimsaSimilarity nilsimsaSimilarity : result) {
-            nilsimsaSimilarity.getUserA().setReviews(getUniqueReviews(nilsimsaSimilarity.getUserA().getReviews()));
-            nilsimsaSimilarity.getUserB().setReviews(getUniqueReviews(nilsimsaSimilarity.getUserB().getReviews()));
-        }
-        return result;
-    }
-
-    private List<Review> getUniqueReviews(List<Review> reviews) {
-        List<Review> result = new ArrayList<>();
-
-        for (Review review : reviews) {
-            if (review.isUnique()) {
-                result.add(review);
-            }
-        }
-        return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<NilsimsaSimilarity> find(Double similarity, String category, Integer limit) {
+    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
         criteria.add(Restrictions.ge(SIMILARITY, similarity))
-            .add(Restrictions.eq("category", category));
+            .add(Restrictions.eq("sameAuthor", sameAuthor))
+            .add(Restrictions.le("wordDistance", wordDistance));
         criteria.setMaxResults(limit);
 
         return criteria.list();
@@ -109,6 +78,17 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     }
 
     @SuppressWarnings("unchecked")
+    public List<NilsimsaSimilarity> find(Double similarity, String category, Integer limit) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+        criteria.add(Restrictions.ge(SIMILARITY, similarity))
+            .add(Restrictions.eq("category", category));
+        criteria.setMaxResults(limit);
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
     public List<String> getCategories() {
         List<String> result = new ArrayList<>();
         result.add("All");
@@ -118,6 +98,42 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
         result.addAll(distinctQuery.list());
 
+        return result;
+    }
+
+    public NilsimsaSimilarity findSimilarityByReviewId(String reviewId) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+
+        criteria.add(Restrictions.disjunction()
+            .add(Restrictions.eq("reviewA.id", reviewId))
+            .add(Restrictions.eq("reviewB.id", reviewId))
+            );
+        criteria.addOrder(Order.desc("similarity"));
+
+        NilsimsaSimilarity result = (NilsimsaSimilarity) criteria.uniqueResult();
+
+        return result;
+    }
+
+    private List<Review> getUniqueReviews(List<Review> reviews) {
+        List<Review> result = new ArrayList<>();
+
+        for (Review review : reviews) {
+            if (review.isUnique()) {
+                result.add(review);
+            }
+        }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<NilsimsaSimilarity> initialize(Criteria criteria) {
+        List<NilsimsaSimilarity> result = criteria.list();
+        for (NilsimsaSimilarity nilsimsaSimilarity : result) {
+            nilsimsaSimilarity.getUserA().setReviews(getUniqueReviews(nilsimsaSimilarity.getUserA().getReviews()));
+            nilsimsaSimilarity.getUserB().setReviews(getUniqueReviews(nilsimsaSimilarity.getUserB().getReviews()));
+        }
         return result;
     }
 }
