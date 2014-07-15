@@ -14,10 +14,15 @@
  */
 package info.interactivesystems.spade.ui.action;
 
+import info.interactivesystems.spade.dao.NilsimsaSimilarityDao;
 import info.interactivesystems.spade.dao.service.ReviewContentService;
+import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
+import info.interactivesystems.spade.ui.dto.DetailsRow;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -33,10 +38,15 @@ import org.springframework.context.annotation.Scope;
 @Slf4j
 @Named
 @Scope("session")
-public class RecommenderAction {
+public class RecommenderAction implements Serializable {
+
+    private static final long serialVersionUID = 7260210638792959399L;
 
     @Resource
     private ReviewContentService service;
+
+    @Resource
+    private NilsimsaSimilarityDao nilsimsaDao;
 
     @Getter
     private List<User> users;
@@ -47,7 +57,10 @@ public class RecommenderAction {
 
     @Getter
     @Setter
-    private Review selectedReview;
+    private DetailsRow selectedRow;
+
+    @Getter
+    private List<DetailsRow> currentRows;
 
     @Getter
     private User currentUser;
@@ -57,13 +70,38 @@ public class RecommenderAction {
         users = service.findUsersWithHIndex(3.0, 30);
 
         currentReviews = users.get(0).getReviews();
-
-        log.info("Size of Current Reviews = '{}'", currentReviews.size());
     }
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
-        currentReviews = currentUser.getReviews();
+
+        List<DetailsRow> rows = new ArrayList<>();
+        if (currentUser != null) {
+            for (Review review : currentUser.getReviews()) {
+                DetailsRow row = new DetailsRow();
+                row.setProductId(review.getProduct().getId());
+                row.setProductName(review.getProduct().getName());
+                row.setCategory(review.getProduct().getCategory());
+                row.setRating(review.getProduct().getRating());
+                row.setReviewDate(review.getReviewDate());
+                row.setReviewText(review.getContent());
+                row.setReviewTitle(review.getTitle());
+                row.setUserRating(review.getRating());
+
+                NilsimsaSimilarity similar = nilsimsaDao.findSimilarityByReviewId(review.getId());
+                if (similar != null) {
+                    row.setSimilar(true);
+                    row.setSimilarityId(similar.getId());
+                } else {
+                    row.setSimilar(false);
+                }
+
+                rows.add(row);
+            }
+        }
+        log.debug("Transfered '{}' items into Detail Row Elements", rows.size());
+
+        currentRows = rows;
     }
 
 }

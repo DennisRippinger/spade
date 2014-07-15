@@ -81,16 +81,15 @@ public class UserDao extends AbstractDao<User> {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(User.class);
         criteria.add(Restrictions.ge(HINDEX, minIndex));
-
+        criteria.add(Restrictions.ge("numberOfReviews", 10));
+        
         // TODO Topmost hIndex user has 21k reviews.
         criteria.add(Restrictions.le(HINDEX, 20.0));
 
         criteria.addOrder(Order.desc(HINDEX));
         criteria.setMaxResults(limit);
 
-        List<User> result = initialize(criteria);
-
-        return result;
+        return initialize(criteria);
     }
 
     /**

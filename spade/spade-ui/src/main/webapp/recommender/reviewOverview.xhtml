@@ -1,14 +1,14 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<p:dataTable id="reviewTable" var="review" value="#{recommenderAction.currentReviews}">
-		<p:column headerText="Product" sortBy="#{product.name}">
-			<h:outputLink value="http://amazon.com/dp/#{review.product.id}" target="_blank">
-				<h:outputText value="#{review.product.name}" />
+	<p:dataTable id="reviewTable" var="review" value="#{recommenderAction.currentRows}" sortBy="#{review.similar}" sortOrder="descending">
+		<p:column headerText="Product" sortBy="#{review.productName}">
+			<h:outputLink value="http://amazon.com/dp/#{review.productId}" target="_blank">
+				<h:outputText value="#{review.productName}" />
 			</h:outputLink>
 		</p:column>
 
-		<p:column headerText="Category" sortBy="#{category}">
-			<h:outputText value="#{review.product.category}" />
+		<p:column headerText="Category" sortBy="#{review.category}">
+			<h:outputText value="#{review.category}" />
 		</p:column>
 
 		<p:column headerText="Date" sortBy="#{reviewDate}">
@@ -16,17 +16,22 @@
 				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
 			</h:outputText>
 		</p:column>
-		<p:column headerText="User Rating" sortBy="#{rating}">
-			<i class="a-icon-star #{starRatingConverter.getAsString(review.rating)}" />
+
+		<p:column headerText="Similar" sortBy="#{review.similar}">
+			<i class="fa fa-check-square #{similarityConverter.getSimilarity(review.similar)}" />
+		</p:column>
+
+		<p:column headerText="User Rating" sortBy="#{review.userRating}">
+			<i class="a-icon-star #{starRatingConverter.getAsString(review.userRating)}" />
 		</p:column>
 
 		<p:column headerText="Rating" sortBy="#{product.rating}">
-			<i class="a-icon-star #{starRatingConverter.getAsString(review.product.rating)}" />
+			<i class="a-icon-star #{starRatingConverter.getAsString(review.rating)}" />
 		</p:column>
 
 		<p:column style="width:24px">
 			<p:commandLink update=":dlgForm:dialog" oncomplete="PF('documentDialog').show()" title="Review" styleClass="ui-icon ui-icon-search">
-				<f:setPropertyActionListener value="#{review}" target="#{recommenderAction.selectedReview}" />
+				<f:setPropertyActionListener value="#{review}" target="#{recommenderAction.selectedRow}" />
 			</p:commandLink>
 		</p:column>
 
