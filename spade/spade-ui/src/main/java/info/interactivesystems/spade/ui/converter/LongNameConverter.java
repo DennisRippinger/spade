@@ -26,7 +26,7 @@ import javax.faces.convert.FacesConverter;
  * 
  * @author Dennis Rippinger
  */
-@FacesConverter(forClass = String.class, value = "converter.longName")
+@FacesConverter(value = "converter.longName")
 public class LongNameConverter implements Converter, Serializable {
 
     private static final long serialVersionUID = 2479669304984009829L;

@@ -24,6 +24,12 @@ img {
 	margin-right: 16px;
 }
 
+#hIndexGauge {
+    width:200px;
+    height:160px;
+    margin: 1em;
+}
+
 .reviewText {
 	margin: 1em;
 }

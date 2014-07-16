@@ -1,32 +1,53 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<h:panelGrid columns="2" cellspacing="10">
-		<h:outputLabel for="author" value="Name:" />
-		<h:outputText id="author" value="#{userAction.user.name}" />
+	<h:outputScript library="js" name="justgage.1.0.1.min.js" target="head" />
+	<h:outputScript library="js" name="raphael.2.1.0.min.js" target="head" />
 
-		<h:outputLabel for="numReviews" value="Reviews:" />
-		<h:outputText id="numReviews" value="#{userAction.user.numberOfReviews}" />
+	<div style="width: 100%; overflow: auto;">
+		<div style="float: left; width: 60%;">
+			<h:panelGrid columns="2" cellspacing="10">
+				<h:outputLabel for="author" value="Name:" />
+				<h:outputText id="author" value="#{userAction.user.name}" />
 
-		<h:outputLabel for="helpful" value="Helpful Votes:" />
-		<h:outputText id="helpful" value="#{userAction.user.helpfulVotes}" />
+				<h:outputLabel for="numReviews" value="Reviews:" />
+				<h:outputText id="numReviews" value="#{userAction.user.numberOfReviews}" />
 
-		<h:outputLabel for="overall" value="Overall Votes:" />
-		<h:outputText id="overall" value="#{userAction.user.helpfulOverallVotes}" />
+				<h:outputLabel for="helpful" value="Helpful Votes:" />
+				<h:outputText id="helpful" value="#{userAction.user.helpfulVotes}" />
 
-		<c:if test="#{userAction.user.helpfulOverallVotes > 0}">
-			<h:outputLabel for="overallPercent" value="Helpfulnes:" />
-			<h:outputText id="overallPercent" value="#{userAction.user.helpfulVotes / userAction.user.helpfulOverallVotes}">
-				<f:convertNumber type="percent" />
-			</h:outputText>
-		</c:if>
+				<h:outputLabel for="overall" value="Overall Votes:" />
+				<h:outputText id="overall" value="#{userAction.user.helpfulOverallVotes}" />
 
-		<h:outputLabel for="hIndex" value="hIndex:" />
-		<h:outputText id="hIndex" value="#{userAction.user.HIndex}" />
+				<c:if test="#{userAction.user.helpfulOverallVotes > 0}">
+					<h:outputLabel for="overallPercent" value="Helpfulnes:" />
+					<h:outputText id="overallPercent"
+						value="#{userAction.user.helpfulVotes / userAction.user.helpfulOverallVotes}">
+						<f:convertNumber type="percent" />
+					</h:outputText>
+				</c:if>
+			</h:panelGrid>
+		</div>
 
-	</h:panelGrid>
+		<div style="float: right; width: 40%;">
+			<div id="hIndexGauge"></div>
+			<script>
+			  var g = new JustGage({
+				    id: "hIndexGauge", 
+				    value: #{hindexHelper.gaugeValue(userAction.user.HIndex)}, 
+				    min: 0,
+				    max: 3.5,
+				    title: "H-Index"
+				  }); 
+			</script>
+		</div>
+	</div>
+
 
 	<h:form>
-		<a href="http://www.amazon.com/gp/cdp/member-reviews/#{userAction.user.id}" target="_blank"> <input type="button" value="User Page on Amazon.com" />
+		<a href="http://www.amazon.com/gp/cdp/member-reviews/#{userAction.user.id}" target="_blank"> <input
+			type="button" value="User Page on Amazon.com" />
 		</a>
 
 		<h:commandButton action="#{similaritiesAction.switchUserViewBack()}" value="Back to Overview" />
@@ -35,7 +56,8 @@
 	<p></p>
 
 	<h:form>
-		<p:dataTable var="review" value="#{userAction.currentRows}" sortBy="#{review.similar}" sortOrder="descending">
+		<p:dataTable var="review" value="#{userAction.currentRows}" sortBy="#{review.similar}"
+			sortOrder="descending">
 
 			<p:column headerText="Product" sortBy="#{review.productName}">
 				<h:outputLink value="http://amazon.com/dp/#{review.productId}" target="_blank">
@@ -66,7 +88,8 @@
 			</p:column>
 
 			<p:column style="width:24px">
-				<p:commandLink update=":dlgForm:dialog" oncomplete="PF('documentDialog').show()" title="Review" styleClass="ui-icon ui-icon-search">
+				<p:commandLink update=":dlgForm:dialog" oncomplete="PF('documentDialog').show()" title="Review"
+					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{review}" target="#{userAction.selectedRow}" />
 				</p:commandLink>
 			</p:column>
@@ -75,7 +98,8 @@
 	</h:form>
 
 	<h:form id="dlgForm">
-		<p:dialog id="dialog" header="Review: #{userAction.selectedRow.reviewTitle}" showEffect="fade" widgetVar="documentDialog" modal="false" resizable="true" width="60em">
+		<p:dialog id="dialog" header="Review: #{userAction.selectedRow.reviewTitle}" showEffect="fade"
+			widgetVar="documentDialog" modal="false" resizable="true" width="60em">
 			<div class="reviewDialog">
 				<h:outputText value="#{userAction.selectedRow.reviewText}" />
 			</div>
