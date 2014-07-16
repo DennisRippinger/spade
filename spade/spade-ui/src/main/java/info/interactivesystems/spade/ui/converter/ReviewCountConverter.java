@@ -12,28 +12,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package info.interactivesystems.spade.ui.action;
+package info.interactivesystems.spade.ui.converter;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- * A factory for creating MeterGauge objects.
+ * The Class ReviewCountConverter.
  * 
  * @author Dennis Rippinger
  */
 @Named
 @ViewScoped
-public class HindexHelper {
+public class ReviewCountConverter {
 
-    public String gaugeValue(Double hindex) {
-        if (hindex > 3.5) {
-            hindex = 3.5;
+    private static final String IMG_PATH = "../resources/img/sum/sum-%s.svg";
+
+    /**
+     * Returns the path of the appropriate review count icon.
+     * 
+     * @param count number of reviews.
+     * @return path of appropriate image.
+     */
+    public String getReviewIcon(Integer count) {
+
+        if (count <= 2) {
+            return String.format(IMG_PATH, 1);
+        } else if (count < 8) {
+            return String.format(IMG_PATH, 2);
+        } else if (count < 50) {
+            return String.format(IMG_PATH, 3);
+        } else {
+            return String.format(IMG_PATH, 4);
         }
 
-        Double result = Math.round(100.0 * hindex) / 100.0;
-
-        return result.toString();
     }
 
 }

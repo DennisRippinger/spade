@@ -45,14 +45,24 @@
 				<c:choose>
 					<c:when test="#{!similaritiesAction.userView}">
 						<p:tabView>
-							<p:tab title="Differences">
+							<p:tab>
+								<f:facet name="title">
+									<i class="fa fa-outdent"></i>
+									<h:outputText value=" Differences" />
+								</f:facet>
+
 								<div id="reviewBox">
 									<div class="reviewText">
 										<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}" escape="false" />
 									</div>
 								</div>
 							</p:tab>
-							<p:tab title="Side-by-Side">
+							<p:tab title="">
+								<f:facet name="title">
+									<i class="fa fa-columns"></i>
+									<h:outputText value=" Side-by-Side" />
+								</f:facet>
+
 								<div style="width: 100%; overflow: auto;">
 									<div style="float: left; width: 48%; text-align: justify;">#{similaritiesAction.similarPair.reviewA.content}</div>
 									<div style="float: right; width: 48%; text-align: justify;">#{similaritiesAction.similarPair.reviewB.content}</div>

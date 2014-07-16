@@ -1,4 +1,6 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<center>
 		<h1>
@@ -8,12 +10,32 @@
 
 	<h:form>
 		<p:panel id="authors" header="Authors" styleClass="#{similaritiesAction.sameAuthor()}">
-			<h:panelGrid columns="2" cellspacing="8">
+
+			<h:panelGrid columns="3" cellspacing="6" style="width: 100%">
 				<h:outputLabel for="authorA" value="User A:" />
-				<h:commandLink id="authorA" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}" value="#{similaritiesAction.similarPair.userA.name}" />
+				<h:commandLink id="authorA"
+					action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userA)}"
+					value="#{similaritiesAction.similarPair.userA.name}" />
+				<div style="float: right; margin-right: -13px;">
+					<img
+						src="#{reviewCountConverter.getReviewIcon(similaritiesAction.similarPair.userA.numberOfReviews)}"
+						width="25px" /> <i class="fa fa-header"
+						style="font-size: x-large; color: #{hindexConverter.colorValue(similaritiesAction.similarPair.userA.HIndex)}" />
+				</div>
+
 
 				<h:outputLabel for="authorB" value="User B:" />
-				<h:commandLink id="authorB" action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}" value="#{similaritiesAction.similarPair.userB.name}" />
+				<h:commandLink id="authorB"
+					action="#{similaritiesAction.switchUserView(similaritiesAction.similarPair.userB)}"
+					value="#{similaritiesAction.similarPair.userB.name}" />
+				<div style="float: right; margin-right: -13px;">
+					<img
+						src="#{reviewCountConverter.getReviewIcon(similaritiesAction.similarPair.userB.numberOfReviews)}"
+						width="25px" /> <i class="fa fa-header"
+						style="font-size: x-large; color: #{hindexConverter.colorValue(similaritiesAction.similarPair.userB.HIndex)}" />
+				</div>
+
+
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
@@ -23,14 +45,20 @@
 		<h:panelGrid columns="2" cellspacing="6">
 
 			<h:outputLabel for="productA" value="A:" />
-			<h:outputLink id="productA" value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}" title="#{similaritiesAction.similarPair.reviewA.product.name}" target="_blank">
-				<h:outputText value="#{similaritiesAction.similarPair.reviewA.product.name}" converter="converter.longName" />
+			<h:outputLink id="productA"
+				value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewA.product.id}"
+				title="#{similaritiesAction.similarPair.reviewA.product.name}" target="_blank">
+				<h:outputText value="#{similaritiesAction.similarPair.reviewA.product.name}"
+					converter="converter.longName" />
 			</h:outputLink>
 
 
 			<h:outputLabel for="productB" value="B:" />
-			<h:outputLink id="productB" value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewB.product.id}" target="_blank">
-				<h:outputText value="#{similaritiesAction.similarPair.reviewB.product.name}" converter="converter.longName" />
+			<h:outputLink id="productB"
+				value="http://amazon.com/dp/#{similaritiesAction.similarPair.reviewB.product.id}"
+				target="_blank">
+				<h:outputText value="#{similaritiesAction.similarPair.reviewB.product.name}"
+					converter="converter.longName" />
 			</h:outputLink>
 
 		</h:panelGrid>
@@ -40,14 +68,18 @@
 		<h:panelGrid columns="2" cellspacing="8">
 
 			<h:outputLabel value="User A:" />
-			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.rating)}" />
+			<i
+				class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.rating)}" />
 			<h:outputLabel value="Product A:" />
-			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.product.rating)}" />
+			<i
+				class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewA.product.rating)}" />
 
 			<h:outputLabel value="User B:" />
-			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewB.rating)}" />
+			<i
+				class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewB.rating)}" />
 			<h:outputLabel value="Product B:" />
-			<i class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewB.product.rating)}" />
+			<i
+				class="a-icon-star #{starRatingConverter.getAsString(similaritiesAction.similarPair.reviewB.product.rating)}" />
 
 		</h:panelGrid>
 	</p:panel>
@@ -56,10 +88,12 @@
 		<h:panelGrid columns="2" cellspacing="8">
 
 			<h:outputLabel for="titleA" value="Title A:" />
-			<h:outputText id="titleA" value="#{similaritiesAction.similarPair.reviewA.title}" converter="converter.longName" />
+			<h:outputText id="titleA" value="#{similaritiesAction.similarPair.reviewA.title}"
+				converter="converter.longName" />
 
 			<h:outputLabel for="titleB" value="Title B:" />
-			<h:outputText id="titleB" value="#{similaritiesAction.similarPair.reviewB.title}" converter="converter.longName" />
+			<h:outputText id="titleB" value="#{similaritiesAction.similarPair.reviewB.title}"
+				converter="converter.longName" />
 
 		</h:panelGrid>
 	</p:panel>
