@@ -14,7 +14,6 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -23,7 +22,6 @@ import javax.inject.Named;
  * @author Dennis Rippinger
  */
 @Named
-@ViewScoped
 public class HindexConverter {
 
     public String gaugeValue(Double hindex) {
