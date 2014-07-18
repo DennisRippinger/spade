@@ -17,3 +17,5 @@
 **/spade-core/**/hibernate.properties
 disco.properties
 derby.log
+
+/spade/spade-ui/src/main/resources/git.properties

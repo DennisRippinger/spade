@@ -24,13 +24,6 @@
 			<var>config</var>
 		</resource-bundle>
 
-		<!-- Properties with build indicators (local/dev) -->
-		<resource-bundle>
-			<base-name>version</base-name>
-			<var>version</var>
-		</resource-bundle>
-
-
 
 	</application>
 
