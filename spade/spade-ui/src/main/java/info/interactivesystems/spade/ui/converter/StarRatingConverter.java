@@ -14,6 +14,11 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 /**
@@ -24,32 +29,33 @@ import javax.inject.Named;
 @Named
 public class StarRatingConverter {
 
+    private Map<Double, String> ratings = new LinkedHashMap<>();
+
+    @PostConstruct
+    void init() {
+        ratings.put(0.75, "a-star-0-5");
+        ratings.put(1.25, "a-star-1");
+        ratings.put(1.75, "a-star-1-5");
+        ratings.put(2.25, "a-star-2");
+        ratings.put(2.75, "a-star-2-5");
+        ratings.put(3.25, "a-star-3");
+        ratings.put(3.75, "a-star-3-5");
+        ratings.put(4.25, "a-star-4");
+        ratings.put(4.75, "a-star-4-5");
+    }
+
     /**
      * Returns a CSS Class defining the star rating from the amazon sprite.
      */
     public String getAsString(Double rating) {
 
-        if (rating >= 0 && rating < 0.75) {
-            return "a-star-0-5";
-        } else if (rating >= 0.75 && rating < 1.25) {
-            return "a-star-1";
-        } else if (rating >= 1.25 && rating < 1.75) {
-            return "a-star-1-5";
-        } else if (rating >= 1.75 && rating < 2.25) {
-            return "a-star-2";
-        } else if (rating >= 2.25 && rating < 2.75) {
-            return "a-star-2-5";
-        } else if (rating >= 2.75 && rating < 3.25) {
-            return "a-star-3";
-        } else if (rating >= 3.25 && rating < 3.75) {
-            return "a-star-3-5";
-        } else if (rating >= 3.75 && rating < 4.25) {
-            return "a-star-4";
-        } else if (rating >= 4.25 && rating < 4.75) {
-            return "a-star-4-5";
-        } else {
-            return "a-star-5";
+        for (Entry<Double, String> entry : ratings.entrySet()) {
+            if (rating < entry.getKey()) {
+                return entry.getValue();
+            }
         }
+
+        return "a-star-5";
 
     }
 
