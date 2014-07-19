@@ -7,23 +7,17 @@
 
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+
 		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>de</supported-locale>
 		</locale-config>
+
 		<resource-bundle>
 			<base-name>MessageResources</base-name>
 			<var>messages</var>
 		</resource-bundle>
-		<resource-bundle>
-			<base-name>ShortCuts</base-name>
-			<var>shortcuts</var>
-		</resource-bundle>
-
-		<!-- Configuration props. -->
-		<resource-bundle>
-			<base-name>config</base-name>
-			<var>config</var>
-		</resource-bundle>
-
 
 	</application>
 
