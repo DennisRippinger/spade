@@ -3,10 +3,33 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<center>
-		<h1>
-			<h:outputText id="category" value="#{similaritiesAction.similarPair.category}" />
-		</h1>
+		<h2>
+			<h:outputText id="category" value="Category: #{similaritiesAction.similarPair.category}" />
+		</h2>
 	</center>
+
+	<h:form>
+		<p:panel id="vote" header="Decision">
+
+			<h:panelGrid columns="2" cellspacing="6" style="width: 100%">
+				<h:outputLabel for="authorA" value="User A:" />
+				<p:selectCheckboxMenu id="menuA" value="#{votingAction.userAVotes}" label="Spam Reason"
+					filter="true" filterMatchMode="startsWith">
+					<f:selectItems value="#{votingAction.options}" />
+				</p:selectCheckboxMenu>
+
+				<h:outputLabel for="authorB" value="User B:" />
+				<p:selectCheckboxMenu id="menuB" value="#{votingAction.userBVotes}" label="Spam Reason"
+					filter="true" filterMatchMode="startsWith">
+					<f:selectItems value="#{votingAction.options}" />
+				</p:selectCheckboxMenu>
+			</h:panelGrid>
+
+			<p:commandButton value="Submit"
+				actionListener="#{votingAction.submit(similaritiesAction.similarPair)}" />
+
+		</p:panel>
+	</h:form>
 
 	<h:form>
 		<p:panel id="authors" header="Authors" styleClass="#{similaritiesAction.sameAuthor()}">

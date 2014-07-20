@@ -84,9 +84,12 @@ public class SimilaritiesAction {
 
     private Integer counter = 0;
 
+    /**
+     * Initializes with no certain category.
+     */
     @PostConstruct
     public void init() {
-        currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, 30);
+        currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, 10);
 
         categories = new ArrayList<>();
         for (String category : similarityDao.getCategories()) {
@@ -99,16 +102,27 @@ public class SimilaritiesAction {
         next();
     }
 
+    /**
+     * Switch to the selected author of a review and the user view.
+     * 
+     * @param user
+     */
     public void switchUserView(User user) {
         userView = true;
         userAction.setUser(user);
         userAction.init();
     }
 
+    /**
+     * Switch back to review perspective.
+     */
     public void switchUserViewBack() {
         userView = false;
     }
 
+    /**
+     * Updates the current category.
+     */
     public void updateCategory() {
 
         if ("All".equals(currentCategory)) {
@@ -121,6 +135,9 @@ public class SimilaritiesAction {
         next();
     }
 
+    /**
+     * Selects the next review in the category set.
+     */
     public void next() {
         if (counter < currentSimilarItem.size()) {
             counter++;
@@ -130,6 +147,9 @@ public class SimilaritiesAction {
         switchUserViewBack();
     }
 
+    /**
+     * Selects the previous review in the category set.
+     */
     public void previous() {
         if (counter > 1) {
             counter--;
@@ -140,6 +160,11 @@ public class SimilaritiesAction {
 
     }
 
+    /**
+     * CSS for same Product
+     * 
+     * @return CSS Key
+     */
     public String sameProduct() {
         String reviewIdA = similarPair.getReviewA().getProduct().getId();
         String reviewIdB = similarPair.getReviewB().getProduct().getId();
@@ -147,6 +172,11 @@ public class SimilaritiesAction {
         return getCssForContentFlag(reviewIdA, reviewIdB);
     }
 
+    /**
+     * CSS for same author
+     * 
+     * @return CSS Key
+     */
     public String sameAuthor() {
         String userIdA = similarPair.getUserA().getId();
         String userIdB = similarPair.getUserB().getId();
@@ -154,6 +184,11 @@ public class SimilaritiesAction {
         return getCssForContentFlag(userIdA, userIdB);
     }
 
+    /**
+     * CSS for same rating
+     * 
+     * @return CSS Key
+     */
     public String sameRating() {
         Double ratingA = similarPair.getReviewA().getRating();
         Double ratingB = similarPair.getReviewB().getRating();
@@ -161,6 +196,11 @@ public class SimilaritiesAction {
         return getCssForContentFlag(ratingA, ratingB);
     }
 
+    /**
+     * CSS for same date
+     * 
+     * @return CSS Key
+     */
     public String sameDate() {
         Date dateA = similarPair.getReviewA().getReviewDate();
         Date dateB = similarPair.getReviewB().getReviewDate();
@@ -168,6 +208,11 @@ public class SimilaritiesAction {
         return getCssForContentFlag(dateA, dateB);
     }
 
+    /**
+     * CSS for same title
+     * 
+     * @return CSS Key
+     */
     public String sameTitle() {
         String titleA = similarPair.getReviewA().getTitle();
         String titleB = similarPair.getReviewB().getTitle();
