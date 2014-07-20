@@ -21,6 +21,12 @@
         <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
         <param-value>true</param-value>
     </context-param>
+    
+	<env-entry>
+        <env-entry-name>com.sun.faces.ClientStateSavingPassword</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>BMnxS7TbB3RzjXfbgY54MszdDonAFgMyLRjQ1AJm</env-entry-value>
+    </env-entry>
 
 
     <!-- primefaces config -->
