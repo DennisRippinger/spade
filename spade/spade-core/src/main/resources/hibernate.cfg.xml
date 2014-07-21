@@ -16,10 +16,10 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
 		<!-- C3P0 Connection Pooling in property file - depending on platform -->
-		<property name="hibernate.dbcp.initialSize">8</property>
-		<property name="hibernate.dbcp.maxActive">20</property>
-		<property name="hibernate.dbcp.maxIdle">20</property>
-		<property name="hibernate.dbcp.minIdle">0</property>
+<!-- 		<property name="hibernate.dbcp.initialSize">8</property> -->
+<!-- 		<property name="hibernate.dbcp.maxActive">20</property> -->
+<!-- 		<property name="hibernate.dbcp.maxIdle">20</property> -->
+<!-- 		<property name="hibernate.dbcp.minIdle">0</property> -->
 
 		<!-- Entities -->
 		<mapping class="info.interactivesystems.spade.entities.NilsimsaSimilarity" />
