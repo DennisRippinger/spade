@@ -13,6 +13,7 @@
 		<property name="show_sql">false</property>
 		<property name="format_sql">false</property>
 		<property name="use_sql_comments">false</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
 		<!-- C3P0 Connection Pooling in property file - depending on platform -->
 		<property name="hibernate.dbcp.initialSize">8</property>

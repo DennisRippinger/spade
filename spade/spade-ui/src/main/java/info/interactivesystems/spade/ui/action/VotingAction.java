@@ -48,6 +48,9 @@ public class VotingAction implements Serializable {
     @Resource
     private VoteDao voteDao;
 
+    @Resource
+    private SimilaritiesAction similaritiesAction;
+
     @Getter
     private List<String> options;
 
@@ -77,7 +80,7 @@ public class VotingAction implements Serializable {
         options.add(localization.getString("info.reason.advertising"));
         options.add(localization.getString("info.reason.differentTopic"));
         options.add(localization.getString("info.reason.somethingElse"));
-        
+
     }
 
     /**
@@ -96,6 +99,8 @@ public class VotingAction implements Serializable {
             userAVotes = new String[] {};
             voteDao.save(voteOnUserA);
         }
+
+        similaritiesAction.next();
 
     }
 
