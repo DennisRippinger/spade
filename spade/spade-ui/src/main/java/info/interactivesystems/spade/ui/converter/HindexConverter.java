@@ -25,6 +25,10 @@ import javax.inject.Named;
 public class HindexConverter {
 
     public String gaugeValue(Double hindex) {
+        if(hindex == null){
+            return "0.0";
+        }
+        
         if (hindex > 3.5) {
             hindex = 3.5;
         }
@@ -35,6 +39,10 @@ public class HindexConverter {
     }
 
     public String colorValue(Double hindex) {
+        if (hindex == null) {
+            return "green";
+        }
+
         if (hindex < 0.9) {
             return "green";
         } else if (hindex < 2.0) {

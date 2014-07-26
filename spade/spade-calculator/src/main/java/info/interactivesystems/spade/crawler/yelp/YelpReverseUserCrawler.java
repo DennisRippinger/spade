@@ -159,7 +159,7 @@ public class YelpReverseUserCrawler {
             if (matcher.find()) {
                 String rating = matcher.group();
                 Integer result = Integer.parseInt(rating);
-                yelpReview.setCheckins(result);
+               // yelpReview.setCheckins(result);
             }
         }
     }

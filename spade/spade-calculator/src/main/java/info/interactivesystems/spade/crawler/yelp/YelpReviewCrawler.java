@@ -152,15 +152,15 @@ public class YelpReviewCrawler {
 
             if (!useful.isEmpty()) {
                 Integer usefulCount = Integer.parseInt(useful);
-                review.setVoteUseful(usefulCount);
+                // review.setVoteUseful(usefulCount);
             }
             if (!funny.isEmpty()) {
                 Integer funnyCount = Integer.parseInt(funny);
-                review.setVoteFunny(funnyCount);
+                // review.setVoteFunny(funnyCount);
             }
             if (!cool.isEmpty()) {
                 Integer coolCount = Integer.parseInt(cool);
-                review.setVoteCool(coolCount);
+                // review.setVoteCool(coolCount);
             }
 
         }
@@ -182,7 +182,7 @@ public class YelpReviewCrawler {
             if (matcher.find()) {
                 String rating = matcher.group();
                 Integer result = Integer.parseInt(rating);
-                yelpReview.setCheckins(result);
+                // yelpReview.setCheckins(result);
             }
         }
     }

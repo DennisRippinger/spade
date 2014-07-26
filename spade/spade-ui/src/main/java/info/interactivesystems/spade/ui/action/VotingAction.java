@@ -28,11 +28,12 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.springframework.context.annotation.Scope;
 
 /**
  * The Class VotingAction.
@@ -40,7 +41,7 @@ import lombok.Setter;
  * @author Dennis Rippinger
  */
 @Named
-@ViewScoped
+@Scope("session")
 public class VotingAction implements Serializable {
 
     private static final long serialVersionUID = -8312158521289713226L;

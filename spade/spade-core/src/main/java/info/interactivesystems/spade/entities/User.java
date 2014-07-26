@@ -41,7 +41,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "users", indexes = { @Index(columnList = "randomID") , @Index(columnList = "hIndex") })
+@Table(name = "users", indexes = { @Index(columnList = "randomID"), @Index(columnList = "hIndex"), @Index(columnList = "meanDifference") })
 public class User implements Serializable {
 
     private static final long serialVersionUID = 7916895135811744472L;
@@ -67,11 +67,11 @@ public class User implements Serializable {
 
     private Double hIndex;
 
-    private Double length;
+    private Double meanDifference;
 
     private Long randomID;
-    
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Review> reviews;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Review> reviews;
 
 }

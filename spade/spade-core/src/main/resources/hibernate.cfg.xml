@@ -27,6 +27,7 @@
 		<mapping class="info.interactivesystems.spade.entities.Review" />
 		<mapping class="info.interactivesystems.spade.entities.User" />
 		<mapping class="info.interactivesystems.spade.entities.Vote" />
+		<mapping class="info.interactivesystems.spade.entities.Stylometry" />
 
 	</session-factory>
 </hibernate-configuration>
