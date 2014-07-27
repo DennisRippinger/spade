@@ -53,7 +53,6 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         return initialize(criteria);
     }
 
-    @SuppressWarnings("unchecked")
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
@@ -62,20 +61,18 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
             .add(Restrictions.le("wordDistance", wordDistance));
         criteria.setMaxResults(limit);
 
-        return criteria.list();
+        return initialize(criteria);
     }
 
-    @SuppressWarnings("unchecked")
     public List<NilsimsaSimilarity> find(Double similarity, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
         criteria.add(Restrictions.ge(SIMILARITY, similarity));
         criteria.setMaxResults(limit);
 
-        return criteria.list();
+        return initialize(criteria);
     }
 
-    @SuppressWarnings("unchecked")
     public List<NilsimsaSimilarity> find(Double similarity, String category, Integer limit) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
@@ -83,7 +80,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
             .add(Restrictions.eq("category", category));
         criteria.setMaxResults(limit);
 
-        return criteria.list();
+        return initialize(criteria);
     }
 
     @SuppressWarnings("unchecked")
