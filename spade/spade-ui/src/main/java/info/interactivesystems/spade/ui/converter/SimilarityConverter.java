@@ -39,4 +39,15 @@ public class SimilarityConverter {
         }
 
     }
+
+    public String getStylometry(Double stylometry) {
+        if (stylometry > 0.97) {
+            return "green";
+        } else if (stylometry > 0.80) {
+            return "#D2CD00";
+        } else {
+            return "red";
+        }
+
+    }
 }

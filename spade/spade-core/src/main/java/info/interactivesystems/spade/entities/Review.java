@@ -27,8 +27,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.engine.internal.Cascade;
-
 import lombok.Getter;
 import lombok.Setter;
 

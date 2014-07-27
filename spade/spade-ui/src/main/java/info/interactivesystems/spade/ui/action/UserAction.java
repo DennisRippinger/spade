@@ -69,6 +69,7 @@ public class UserAction implements Serializable {
                 row.setReviewText(review.getContent());
                 row.setReviewTitle(review.getTitle());
                 row.setUserRating(review.getRating());
+                row.setStylometry(review.getMeanSimilarity() != null ? review.getMeanSimilarity() : 1.0);
 
                 NilsimsaSimilarity similar = nilsimsaDao.findSimilarityByReviewId(review.getId());
                 if (similar != null) {

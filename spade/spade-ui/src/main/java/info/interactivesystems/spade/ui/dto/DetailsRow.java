@@ -42,6 +42,8 @@ public class DetailsRow implements Serializable {
     private Double rating;
 
     private boolean similar;
+    
+    private Double stylometry;
 
     private String reviewTitle;
 
