@@ -8,12 +8,12 @@
 	<ui:param name="pageTitle" value="Similarities" />
 
 	<ui:define name="content">
-	
+
 		<h:form>
 			<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
 			<p:hotkey bind="right" update="@all" actionListener="#{similaritiesAction.next}" />
 		</h:form>
-		
+
 		<p:layout fullPage="false" style="height: 900px;">
 			<p:layoutUnit position="east" size="350">
 
@@ -30,12 +30,14 @@
 									<i class="fa fa-outdent"></i>
 									<h:outputText value=" Differences" />
 								</f:facet>
-
-								<div id="reviewBox">
-									<div class="reviewText">
-										<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}" escape="false" />
+								<p></p>
+								<p:panel id="contentBox" header="Content" styleClass="#{similaritiesAction.sameContent()}">
+									<div id="reviewBox">
+										<div class="reviewText">
+											<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}" escape="false" />
+										</div>
 									</div>
-								</div>
+								</p:panel>
 							</p:tab>
 							<p:tab title="">
 								<f:facet name="title">

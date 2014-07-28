@@ -213,6 +213,18 @@ public class SimilaritiesAction {
 
         return getCssForContentFlag(titleA, titleB);
     }
+    
+    /**
+     * CSS for same content
+     * 
+     * @return CSS Key
+     */
+    public String sameContent() {
+        String titleA = similarPair.getReviewA().getContent();
+        String titleB = similarPair.getReviewB().getContent();
+
+        return getCssForContentFlag(titleA, titleB);
+    }
 
     private String getCssForContentFlag(Object idA, Object idB) {
         if (idA.equals(idB)) {
