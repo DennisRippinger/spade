@@ -1,6 +1,6 @@
 html,body {
-	font-family: sans-serif, Arial, "Segoe UI";
-	color: #383838;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #333;
 	font-size: 12px;
 	line-height: 18px;
 }
@@ -11,12 +11,12 @@ p {
 }
 
 a,a:link,a:active,a:visited {
-	color: #0b578d;
+	color: #333;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #0d70b6;
+	color: #6f5499;
 	text-decoration: none;
 }
 
@@ -115,4 +115,26 @@ h4 {
 table {
 	font-size: 12px;
 	line-height: 18px;
+}
+
+.added {
+	background: #8Fbc8F;
+}
+
+.removed {
+	background: #F08080;
+}
+
+.sideReview {
+	width: 48%;
+	text-align: justify;
+	font-size: medium;
+}
+
+.side-left {
+	float: left;
+}
+
+.side-right {
+	float: right;
 }

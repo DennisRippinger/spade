@@ -17,7 +17,6 @@ package info.interactivesystems.spade.util;
 import info.interactivesystems.spade.dto.DiffContainer;
 import info.interactivesystems.spade.entities.Review;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -54,7 +53,9 @@ public class DiffCreator {
 
         log.debug("Found '{}' differences.", differences.size());
 
-        String html = diff.diff_prettyHtml((LinkedList<Diff>) differences);
+        String html = createHTML(differences);
+        html = html.replaceAll("style=\"background:#E6FFE6;", "class = \"added;");
+        html = html.replaceAll("style=\"background:#FFE6E6;", "class = \"removed;");
 
         DiffContainer result = new DiffContainer();
         result.setHtml(html);
@@ -84,6 +85,35 @@ public class DiffCreator {
         };
 
         return new diff_match_patch(scorer);
+    }
+
+    /**
+     * Modified Method of diff_match_patch
+     * 
+     * @param diffs the list of diffs.
+     * @return an HTML String.
+     */
+    private String createHTML(List<Diff> diffs) {
+        StringBuilder html = new StringBuilder();
+        for (Diff aDiff : diffs) {
+            String text = aDiff.text.replace("&", "&amp;").replace("<", "&lt;")
+                .replace(">", "&gt;").replace("\n", "&para;<BR>");
+            switch (aDiff.operation) {
+                case INSERT:
+                    html.append("<ins class = \"added\">")
+                        .append(text).append("</ins>");
+                    break;
+                case DELETE:
+                    html.append("<del class = \"removed\">")
+                        .append(text).append("</DEL>");
+                    break;
+                case EQUAL:
+                    html.append("<span>").append(text)
+                        .append("</span>");
+                    break;
+            }
+        }
+        return html.toString();
     }
 
 }

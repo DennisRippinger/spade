@@ -25,7 +25,7 @@
 				</p:selectCheckboxMenu>
 			</h:panelGrid>
 
-			<p:commandButton value="Submit"
+			<p:commandButton value="Submit" update="@all"
 				actionListener="#{votingAction.submit(similaritiesAction.similarPair)}" />
 
 		</p:panel>
