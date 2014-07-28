@@ -45,14 +45,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         super(NilsimsaSimilarity.class);
     }
 
-    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer limit) {
-        Criteria criteria = getSameAuthorCriteria(similarity, sameAuthor);
-        criteria.setMaxResults(limit);
-
-        return initialize(criteria);
-    }
-
-    public List<NilsimsaSimilarity> findInWindow(Double similarity, Boolean sameAuthor, Integer window) {
+    public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer window) {
         Criteria criteria = getSameAuthorCriteria(similarity, sameAuthor);
         criteria.setFirstResult((window -1) * WINDOW_SIZE);
         criteria.setMaxResults(WINDOW_SIZE);
