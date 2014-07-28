@@ -84,12 +84,15 @@ public class SimilaritiesAction {
 
     private Integer counter = 0;
 
+    private Integer window = 1;
+
     /**
      * Initializes with no certain category.
      */
     @PostConstruct
     public void init() {
-        currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, 10);
+
+        currentSimilarItem = similarityDao.findInWindow(SIMILARITY_LIMIT, false, window);
 
         categories = new ArrayList<>();
         for (String category : similarityDao.getCategories()) {
@@ -126,7 +129,7 @@ public class SimilaritiesAction {
     public void updateCategory() {
 
         if ("All".equals(currentCategory)) {
-            currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, 30);
+            currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, 30);
         } else {
             currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, currentCategory, 30);
         }
@@ -140,7 +143,13 @@ public class SimilaritiesAction {
      */
     public void next() {
         if (counter < currentSimilarItem.size()) {
-            counter++;
+            similarPair = currentSimilarItem.get(counter++);
+            diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
+        } else {
+            counter = 0;
+            window++;
+
+            currentSimilarItem = similarityDao.findInWindow(SIMILARITY_LIMIT, false, window);
             similarPair = currentSimilarItem.get(counter);
             diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
         }

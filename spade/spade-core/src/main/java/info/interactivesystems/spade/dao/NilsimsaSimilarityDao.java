@@ -37,6 +37,8 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
+    public static final Integer WINDOW_SIZE = 10;
+    
     private static final String SIMILARITY = "similarity";
 
     public NilsimsaSimilarityDao() {
@@ -44,13 +46,27 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
     }
 
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer limit) {
+        Criteria criteria = getSameAuthorCriteria(similarity, sameAuthor);
+        criteria.setMaxResults(limit);
+
+        return initialize(criteria);
+    }
+
+    public List<NilsimsaSimilarity> findInWindow(Double similarity, Boolean sameAuthor, Integer window) {
+        Criteria criteria = getSameAuthorCriteria(similarity, sameAuthor);
+        criteria.setFirstResult((window -1) * WINDOW_SIZE);
+        criteria.setMaxResults(WINDOW_SIZE);
+
+        return initialize(criteria);
+    }
+
+    private Criteria getSameAuthorCriteria(Double similarity, Boolean sameAuthor) {
         Criteria criteria = sessionFactory.getCurrentSession()
             .createCriteria(NilsimsaSimilarity.class);
         criteria.add(Restrictions.ge(SIMILARITY, similarity))
             .add(Restrictions.eq("sameAuthor", sameAuthor));
-        criteria.setMaxResults(limit);
 
-        return initialize(criteria);
+        return criteria;
     }
 
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer wordDistance, Integer limit) {
