@@ -11,56 +11,59 @@
 
 		<h:form>
 			<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
-			<p:hotkey bind="right" update="@all" actionListener="#{similaritiesAction.next}" />
+			<p:hotkey bind="right" update=":centerContent,:sideContent" actionListener="#{similaritiesAction.next}" />
 		</h:form>
 
+
 		<p:layout fullPage="false" style="height: 900px;">
+
 			<p:layoutUnit position="east" size="350">
-
-				<ui:include src="/similarity/sidebar.xhtml" />
-
+				<h:panelGroup id="sideContent">
+					<ui:include src="/similarity/sidebar.xhtml" />
+				</h:panelGroup>
 			</p:layoutUnit>
 
 			<p:layoutUnit position="center">
-				<c:choose>
-					<c:when test="#{!similaritiesAction.userView}">
-						<p:tabView>
-							<p:tab>
-								<f:facet name="title">
-									<i class="fa fa-outdent"></i>
-									<h:outputText value=" Differences" />
-								</f:facet>
-								<p></p>
-								<p:panel id="contentBox" header="Content" styleClass="#{similaritiesAction.sameContent()}">
-									<div id="reviewBox">
-										<div class="reviewText">
-											<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}" escape="false" />
+				<h:panelGroup id="centerContent">
+					<c:choose>
+						<c:when test="#{!similaritiesAction.userView}">
+							<p:tabView>
+								<p:tab>
+									<f:facet name="title">
+										<i class="fa fa-outdent"></i>
+										<h:outputText value=" Differences" />
+									</f:facet>
+									<p></p>
+									<p:panel id="contentBox" header="Content" styleClass="#{similaritiesAction.sameContent()}">
+										<div id="reviewBox">
+											<div class="reviewText">
+												<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}"
+													escape="false" />
+											</div>
 										</div>
+									</p:panel>
+								</p:tab>
+								<p:tab title="">
+									<f:facet name="title">
+										<i class="fa fa-columns"></i>
+										<h:outputText value=" Side-by-Side" />
+									</f:facet>
+
+									<div style="width: 100%; overflow: auto;">
+										<div class="sideReview side-left">#{similaritiesAction.similarPair.reviewA.content}</div>
+										<div class="sideReview side-right">#{similaritiesAction.similarPair.reviewB.content}</div>
 									</div>
-								</p:panel>
-							</p:tab>
-							<p:tab title="">
-								<f:facet name="title">
-									<i class="fa fa-columns"></i>
-									<h:outputText value=" Side-by-Side" />
-								</f:facet>
+									<div style="clear: both"></div>
+								</p:tab>
+							</p:tabView>
+						</c:when>
+						<c:otherwise>
+							<ui:include src="/similarity/user.xhtml" />
+						</c:otherwise>
 
-								<div style="width: 100%; overflow: auto;">
-									<div class="sideReview side-left">#{similaritiesAction.similarPair.reviewA.content}</div>
-									<div class="sideReview side-right">#{similaritiesAction.similarPair.reviewB.content}</div>
-								</div>
-								<div style="clear: both"></div>
-							</p:tab>
-						</p:tabView>
-					</c:when>
-					<c:otherwise>
-						<ui:include src="/similarity/user.xhtml" />
-					</c:otherwise>
-
-				</c:choose>
-
+					</c:choose>
+				</h:panelGroup>
 			</p:layoutUnit>
-
 		</p:layout>
 
 	</ui:define>

@@ -21,18 +21,24 @@ import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.util.DiffCreator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+import org.primefaces.component.log.Log;
 import org.springframework.context.annotation.Scope;
 
 /**
@@ -40,6 +46,7 @@ import org.springframework.context.annotation.Scope;
  * 
  * @author Dennis Rippinger
  */
+@Slf4j
 @Named
 @Scope("session")
 public class SimilaritiesAction {
@@ -137,6 +144,13 @@ public class SimilaritiesAction {
             currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, window);
             similarPair = currentSimilarItem.get(counter);
             diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
+
+            try {
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+            } catch (IOException e) {
+                log.warn("Could not reload page", e);
+            }
         }
         switchUserViewBack();
     }
@@ -213,7 +227,7 @@ public class SimilaritiesAction {
 
         return getCssForContentFlag(titleA, titleB);
     }
-    
+
     /**
      * CSS for same content
      * 
