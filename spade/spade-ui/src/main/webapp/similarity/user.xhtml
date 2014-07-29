@@ -75,12 +75,12 @@
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="Style" sortBy="#{review.similar}">
+			<p:column headerText="Style" sortBy="#{review.stylometry}">
 				<i class="fa fa-keyboard-o stylometry"
 					style="color: #{similarityConverter.getStylometry(review.stylometry)};" />
 			</p:column>
 
-			<p:column headerText="Similar" sortBy="#{review.stylometry}">
+			<p:column headerText="Similar" sortBy="#{review.similar}">
 				<i class="fa fa-check-square #{similarityConverter.getSimilarity(review.similar)}" />
 			</p:column>
 
