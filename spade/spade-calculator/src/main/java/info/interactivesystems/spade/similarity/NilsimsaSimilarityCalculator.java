@@ -83,7 +83,7 @@ public class NilsimsaSimilarityCalculator {
                     similarity.setCategory(category);
 
                     Integer daysBetween = calculateDifference(outerReview.getReviewDate(), innerReview.getReviewDate());
-                    Boolean sameAuthor = calculateSameAuthorshit(outerReview, innerReview);
+                    Boolean sameAuthor = calculateSameAuthorship(outerReview, innerReview);
                     Integer wordDistance = calculateWordDistance(outerReview, innerReview);
 
                     similarity.setDayDistance(daysBetween);
@@ -119,7 +119,7 @@ public class NilsimsaSimilarityCalculator {
         return difference;
     }
 
-    private Boolean calculateSameAuthorshit(Review reviewA, Review reviewB) {
+    private Boolean calculateSameAuthorship(Review reviewA, Review reviewB) {
         return reviewA.getUser().equals(reviewB.getUser());
     }
 

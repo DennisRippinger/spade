@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HIndexResolver {
 
-    private static final Integer MAXSIZE = 2441053;
+    private static final Long MAXSIZE = 6643623L;
 
     @Resource
     private ReviewContentService service;
@@ -47,7 +47,7 @@ public class HIndexResolver {
      * @param maxIndex the max index
      */
     public void resolveHIndex() {
-        for (Long count = 1L; count <= MAXSIZE; count++) {
+        for (Long count = 2441053L; count <= MAXSIZE; count++) {
             User user = service.findUserByID(count);
 
             List<Review> reviewsFromUser = service.findReviewFromUser(user.getId());
