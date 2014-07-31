@@ -26,6 +26,7 @@ import name.fraser.neil.plaintext.SemanticBreakScorer;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,7 +50,9 @@ public class DiffCreator {
      * @return the differences in a {@link DiffContainer}
      */
     public DiffContainer getDifferences(Review one, Review two) {
-        List<Diff> differences = diff.diff_main(one.getContent(), two.getContent());
+        String oneContent = decode(one.getContent());
+        String twoContent = decode(two.getContent());
+        List<Diff> differences = diff.diff_main(oneContent, twoContent);
 
         log.debug("Found '{}' differences.", differences.size());
 
@@ -114,6 +117,10 @@ public class DiffCreator {
             }
         }
         return html.toString();
+    }
+
+    private String decode(String content) {
+        return StringEscapeUtils.unescapeHtml4(content);
     }
 
 }
