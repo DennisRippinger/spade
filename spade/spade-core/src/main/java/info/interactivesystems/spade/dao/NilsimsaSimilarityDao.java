@@ -37,8 +37,8 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
-    public static final Integer WINDOW_SIZE = 10;
-    
+    public static final Integer WINDOW_SIZE = 100;
+
     private static final String SIMILARITY = "similarity";
 
     public NilsimsaSimilarityDao() {
@@ -47,7 +47,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer window) {
         Criteria criteria = getSameAuthorCriteria(similarity, sameAuthor);
-        criteria.setFirstResult((window -1) * WINDOW_SIZE);
+        criteria.setFirstResult((window - 1) * WINDOW_SIZE);
         criteria.setMaxResults(WINDOW_SIZE);
 
         return initialize(criteria);
@@ -55,9 +55,13 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
     private Criteria getSameAuthorCriteria(Double similarity, Boolean sameAuthor) {
         Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(NilsimsaSimilarity.class);
+            .createCriteria(NilsimsaSimilarity.class, "similarity");
+
         criteria.add(Restrictions.ge(SIMILARITY, similarity))
             .add(Restrictions.eq("sameAuthor", sameAuthor));
+
+        criteria.createAlias("similarity.reviewA", "review");
+        criteria.add(Restrictions.ge("review.densityRelation", 1.3));
 
         return criteria;
     }
@@ -123,6 +127,47 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         }
 
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public NilsimsaSimilarity findSimilarityByReviewId(String reviewAId, String reviewBId) {
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(NilsimsaSimilarity.class);
+
+        criteria.add(Restrictions.disjunction(
+            Restrictions.conjunction()
+                .add(Restrictions.eq("reviewA.id", reviewAId))
+                .add(Restrictions.eq("reviewB.id", reviewBId)),
+            Restrictions.conjunction()
+                .add(Restrictions.eq("reviewA.id", reviewBId))
+                .add(Restrictions.eq("reviewB.id", reviewAId)))
+            );
+        criteria.addOrder(Order.desc("similarity"));
+
+        List<NilsimsaSimilarity> resultList = criteria.list();
+
+        if (!resultList.isEmpty()) {
+            return resultList.get(0);
+        }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> listSuspicioussUser() {
+        SQLQuery query = sessionFactory.getCurrentSession()
+            .createSQLQuery("SELECT distinct(tmp.user) "
+                + "FROM ((SELECT userA_id as user "
+                + "FROM "
+                + "similarities "
+                + "WHERE similarity >= 0.85) UNION (SELECT "
+                + "userB_id as user "
+                + "FROM "
+                + "similarities "
+                + "WHERE similarity >= 0.85)) as tmp;");
+
+        return query.list();
+
     }
 
     private List<Review> getUniqueReviews(List<Review> reviews) {

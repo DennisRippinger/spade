@@ -19,7 +19,9 @@ import info.interactivesystems.spade.entities.Review;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -56,7 +58,7 @@ public class ReviewDao extends AbstractDao<Review> {
             .createCriteria(Review.class);
         criteria.add(Restrictions.eq("user.id", userID));
         criteria.add(Restrictions.eq("unique", true));
-        
+
         return criteria.list();
     }
 
@@ -64,8 +66,35 @@ public class ReviewDao extends AbstractDao<Review> {
     public List<Review> findReviewsByCategory(String category) {
 
         Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Review.class);
-        criteria.add(Restrictions.eq("category", category));
+            .createCriteria(Review.class, "review");
+
+        criteria.createAlias("review.product", "product");
+        criteria.add(Restrictions.eq("product.category", category));
+        criteria.add(Restrictions.eq("unique", true));
+        
+        criteria.setProjection(Projections.projectionList()
+            .add(Projections.property("id"), "id")
+            .add(Projections.property("nilsimsa"), "nilsimsa"))
+            .setResultTransformer(Transformers.aliasToBean(Review.class));
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Review> findReviewFromUserInCategory(String userID, String category) {
+
+        Criteria criteria = sessionFactory.getCurrentSession()
+            .createCriteria(Review.class, "review");
+
+        criteria.createAlias("review.product", "product");
+        criteria.add(Restrictions.eq("product.category", category));
+        criteria.add(Restrictions.eq("user.id", userID));
+        criteria.add(Restrictions.eq("unique", true));
+        
+        criteria.setProjection(Projections.projectionList()
+            .add(Projections.property("id"), "id")
+            .add(Projections.property("nilsimsa"), "nilsimsa"))
+            .setResultTransformer(Transformers.aliasToBean(Review.class));
 
         return criteria.list();
     }

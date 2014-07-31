@@ -128,6 +128,10 @@ public class ReviewContentService {
     public List<Review> findReviewFromUser(String userID) {
         return reviewDao.findReviewFromUser(userID);
     }
+    
+    public List<Review> findReviewFromUserInCategory(String userID, String category){
+        return reviewDao.findReviewFromUserInCategory(userID, category);
+    }
 
     public List<Review> findReviewsByCategory(String category) {
         return reviewDao.findReviewsByCategory(category);
@@ -191,6 +195,11 @@ public class ReviewContentService {
         return userDao.checkIfAlreadyExists(id);
     }
 
+    /**
+     * Finds a user by his random ID.
+     * @param id
+     * @return
+     */
     public User findUserByID(Long id) {
         return userDao.findByRandomID(id);
     }
