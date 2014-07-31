@@ -21,8 +21,8 @@ import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.entities.Vote;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -70,7 +70,7 @@ public class VotingAction implements Serializable {
      */
     @PostConstruct
     public void init() {
-        options = new ArrayList<>();
+        options = new LinkedList<>();
 
         localization = ResourceBundle.getBundle("MessageResources");
 
@@ -108,6 +108,7 @@ public class VotingAction implements Serializable {
     private Vote extractVoteEntity(User user, Review review, Double similarity, String[] userVotes) {
         Vote vote = new Vote();
 
+        vote.setSessionID(similaritiesAction.getSessionID());
         vote.setUser(user);
         vote.setReview(review);
         vote.setSimilarity(similarity);

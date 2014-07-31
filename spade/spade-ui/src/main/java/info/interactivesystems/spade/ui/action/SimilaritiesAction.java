@@ -21,7 +21,6 @@ import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.util.DiffCreator;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +31,12 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.primefaces.component.log.Log;
 import org.springframework.context.annotation.Scope;
 
 /**
@@ -50,8 +48,6 @@ import org.springframework.context.annotation.Scope;
 @Named
 @Scope("session")
 public class SimilaritiesAction {
-
-    private static final Double SIMILARITY_LIMIT = 0.90;
 
     // Resources
 
@@ -66,6 +62,9 @@ public class SimilaritiesAction {
 
     @Resource
     private UserAction userAction;
+
+    @Resource
+    private SimilarityBean similarityBean;
 
     // Variables
 
@@ -91,7 +90,8 @@ public class SimilaritiesAction {
 
     private Integer counter = 0;
 
-    private Integer window = 1;
+    @Getter
+    private String sessionID;
 
     /**
      * Initializes with no certain category.
@@ -99,7 +99,9 @@ public class SimilaritiesAction {
     @PostConstruct
     public void init() {
 
-        currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, window);
+        sessionID = getSessionKey();
+
+        log.info("Current Session ID: '{}'", sessionID);
 
         categories = new ArrayList<>();
         for (String category : similarityDao.getCategories()) {
@@ -134,38 +136,10 @@ public class SimilaritiesAction {
      * Selects the next review in the category set.
      */
     public void next() {
-        if (counter < currentSimilarItem.size()) {
-            similarPair = currentSimilarItem.get(counter++);
-            diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
-        } else {
-            counter = 0;
-            window++;
+        similarPair = similarityBean.getSimilarity(counter++);
+        diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
 
-            currentSimilarItem = similarityDao.find(SIMILARITY_LIMIT, false, window);
-            similarPair = currentSimilarItem.get(counter);
-            diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
-
-            try {
-                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-                ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
-            } catch (IOException e) {
-                log.warn("Could not reload page", e);
-            }
-        }
         switchUserViewBack();
-    }
-
-    /**
-     * Selects the previous review in the category set.
-     */
-    public void previous() {
-        if (counter > 1) {
-            counter--;
-            similarPair = currentSimilarItem.get(counter);
-            diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
-        }
-        switchUserViewBack();
-
     }
 
     /**
@@ -245,5 +219,13 @@ public class SimilaritiesAction {
             return "sameContent";
         }
         return "differentContent";
+    }
+
+    private String getSessionKey() {
+        FacesContext fctx = FacesContext.getCurrentInstance();
+        ExternalContext ectx = fctx.getExternalContext();
+        HttpSession session = (HttpSession) ectx.getSession(false);
+
+        return session.getId();
     }
 }

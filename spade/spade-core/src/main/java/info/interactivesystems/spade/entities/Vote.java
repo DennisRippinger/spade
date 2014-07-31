@@ -18,6 +18,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,19 +33,21 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "votings")
+@Table(name = "votings", indexes = { @Index(columnList = "sessionID") })
 public class Vote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String sessionID;
+
     @OneToOne
     private Review review;
 
     @OneToOne
     private User user;
-    
+
     private Double similarity;
 
     /*
@@ -64,5 +67,9 @@ public class Vote {
     private boolean reviewIsNotReason = false;
 
     private boolean somethingElse = false;
+    
+    private boolean push = false;
+    
+    private boolean pull = false;
 
 }

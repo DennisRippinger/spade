@@ -69,10 +69,10 @@ ol li {
 h1 {
 	margin: 0;
 	padding: 0 0 4px;
-	font: 18px Arial;
+	font-size: 28px;
 	font-weight: normal;
 	line-height: 24px;
-	color: #0b578d;
+	margin-bottom: 0.2em;
 }
 
 h2 {

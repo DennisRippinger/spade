@@ -55,6 +55,12 @@ img {
 	font-size: x-large;
 }
 
+.copied {
+	margin-left: auto;
+	margin-right: auto;
+	display: table !important;
+}
+
 .stylometry {
 	margin-left: auto;
 	margin-right: auto;

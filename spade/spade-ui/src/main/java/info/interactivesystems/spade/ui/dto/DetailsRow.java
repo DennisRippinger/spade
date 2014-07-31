@@ -14,6 +14,8 @@
  */
 package info.interactivesystems.spade.ui.dto;
 
+import info.interactivesystems.spade.ui.util.CopyDirection;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -50,5 +52,7 @@ public class DetailsRow implements Serializable {
     private String reviewText;
 
     private Long similarityId;
+    
+    private CopyDirection direction;
 
 }

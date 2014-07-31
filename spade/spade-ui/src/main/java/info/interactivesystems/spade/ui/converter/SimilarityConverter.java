@@ -14,6 +14,8 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
+import info.interactivesystems.spade.ui.util.CopyDirection;
+
 import javax.inject.Named;
 
 /**
@@ -36,6 +38,23 @@ public class SimilarityConverter {
             return "sameTable";
         } else {
             return "differentTable";
+        }
+
+    }
+
+    public String getCopyDirection(CopyDirection direction) {
+
+        switch (direction) {
+            case FIRST:
+                return "fa-long-arrow-left";
+            case LATER:
+                return "fa-long-arrow-right";
+            case SAME:
+                return "fa-arrows-h";
+            case NONE:
+                return "";
+            default:
+                return "";
         }
 
     }

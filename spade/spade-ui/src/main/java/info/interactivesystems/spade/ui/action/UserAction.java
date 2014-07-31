@@ -19,6 +19,7 @@ import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.ui.dto.DetailsRow;
+import info.interactivesystems.spade.ui.util.CopyDirection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -75,8 +76,12 @@ public class UserAction implements Serializable {
                 if (similar != null) {
                     row.setSimilar(true);
                     row.setSimilarityId(similar.getId());
+
+                    getCopyDirection(review, row, similar);
+
                 } else {
                     row.setSimilar(false);
+                    row.setDirection(CopyDirection.NONE);
                 }
 
                 rows.add(row);
@@ -86,4 +91,22 @@ public class UserAction implements Serializable {
         currentRows = rows;
     }
 
+    private void getCopyDirection(Review review, DetailsRow row, NilsimsaSimilarity similar) {
+        Review otherReview;
+        if (similar.getReviewA().getId().equals(review.getId())) {
+            otherReview = similar.getReviewB();
+        } else {
+            otherReview = similar.getReviewA();
+        }
+
+        Integer compare = review.getReviewDate().compareTo(otherReview.getReviewDate());
+
+        if (compare.equals(0)) {
+            row.setDirection(CopyDirection.SAME);
+        } else if (compare > 0) {
+            row.setDirection(CopyDirection.LATER);
+        } else if (compare < 0) {
+            row.setDirection(CopyDirection.FIRST);
+        }
+    }
 }

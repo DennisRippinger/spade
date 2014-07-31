@@ -5,8 +5,11 @@
 	<h:outputScript library="js" name="justgage.1.0.1.min.js" target="head" />
 	<h:outputScript library="js" name="raphael.2.1.0.min.js" target="head" />
 
+	<h1>Author</h1>
 	<div style="width: 100%; overflow: auto;">
 		<div style="float: left; width: 60%;">
+
+
 			<h:panelGrid columns="2" cellspacing="10">
 				<h:outputLabel for="author" value="Name:" />
 				<h:outputText id="author" value="#{userAction.user.name}" />
@@ -54,6 +57,7 @@
 	</h:form>
 
 	<p></p>
+	<h1>Reviews</h1>
 
 	<h:form>
 		<p:dataTable var="review" value="#{userAction.currentRows}" sortBy="#{review.similar}"
@@ -82,6 +86,10 @@
 
 			<p:column headerText="Similar" sortBy="#{review.similar}">
 				<i class="fa fa-check-square #{similarityConverter.getSimilarity(review.similar)}" />
+			</p:column>
+			
+			<p:column headerText="Copied">
+				<i class="fa #{similarityConverter.getCopyDirection(review.direction)} fa-2x copied"/>
 			</p:column>
 
 			<p:column headerText="User Rating" sortBy="#{review.userRating}">

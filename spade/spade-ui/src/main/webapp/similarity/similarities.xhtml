@@ -10,10 +10,9 @@
 	<ui:define name="content">
 
 		<h:form>
-			<p:hotkey bind="left" update="@all" actionListener="#{similaritiesAction.previous}" />
-			<p:hotkey bind="right" update=":centerContent,:sideContent" actionListener="#{similaritiesAction.next}" />
+			<p:hotkey bind="right" update=":centerContent,:sideContent"
+				actionListener="#{similaritiesAction.next}" />
 		</h:form>
-
 
 		<p:layout fullPage="false" style="height: 900px;">
 
