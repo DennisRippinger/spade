@@ -19,7 +19,6 @@ import info.interactivesystems.spade.crawler.util.CrawlerUtil;
 import info.interactivesystems.spade.dao.ProductDao;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.exception.CrawlerException;
-import info.interactivesystems.spade.util.Authority;
 import info.interactivesystems.spade.util.ProductCategory;
 
 import java.io.UnsupportedEncodingException;
@@ -124,8 +123,6 @@ public class AmazonProductCrawler {
 
             if (hasReviews(productContainer, product) && !productDao.checkIfAlreadyExists(asin)) {
 
-                product.setAuthority(Authority.AMAZON);
-                product.setType(productCategory);
 
                 extractName(productContainer, product);
                 extractRating(productContainer, product);
@@ -186,7 +183,7 @@ public class AmazonProductCrawler {
         // Cut refer
         productURL = productURL.substring(0, productURL.lastIndexOf('/'));
 
-        product.setSource(productURL);
+//        product.setSource(productURL);
     }
 
     private String getASIN(DomElement productContainer) {
@@ -204,7 +201,7 @@ public class AmazonProductCrawler {
         DomElement domImage = productContainer.getFirstByXPath(".//img[@class='productImage cfMarker'|@class='placeholder cfMarker']");
         if (domImage != null) {
             String imgLocation = domImage.getAttribute("src");
-            product.setImageUrl(imgLocation);
+//            product.setImageUrl(imgLocation);
         }
 
     }

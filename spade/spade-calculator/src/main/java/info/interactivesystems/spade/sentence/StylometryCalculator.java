@@ -28,9 +28,9 @@ public class StylometryCalculator {
         Stylometry stylometry = new Stylometry();
 
         // Restructure
-        stylometry.setAri(review.getAri());
-        stylometry.setGfi(review.getGfi());
-        stylometry.setDensity(review.getDensity());
+//        stylometry.setAri(review.getAri());
+//        stylometry.setGfi(review.getGfi());
+//        stylometry.setDensity(review.getDensity());
 
         List<String> sentences = getSentences(review.getContent());
         List<String> words = getWords(sentences);

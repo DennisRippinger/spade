@@ -14,14 +14,11 @@
  */
 package info.interactivesystems.spade.entities;
 
-import info.interactivesystems.spade.util.Authority;
-
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Index;
@@ -33,7 +30,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * DTO for a UncategorizedReview.
+ * User Entity.
  * 
  * @author Dennis Rippinger
  * 
@@ -49,10 +46,12 @@ public class User implements Serializable {
     @Id
     private String id;
 
+    private Long randomID;
+
     @Lob
     private String name;
 
-    private Integer ranking;
+    private Integer numberOfReviews = 0;
 
     private Integer helpfulness = 0;
 
@@ -60,16 +59,10 @@ public class User implements Serializable {
 
     private Integer helpfulOverallVotes = 0;
 
-    private Integer numberOfReviews = 0;
-
-    @Enumerated(EnumType.ORDINAL)
-    private Authority authority;
-
     private Double hIndex;
 
-    private Double meanDifference;
-
-    private Long randomID;
+    @Column(name = "meanDifference")
+    private Double meanStylometry;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Review> reviews;

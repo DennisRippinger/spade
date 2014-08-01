@@ -84,7 +84,7 @@ public class StylometrySimilarity {
         }
         meanUserSimilarity /= reviewMap.size();
 
-        user.setMeanDifference(meanUserSimilarity);
+        user.setMeanStylometry(meanUserSimilarity);
         service.saveUser(user);
 
         // Reduce output noise

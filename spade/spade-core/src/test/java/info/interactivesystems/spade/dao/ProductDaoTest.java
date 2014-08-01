@@ -2,7 +2,6 @@ package info.interactivesystems.spade.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.Product;
-import info.interactivesystems.spade.util.ProductCategory;
 
 import javax.annotation.Resource;
 
@@ -25,8 +24,6 @@ public class ProductDaoTest extends AbstractTestNGSpringContextTests {
         Product result = new Product();
         result.setId("AED12345");
         result.setName("Demo Product");
-        result.setSource("Test source");
-        result.setType(ProductCategory.DIGITAL_CAMERA);
         result.setRating(4.5);
 
         demoValue = result;

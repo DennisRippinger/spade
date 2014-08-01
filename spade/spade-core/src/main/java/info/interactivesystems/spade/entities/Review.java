@@ -56,21 +56,11 @@ public class Review implements Serializable {
     @Lob
     private String title;
 
-    private Integer comments;
-
     private Integer helpfulVotes;
 
     private Integer totalVotes;
 
     // Calculation Values
-
-    private Double ari;
-
-    private Double gfi;
-
-    private Double density;
-
-    private Double densityRelation;
 
     private Integer wordCount;
 

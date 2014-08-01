@@ -270,7 +270,6 @@ public class YelpReviewCrawler {
         user.setId(userId);
         user.setName(userName);
         user.setNumberOfReviews(noReviews);
-        user.setAuthority(Authority.YELP);
 
         // Random ID eats Update.
         if (!userDao.checkIfAlreadyExists(userId)) {

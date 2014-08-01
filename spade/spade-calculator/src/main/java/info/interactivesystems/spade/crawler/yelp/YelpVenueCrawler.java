@@ -119,10 +119,6 @@ public class YelpVenueCrawler {
         for (DomElement venueContainer : divVenue) {
             Product product = new Product();
 
-            product.setAuthority(Authority.YELP);
-            product.setLocation(location);
-            product.setType(category);
-
             extractIdAndName(venueContainer, product);
             extractRating(venueContainer, product);
             extractImageLocation(venueContainer, product);
@@ -160,7 +156,7 @@ public class YelpVenueCrawler {
     private void extractImageLocation(DomElement venueContainer, Product product) {
         DomElement domImage = venueContainer.getFirstByXPath(".//img[@height='90']");
         String imgLocation = domImage.getAttribute("src");
-        product.setImageUrl(imgLocation);
+//        product.setImageUrl(imgLocation);
     }
 
     /**
@@ -175,9 +171,9 @@ public class YelpVenueCrawler {
         if (domPriceRange != null) {
             String priceRange = domPriceRange.getTextContent();
             PriceCategory priceCategory = PriceCategory.valueOf(priceRange);
-            product.setPriceCategory(priceCategory);
+//            product.setPriceCategory(priceCategory);
         } else {
-            product.setPriceCategory(PriceCategory.NON_GIVEN);
+//            product.setPriceCategory(PriceCategory.NON_GIVEN);
         }
 
     }

@@ -14,16 +14,10 @@
  */
 package info.interactivesystems.spade.entities;
 
-import info.interactivesystems.spade.util.Authority;
-import info.interactivesystems.spade.util.PriceCategory;
-import info.interactivesystems.spade.util.ProductCategory;
-
 import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Index;
@@ -49,36 +43,19 @@ public class Product implements Serializable {
 
     @Id
     private String id;
+    
+    private Long randomID;
 
     @Lob
     private String name;
-
-    @Enumerated(EnumType.ORDINAL)
-    private ProductCategory type;
 
     private String category;
 
     private Double rating;
 
-    private String imageUrl;
-
-    private String source;
-
     private Double price;
 
     private Integer noOfReviews;
-
-    // Venues only
-    private String location;
-
-    @Enumerated(EnumType.ORDINAL)
-    private PriceCategory priceCategory;
-
-    @Enumerated(EnumType.ORDINAL)
-    private Authority authority;
-
-    // Temp
-    private Long randomID;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Review> reviews;

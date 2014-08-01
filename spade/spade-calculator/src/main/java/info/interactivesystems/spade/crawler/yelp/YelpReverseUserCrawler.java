@@ -132,8 +132,8 @@ public class YelpReverseUserCrawler {
                  * Unfortunately there is no distinct attribute. Yelp itself seems to manage some kind of tag cloud to attribute
                  * a venue to a category.
                  */
-                yelpVenue.setType(ProductCategory.UNKNOWN);
-                yelpVenue.setAuthority(Authority.YELP);
+
+//                yelpVenue.setAuthority(Authority.YELP);
 
                 // Save
                 if (!productDao.checkIfAlreadyExists(yelpVenue.getId())) {
@@ -258,17 +258,17 @@ public class YelpReverseUserCrawler {
         }
 
         String state = "";
-        if (domState != null) {
-            // US notation
-            state = domState.asText();
-            String result = String.format("%s, %s", city, state);
-            product.setLocation(result);
-        } else {
-            /*
-             * Rest of the World. May be inaccurate, but not relevant.
-             */
-            product.setLocation(city);
-        }
+//        if (domState != null) {
+//            // US notation
+//            state = domState.asText();
+//            String result = String.format("%s, %s", city, state);
+//            product.setLocation(result);
+//        } else {
+//            /*
+//             * Rest of the World. May be inaccurate, but not relevant.
+//             */
+//            product.setLocation(city);
+//        }
 
     }
 
@@ -294,9 +294,9 @@ public class YelpReverseUserCrawler {
                 default:
                     priceCategory = PriceCategory.NON_GIVEN;
             }
-            product.setPriceCategory(priceCategory);
+//            product.setPriceCategory(priceCategory);
         } else {
-            product.setPriceCategory(PriceCategory.NON_GIVEN);
+//            product.setPriceCategory(PriceCategory.NON_GIVEN);
         }
     }
 

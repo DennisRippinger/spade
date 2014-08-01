@@ -107,7 +107,6 @@ public class ImportDataProducer implements Callable<Boolean> {
                     extractReviewText(line, review);
                 } else {
                     review.setProduct(product);
-                    calculateMetric(review);
 
                     queue.put(new CombinedData(user, review, product));
 
@@ -128,29 +127,6 @@ public class ImportDataProducer implements Callable<Boolean> {
         log.info("Error counter = '{}'", errorCounter);
         hasMore = false;
         return hasMore;
-    }
-
-    private void calculateMetric(Review review) {
-        Double calculatedARIndex = sentenceService.calculateARIndex(review.getContent());
-        Double calculatedGFIndex = sentenceService.calculateGFIndex(review.getContent());
-        Double calculatedInformationDensity = sentenceService.calculateInformationDensity(review.getContent());
-        Integer wordCount = sentenceService.calculateWordCount(review.getContent());
-
-        review.setAri(calculatedARIndex);
-        review.setGfi(calculatedGFIndex);
-        review.setDensity(calculatedInformationDensity);
-        review.setWordCount(wordCount);
-
-        String nilsimsaValue = nilsimsa.calculateNilsima(review.getContent());
-        review.setNilsimsa(nilsimsaValue);
-
-        Double densityRelation = calclateDensity(review);
-        review.setDensityRelation(densityRelation);
-
-    }
-
-    private Double calclateDensity(Review review) {
-        return review.getDensity() * Math.log(review.getWordCount());
     }
 
     private void extractReviewText(String line, Review review) {
@@ -261,8 +237,6 @@ public class ImportDataProducer implements Callable<Boolean> {
 
     private void initialize(User user, Product product) {
 
-        user.setAuthority(Authority.AMAZON);
-        product.setAuthority(Authority.AMAZON);
 
         reviewCounter++;
 

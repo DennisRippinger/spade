@@ -24,7 +24,6 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         result.setId("123");
         result.setName("Test User");
         result.setNumberOfReviews(5);
-        result.setRanking(1023);
 
         demoUser = result;
     }
