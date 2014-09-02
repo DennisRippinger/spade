@@ -36,7 +36,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "products", indexes = { @Index(columnList = "randomID"), @Index(columnList = "category") })
+@Table(name = "products", indexes = { @Index(columnList = "randomID"), @Index(columnList = "category"),@Index(columnList = "noOfTopDifferences") })
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 7936029047258589542L;
@@ -56,6 +56,8 @@ public class Product implements Serializable {
     private Double price;
 
     private Integer noOfReviews;
+    
+    private Integer noOfTopDifferences;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Review> reviews;

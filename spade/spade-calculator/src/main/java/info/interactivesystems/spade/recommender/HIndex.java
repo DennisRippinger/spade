@@ -25,7 +25,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class HIndex {
 
-    private static final Double AMAZON_GLOBAL_AVG = 4.190279903844344;
+    private static final Double AMAZON_GLOBAL_AVG = 4.150117735337405;
+    
 
     @Resource
     private ReviewContentService service;

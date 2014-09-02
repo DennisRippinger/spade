@@ -61,6 +61,8 @@ public class SimilarityBean {
     @PostConstruct
     public void init() throws SpadeException {
 
+        log.info("Init Similarity Bean");
+        
         try {
             initializeBlacklist();
 

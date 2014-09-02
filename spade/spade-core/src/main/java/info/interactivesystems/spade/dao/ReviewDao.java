@@ -19,8 +19,13 @@ import info.interactivesystems.spade.entities.Review;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
@@ -71,7 +76,7 @@ public class ReviewDao extends AbstractDao<Review> {
         criteria.createAlias("review.product", "product");
         criteria.add(Restrictions.eq("product.category", category));
         criteria.add(Restrictions.eq("unique", true));
-        
+
         criteria.setProjection(Projections.projectionList()
             .add(Projections.property("id"), "id")
             .add(Projections.property("nilsimsa"), "nilsimsa"))
@@ -90,7 +95,7 @@ public class ReviewDao extends AbstractDao<Review> {
         criteria.add(Restrictions.eq("product.category", category));
         criteria.add(Restrictions.eq("user.id", userID));
         criteria.add(Restrictions.eq("unique", true));
-        
+
         criteria.setProjection(Projections.projectionList()
             .add(Projections.property("id"), "id")
             .add(Projections.property("nilsimsa"), "nilsimsa"))
@@ -99,4 +104,16 @@ public class ReviewDao extends AbstractDao<Review> {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Review> findHighestVarianceReview(String userID) {
+
+        Query query = sessionFactory.getCurrentSession().
+            createQuery("FROM Review WHERE User_fk = :user AND variance = "
+                + "(SELECT MAX(variance) "
+                + "FROM Review "
+                + "WHERE User_fk = :user)");
+        query.setParameter("user", userID);
+
+        return query.list();
+    }
 }

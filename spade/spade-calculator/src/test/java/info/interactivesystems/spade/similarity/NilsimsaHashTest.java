@@ -45,9 +45,9 @@ public class NilsimsaHashTest extends AbstractTestNGSpringContextTests {
     @Test
     public void calculateNilsima() {
         String hashOne =
-            hash.calculateNilsima("I did extensive research before selecting the SD600, and I am thrilled with my purchase. This camera is tiny (smaller than my iPod) and lightweight, but still takes incredible pictures. The screen is much larger than my friends' cameras, and it has all the extra settings that the average person needs to take great photos is all kinds of conditions. I have not had any bad or blurry pictures with it yet. I am thrilled with this camera and would recommend it to everyone.");
+            hash.calculateNilsima("A present for my son");
         String hashTwo =
-            hash.calculateNilsima("I did extensive research before selecting the Kodak EasyShare C875, and I am thrilled with my purchase. This camera takes incredible pictures. The screen is much larger than my friends' cameras, and it has all the extra settings that the average person needs to take great photos in all kinds of conditions. I have not had any bad or blurry pictures with it yet. I am thrilled with this camera and would recommend it to everyone.");
+            hash.calculateNilsima("A present for my daugther");
 
         log.info("Hash One '{}'", hashOne);
         log.info("Hash Two '{}'", hashTwo);
@@ -56,7 +56,7 @@ public class NilsimsaHashTest extends AbstractTestNGSpringContextTests {
         log.info("Compared: '{}'", compared);
     }
 
-    @Test
+   // @Test
     public void applyHashOnDataSet() {
         for (Integer reviewCounter = 1; reviewCounter <= 34686770; reviewCounter++) {
             String reviewID = String.format("R%010d", reviewCounter);

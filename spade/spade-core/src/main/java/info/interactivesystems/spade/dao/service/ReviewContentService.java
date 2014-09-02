@@ -129,6 +129,10 @@ public class ReviewContentService {
         return reviewDao.findReviewFromUser(userID);
     }
     
+    public List<Review> findHighestVarianceReview(String userID){
+        return reviewDao.findHighestVarianceReview(userID);
+    }
+    
     public List<Review> findReviewFromUserInCategory(String userID, String category){
         return reviewDao.findReviewFromUserInCategory(userID, category);
     }

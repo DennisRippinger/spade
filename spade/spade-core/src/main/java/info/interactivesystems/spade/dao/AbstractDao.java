@@ -50,7 +50,7 @@ public abstract class AbstractDao<T> {
 	}
 
 	public void save(T entity) {
-		sessionFactory.getCurrentSession().save(entity);
+		sessionFactory.getCurrentSession().saveOrUpdate(entity);
 	}
 
 	public void update(T entity) {
