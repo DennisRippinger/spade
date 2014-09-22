@@ -1,24 +1,66 @@
 <ui:composition
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
-	template="/WEB-INF/templates/template.xhtml">
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        template="/WEB-INF/templates/template.xhtml">
 
-	<ui:param
-		name="parentId"
-		value="dashboard" />
-	<ui:param
-		name="pageTitle"
-		value="Dashboard" />
+    <ui:param
+            name="parentId"
+            value="dashboard"/>
+    <ui:param
+            name="pageTitle"
+            value="Dashboard"/>
 
-	<ui:define
-		name="content">
+    <ui:define
+            name="content">
+        <section>
+            <h2>What is SPADE</h2>
 
-		<p>Hello</p>
+            <p>
+                Spade (Spam Detection and Analysis) is a software to analyse possible pairs of <em>opinion spam</em>.
+                Such spam intends to manipulate the public picture of a product or service by injecting untruthfull reviews into an appropirate plattform.
+                This can be done by compelling reviews that are voted to prominent position for interesseted customers, or by targeting the overall rating.
+                Spade tries to identify such spam under the proposition that such opinion spam is often just a copy of another review.
+            </p>
 
-	</ui:define>
+            <p>
+                This proof-of-concept presents pairs of review that are similar to each other.
+                In addition are meta-information displayed that should help to identify the motivation behind a review, like the days between the reviews.
+                Also uses the software two other metrics that should help in this task: The H<sub>v</sub> Score and the Stylometric similarity.
+            </p>
+            <p>
+                The presented data is from the US version of Amazon.com.
+                It contains 18 years of reviews from June 1995 to March 2013.
+            </p>
+        </section>
+        <section>
+            <h2>H<sub>v</sub> Score</h2>
+
+            <p>
+                This score is a number that should indicate how <em>suspicious</em> the voting behaviour of a user is.
+                Suspicious means here a value that is depended on the average rating of a product or service, the average rating of the current user and the average rating of all users.
+                The results are displayed within a colour code gauge.
+                Green indicates a low, yellow a mediate and red a high score.
+                However, a high value is not a hard indicator.
+                Products or services can be discussed controvercial among users, what makes every user suspicious that participates in the discussion.
+            </p>
+
+        </section>
+
+        <section>
+
+            <h2>Stylometry</h2>
+
+            <p>
+               Each person has their own personal style of writing that can measured and quantified.
+               A spammer under Spade proposition would have different writing styles, what could result in clues on a different authorship.
+               However, usually it takes a larger text to extract a sufficient amount of style features, which are within the dataset not given.
+               Spade can therefore only identify only very obvious different writing styles.
+               They are also represented within the known color code or green, yellow and red by this icon: <i class="fa fa-keyboard-o"/>.
+               In cases of very short reviews the value is not relyable and the color is therefore grey.
+            </p>
+
+        </section>
+
+    </ui:define>
 
 </ui:composition>
