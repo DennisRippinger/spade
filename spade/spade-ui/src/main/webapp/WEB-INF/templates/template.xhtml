@@ -73,18 +73,19 @@
                         Similarities
                     </h:link>
                 </li>
-
-                <c:choose>
-                    <c:when test="#{parentId eq 'similarities'}">
-                        <li style="float: right;">
-                            <a href="#" onClick="startIntro();" class="active" >Help</a>
-                        </li>
-                    </c:when>
-                </c:choose>
-                <li style="float: right;"><h:link outcome="/about.xhtml"
-                                                  styleClass="#{parentId == 'about' ? 'active' : ''}">
-                    About
-                </h:link></li>
+                <li style="float: right;">
+                    <h:link outcome="/about.xhtml"
+                            styleClass="#{parentId == 'about' ? 'active' : ''}">
+                        About
+                    </h:link>
+                </li>
+                <li style="float: right;">
+                    <c:choose>
+                        <c:when test="#{parentId eq 'similarities'}">
+                            <a href="#" onClick="startIntro();">Help</a>
+                        </c:when>
+                    </c:choose>
+                </li>
             </ul>
         </div>
 
