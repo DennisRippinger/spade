@@ -14,6 +14,8 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
+import info.interactivesystems.spade.entities.Review;
+import info.interactivesystems.spade.ui.dto.DetailsRow;
 import info.interactivesystems.spade.ui.util.CopyDirection;
 
 import javax.inject.Named;
@@ -59,10 +61,15 @@ public class SimilarityConverter {
 
     }
 
-    public String getStylometry(Double stylometry) {
-        if (stylometry > 0.97) {
+    public String getStylometry(DetailsRow detailsRow) {
+
+		if(detailsRow.getWordLength() <= 20){
+			return "grey";
+		}
+
+        if (detailsRow.getStylometry() > 0.97) {
             return "green";
-        } else if (stylometry > 0.80) {
+        } else if (detailsRow.getStylometry()  > 0.80) {
             return "#D2CD00";
         } else {
             return "red";

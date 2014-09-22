@@ -43,7 +43,7 @@ public class StylometrySimilarity {
     @Resource
     private ReviewContentService service;
 
-    public void calculatePCA(User user) {
+    public void calculateCosSimilarity(User user) {
 
         if (user.getNumberOfReviews() <= 1) {
             return;

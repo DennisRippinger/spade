@@ -2,7 +2,6 @@ package info.interactivesystems.spade.stylometry;
 
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.User;
-import info.interactivesystems.spade.stylometry.StylometrySimilarity;
 
 import javax.annotation.Resource;
 
@@ -26,7 +25,7 @@ public class StylometrySymilarityTest extends AbstractTestNGSpringContextTests {
             User user = service.findUserByID(id);
             
             if (user != null && user.getNumberOfReviews() < 1000) {
-                pca.calculatePCA(user);
+                pca.calculateCosSimilarity(user);
             }
         }
 

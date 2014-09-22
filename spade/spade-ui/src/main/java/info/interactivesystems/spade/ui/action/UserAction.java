@@ -58,6 +58,9 @@ public class UserAction implements Serializable {
     private List<DetailsRow> currentRows;
 
     public void init() {
+
+		// Wrapper needed to be sortable within the UI.
+
         List<DetailsRow> rows = new ArrayList<>();
         if (user != null) {
             for (Review review : user.getReviews()) {
@@ -70,6 +73,7 @@ public class UserAction implements Serializable {
                 row.setReviewText(review.getContent());
                 row.setReviewTitle(review.getTitle());
                 row.setUserRating(review.getRating());
+				row.setWordLength(review.getWordCount());
                 row.setStylometry(review.getMeanSimilarity() != null ? review.getMeanSimilarity() : 1.0);
 
                 NilsimsaSimilarity similar = nilsimsaDao.findSimilarityByReviewId(review.getId());
