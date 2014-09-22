@@ -15,40 +15,41 @@
 package info.interactivesystems.spade.util;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * The Class HashUtil offers methods to calculate a hash for a given string.
- * 
+ *
  * @author Dennis Rippinger
  */
 public final class HashUtil {
 
-    /**
-     * Calculates the SHA-1 value for the given input.
-     * 
-     * @param input the original String.
-     * @return the the SHA-1 Value.
-     * @throws NoSuchAlgorithmException thrown if the SHA-1 Hash is not within the Java Runtime.
-     * @throws UnsupportedEncodingException thrown if UTF-8 is not supported by the system.
-     * @see Source: http://www.sha1-online.com/sha1-java/
-     */
-    public static String sha1(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest mDigest = MessageDigest.getInstance("SHA1");
-        byte[] result = mDigest.digest(input.getBytes("UTF-8"));
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < result.length; i++) {
-            sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-        }
+	/**
+	 * Calculates the SHA-1 value for the given input.
+	 *
+	 * @param input the original String.
+	 * @return the SHA-1 Value.
+	 * @throws NoSuchAlgorithmException     thrown if the SHA-1 Hash is not within the Java Runtime.
+	 * @throws UnsupportedEncodingException thrown if UTF-8 is not supported by the system.
+	 * @see Source: http://www.sha1-online.com/sha1-java/
+	 */
+	public static String sha1(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest mDigest = MessageDigest.getInstance("SHA1");
+		byte[] result = mDigest.digest(input.getBytes(StandardCharsets.UTF_8));
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < result.length; i++) {
+			sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+		}
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 
-    /**
-     * Private Constructor.
-     */
-    private HashUtil() {
+	/**
+	 * Private Constructor.
+	 */
+	private HashUtil() {
 
-    }
+	}
 }
