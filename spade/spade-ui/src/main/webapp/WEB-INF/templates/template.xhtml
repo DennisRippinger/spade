@@ -1,94 +1,114 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jstl/core">
 <h:head>
-	<title>#{pageTitle} - SPADE</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>#{pageTitle} - SPADE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-	<link rel="apple-touch-icon-precomposed" sizes="57x57"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-57x57.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="114x114"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-114x114.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="72x72"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-72x72.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="144x144"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-144x144.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="60x60"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-60x60.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="120x120"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-120x120.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="76x76"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-76x76.png" />
-	<link rel="apple-touch-icon-precomposed" sizes="152x152"
-		href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-152x152.png" />
-	<link rel="icon" type="image/png"
-		href="#{request.contextPath}/resources/img/favicons/favicon-196x196.png" sizes="196x196" />
-	<link rel="icon" type="image/png"
-		href="#{request.contextPath}/resources/img/favicons/favicon-96x96.png" sizes="96x96" />
-	<link rel="icon" type="image/png"
-		href="#{request.contextPath}/resources/img/favicons/favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png"
-		href="#{request.contextPath}/resources/img/favicons/favicon-16x16.png" sizes="16x16" />
-	<link rel="icon" type="image/png"
-		href="#{request.contextPath}/resources/img/favicons/favicon-128.png" sizes="128x128" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="60x60"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-60x60.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="120x120"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-120x120.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="76x76"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-76x76.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="152x152"
+          href="#{request.contextPath}/resources/img/favicons/apple-touch-icon-152x152.png"/>
+    <link rel="icon" type="image/png"
+          href="#{request.contextPath}/resources/img/favicons/favicon-196x196.png" sizes="196x196"/>
+    <link rel="icon" type="image/png"
+          href="#{request.contextPath}/resources/img/favicons/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/png"
+          href="#{request.contextPath}/resources/img/favicons/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png"
+          href="#{request.contextPath}/resources/img/favicons/favicon-16x16.png" sizes="16x16"/>
+    <link rel="icon" type="image/png"
+          href="#{request.contextPath}/resources/img/favicons/favicon-128.png" sizes="128x128"/>
 
-	<h:outputStylesheet name="css/style.css" />
-	<h:outputStylesheet name="css/style_text.css" />
-	<h:outputStylesheet name="css/menu.css" />
-	<h:outputStylesheet name="css/prime-addons.css" />
-	<h:outputStylesheet name="css/amazon.css" />
-	<h:outputStylesheet name="css/font-awesome.min.css"/>
-	
+    <h:outputStylesheet name="css/style.css"/>
+    <h:outputStylesheet name="css/style_text.css"/>
+    <h:outputStylesheet name="css/menu.css"/>
+    <h:outputStylesheet name="css/prime-addons.css"/>
+    <h:outputStylesheet name="css/amazon.css"/>
+    <h:outputStylesheet name="css/font-awesome.min.css"/>
+    <h:outputStylesheet name="css/introjs.min.css"/>
+
+    <h:outputScript name="js/intro.min.js"/>
 
 
-	<ui:insert name="customhead" />
+    <ui:insert name="customhead"/>
 </h:head>
 <h:body>
 
-	<div class="container">
+    <div class="container">
 
-		<header class="header">
-			<h1>
-				<h:link outcome="/home.xhtml" title="SPADE - Spam Detection and Analysis">
-					SPADE - Spam Detection and Analysis
-				</h:link>
-			</h1>
-		</header>
+        <header class="header">
+            <h1>
+                <h:link outcome="/home.xhtml" title="SPADE - Spam Detection and Analysis">
+                    SPADE - Spam Detection and Analysis
+                </h:link>
+            </h1>
+        </header>
 
-		<div class="nav">
-			<ul>
-				<li class="current"><h:link outcome="/home.xhtml" styleClass="#{parentId == 'dashboard' ? 'active' : ''}">
-						Dashboard
-					</h:link></li>
-				<li><h:link outcome="/similarity/similarities.xhtml" styleClass="#{parentId == 'similarities' ? 'active' : ''}">
-						Similarities
-					</h:link></li>
-				<li><h:link outcome="/about.xhtml" styleClass="#{parentId == 'about' ? 'active' : ''}">
-						About
-					</h:link></li>
-			</ul>
-		</div>
+        <div class="nav">
+            <ul>
+                <li class="current">
+                    <h:link outcome="/home.xhtml"
+                            styleClass="#{parentId == 'dashboard' ? 'active' : ''}">
+                        Dashboard
+                    </h:link>
+                </li>
+                <li>
+                    <h:link outcome="/similarity/similarities.xhtml"
+                            styleClass="#{parentId == 'similarities' ? 'active' : ''}">
+                        Similarities
+                    </h:link>
+                </li>
 
-		<div style="clear: both" />
+                <c:choose>
+                    <c:when test="#{parentId eq 'similarities'}">
+                        <li style="float: right;">
+                            <a href="#" onClick="startIntro();" class="active" >Help</a>
+                        </li>
+                    </c:when>
+                </c:choose>
+                <li style="float: right;"><h:link outcome="/about.xhtml"
+                                                  styleClass="#{parentId == 'about' ? 'active' : ''}">
+                    About
+                </h:link></li>
+            </ul>
+        </div>
 
-		<div class="content">
-			<ui:insert name="content">
-				Main Content
-			</ui:insert>
-		</div>
+        <div style="clear: both"/>
+
+        <div class="content">
+            <ui:insert name="content">
+                Main Content
+            </ui:insert>
+        </div>
 
 
-		<div style="clear: both" />
+        <div style="clear: both"/>
 
 
-		<footer class="footer">
-			<div class="footer-content">
-				<div class="version">
-					SPADE - Spam Detection and Analysis<br /> Commit ID: #{gitRepositoryStateFactory.gitRepositoryState.commitIdAbbrev} - #{gitRepositoryStateFactory.gitRepositoryState.buildTime}
-				</div>
-				<div style="clear: both" />
-			</div>
-		</footer>
-	</div>
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="version">
+                    SPADE - Spam Detection and Analysis<br/> Commit ID: #{gitRepositoryStateFactory.gitRepositoryState.commitIdAbbrev} - #{gitRepositoryStateFactory.gitRepositoryState.buildTime}
+                </div>
+                <div style="clear: both"/>
+            </div>
+        </footer>
+    </div>
 
 </h:body>
 </html>

@@ -1,8 +1,10 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
-	template="/WEB-INF/templates/template.xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<ui:param name="parentId" value="similarities" />
 	<ui:param name="pageTitle" value="Similarities" />
@@ -65,6 +67,7 @@
 			</p:layoutUnit>
 		</p:layout>
 
+        <h:outputScript name="js/intro-commands.js"/>
 	</ui:define>
 
 </ui:composition>

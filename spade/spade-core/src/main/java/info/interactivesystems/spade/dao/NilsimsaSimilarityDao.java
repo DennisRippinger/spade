@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
-    public static final Integer WINDOW_SIZE = 200;
+    public static final Integer WINDOW_SIZE = 20;
 
     private static final String SIMILARITY = "similarity";
 
@@ -47,6 +47,7 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
     public List<NilsimsaSimilarity> find(Double similarity, Boolean sameAuthor, Integer window) {
         Criteria criteria = getSameAuthorCriteria(similarity, sameAuthor);
+	//	criteria.add(Restrictions.eq("category", "Movies & TV"));
         criteria.setFirstResult((window - 1) * WINDOW_SIZE);
         criteria.setMaxResults(WINDOW_SIZE);
 

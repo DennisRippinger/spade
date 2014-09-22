@@ -51,6 +51,8 @@ public class DetailsRow implements Serializable {
 
     private String reviewText;
 
+	private Integer wordLength;
+
     private Long similarityId;
     
     private CopyDirection direction;
