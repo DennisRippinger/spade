@@ -14,57 +14,57 @@
  */
 package info.interactivesystems.spade.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 /**
  * The Class NilsimsaSimilarity.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Entity
 @Setter
 @Getter
 @Table(
-    name = "similarities",
-    indexes = {
-        @Index(columnList = "sameAuthor"),
-        @Index(columnList = "similarity"),
-        @Index(columnList = "category") })
+		name = "similarities",
+		indexes = {
+				@Index(columnList = "sameAuthor"),
+				@Index(columnList = "similarity"),
+				@Index(columnList = "category")})
 public class NilsimsaSimilarity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @OneToOne
-    private Review reviewA;
+	@OneToOne
+	private Review reviewA;
 
-    @OneToOne
-    private Review reviewB;
+	@OneToOne
+	private Review reviewB;
 
-    private Double similarity;
+	private Double similarity;
 
-    private String category;
+	private String category;
 
-    private boolean sameAuthor;
+	private boolean sameAuthor;
 
-    private Integer dayDistance;
+	private Integer dayDistance;
 
-    private Integer wordDistance;
+	private Integer wordDistance;
 
-    @OneToOne
-    private User userA;
+	@Column(name = "occurrences_a")
+	private Integer occurrencesA;
 
-    @OneToOne
-    private User userB;
+	@Column(name = "occurrences_b")
+	private Integer occurrencesB;
+
+	@OneToOne
+	private User userA;
+
+	@OneToOne
+	private User userB;
 
 }

@@ -131,6 +131,26 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         return null;
     }
 
+	@SuppressWarnings("unchecked")
+	public List<NilsimsaSimilarity> findSimilaritiesByReviewId(String reviewId) {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(NilsimsaSimilarity.class);
+
+		criteria.add(Restrictions.disjunction()
+						.add(Restrictions.eq("reviewA.id", reviewId))
+						.add(Restrictions.eq("reviewB.id", reviewId))
+		);
+		criteria.addOrder(Order.desc("similarity"));
+
+		List<NilsimsaSimilarity> resultList = criteria.list();
+
+		if (!resultList.isEmpty()) {
+			return resultList;
+		}
+
+		return null;
+	}
+
     @SuppressWarnings("unchecked")
     public NilsimsaSimilarity findSimilarityByReviewId(String reviewAId, String reviewBId) {
         Criteria criteria = sessionFactory.getCurrentSession()

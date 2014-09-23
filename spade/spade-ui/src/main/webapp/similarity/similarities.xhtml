@@ -6,68 +6,83 @@
                 template="/WEB-INF/templates/template.xhtml"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<ui:param name="parentId" value="similarities" />
-	<ui:param name="pageTitle" value="Similarities" />
+    <ui:param name="parentId" value="similarities"/>
+    <ui:param name="pageTitle" value="Similarities"/>
 
-	<ui:define name="content">
+    <ui:define name="content">
 
-		<h:form>
-			<p:hotkey bind="right" update=":centerContent,:sideContent"
-				actionListener="#{similaritiesAction.next}" />
-		</h:form>
+        <h:form>
+            <p:hotkey bind="right" update=":centerContent,:sideContent"
+                      actionListener="#{similaritiesAction.next}"/>
+        </h:form>
 
-		<p:layout fullPage="false" style="height: 900px;">
+        <p:layout fullPage="false" style="height: 900px;">
 
-			<p:layoutUnit position="east" size="350">
-				<h:panelGroup id="sideContent">
-					<ui:include src="/similarity/sidebar.xhtml" />
-				</h:panelGroup>
-			</p:layoutUnit>
+            <p:layoutUnit position="east" size="350">
+                <h:panelGroup id="sideContent">
+                    <ui:include src="/similarity/sidebar.xhtml"/>
+                </h:panelGroup>
+            </p:layoutUnit>
 
-			<p:layoutUnit position="center">
-				<h:panelGroup id="centerContent">
-					<c:choose>
-						<c:when test="#{!similaritiesAction.userView}">
-							<p:tabView>
-								<p:tab>
-									<f:facet name="title">
-										<i class="fa fa-outdent"></i>
-										<h:outputText value=" Differences" />
-									</f:facet>
-									<p></p>
-									<p:panel id="contentBox" header="Content" styleClass="#{similaritiesAction.sameContent()}">
-										<div id="reviewBox">
-											<div class="reviewText">
-												<h:outputText id="output" value="#{similaritiesAction.diffContainer.html}"
-													escape="false" />
-											</div>
-										</div>
-									</p:panel>
-								</p:tab>
-								<p:tab title="">
-									<f:facet name="title">
-										<i class="fa fa-columns"></i>
-										<h:outputText value=" Side-by-Side" />
-									</f:facet>
+            <p:layoutUnit position="center">
+                <h:panelGroup id="centerContent">
+                    <c:choose>
+                        <c:when test="#{!similaritiesAction.userView}">
+                            <h2>
+                                <h:outputText id="category"
+                                              value="Category: #{similaritiesAction.similarPair.category}"/>
+                            </h2>
 
-									<div style="width: 100%; overflow: auto;">
-										<div class="sideReview side-left">#{similaritiesAction.similarPair.reviewA.content}</div>
-										<div class="sideReview side-right">#{similaritiesAction.similarPair.reviewB.content}</div>
-									</div>
-									<div style="clear: both"></div>
-								</p:tab>
-							</p:tabView>
-						</c:when>
-						<c:otherwise>
-							<ui:include src="/similarity/user.xhtml" />
-						</c:otherwise>
+                            <div id="occurrences" style="float: right">
+                                <h:outputText value="Occurence A: #{similaritiesAction.similarPair.occurrencesA}"/>
+                                <br></br>
+                                <h:outputText value="Occurence B: #{similaritiesAction.similarPair.occurrencesB}"/>
+                            </div>
 
-					</c:choose>
-				</h:panelGroup>
-			</p:layoutUnit>
-		</p:layout>
+                            <p:tabView>
+                                <p:tab>
+                                    <f:facet name="title">
+                                        <i class="fa fa-outdent"></i>
+                                        <h:outputText value=" Differences"/>
+                                    </f:facet>
+
+                                    <p></p>
+                                    <p:panel id="contentBox" header="Content"
+                                             styleClass="#{similaritiesAction.sameContent()}">
+                                        <div id="reviewBox">
+                                            <div class="reviewText">
+                                                <h:outputText id="output"
+                                                              value="#{similaritiesAction.diffContainer.html}"
+                                                              escape="false"/>
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </p:tab>
+
+                                <p:tab title="">
+                                    <f:facet name="title">
+                                        <i class="fa fa-columns"></i>
+                                        <h:outputText value=" Side-by-Side"/>
+                                    </f:facet>
+
+                                    <div style="width: 100%; overflow: auto;">
+                                        <div class="sideReview side-left">#{similaritiesAction.similarPair.reviewA.content}</div>
+                                        <div class="sideReview side-right">#{similaritiesAction.similarPair.reviewB.content}</div>
+                                    </div>
+                                    <div style="clear: both"></div>
+                                </p:tab>
+                            </p:tabView>
+                        </c:when>
+                        <c:otherwise>
+                            <ui:include src="/similarity/user.xhtml"/>
+                        </c:otherwise>
+
+                    </c:choose>
+                </h:panelGroup>
+            </p:layoutUnit>
+        </p:layout>
 
         <h:outputScript name="js/intro-commands.js"/>
-	</ui:define>
+    </ui:define>
 
 </ui:composition>

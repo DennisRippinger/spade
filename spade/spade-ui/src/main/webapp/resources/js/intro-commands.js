@@ -39,6 +39,11 @@ function startIntro() {
                 position: 'left'
             },
             {
+                element: document.querySelector('#occurrences'),
+                intro: "This field show how often the review occurs within the set of possible content similarities.",
+                position: 'left'
+            },
+            {
                 element: document.querySelector('#vote-intro'),
                 intro: "Once you have reviewed the possible information, you can chose on the nature of the review.",
                 position: 'left'
