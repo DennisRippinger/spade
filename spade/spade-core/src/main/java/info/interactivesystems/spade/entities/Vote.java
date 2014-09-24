@@ -60,7 +60,7 @@ public class Vote {
 
     private boolean lazyUser = false;
 
-    private boolean dupeRecommender = false;
+    private boolean ospam = false;
 
     private boolean advertising = false;
 
