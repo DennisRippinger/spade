@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
 
-    public static final Integer WINDOW_SIZE = 20;
+    public static final Integer WINDOW_SIZE = 100;
 
     private static final String SIMILARITY = "similarity";
 
@@ -63,7 +63,10 @@ public class NilsimsaSimilarityDao extends AbstractDao<NilsimsaSimilarity> {
         criteria.add(Restrictions.lt("similarity", 1.0));
 
         criteria.createAlias("similarity.reviewA", "review");
-       // criteria.add(Restrictions.ge("review.densityFunction", 1.5));
+        criteria.add(Restrictions.ge("review.density", 2.0));
+
+		criteria.createAlias("similarity.reviewB", "reviewb");
+		criteria.add(Restrictions.ge("reviewb.density", 2.0));
 
         return criteria;
     }

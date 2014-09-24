@@ -68,6 +68,8 @@ public class Review implements Serializable {
 
     private Double variance;
 
+	private Double density;
+
     @Column(name = "meanDifference")
     private Double meanSimilarity;
 
