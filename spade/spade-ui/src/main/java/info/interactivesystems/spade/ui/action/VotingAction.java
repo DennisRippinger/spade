@@ -74,14 +74,13 @@ public class VotingAction implements Serializable {
 
         localization = ResourceBundle.getBundle("MessageResources");
 
-        options.add(localization.getString("info.reason.editFunction"));
-        options.add(localization.getString("info.reason.angry"));
-        options.add(localization.getString("info.reason.lazy"));
-        options.add(localization.getString("info.reason.dupe"));
-        options.add(localization.getString("info.reason.advertising"));
+		options.add(localization.getString("info.reason.ospam"));
+		options.add(localization.getString("info.reason.advertising"));
+		options.add(localization.getString("info.reason.editFunction"));
+		options.add(localization.getString("info.reason.angry"));
+		options.add(localization.getString("info.reason.lazy"));
         options.add(localization.getString("info.reason.differentTopic"));
         options.add(localization.getString("info.reason.somethingElse"));
-
     }
 
     /**
