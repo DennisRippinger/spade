@@ -1,7 +1,6 @@
 /**
- * 
- */
-/**
+ *
+ *
  * @author Dennis Rippinger
  *
  */

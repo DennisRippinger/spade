@@ -15,55 +15,52 @@
 package info.interactivesystems.spade.similarity;
 
 import info.interactivesystems.spade.dto.SimilartyMesurement;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.springframework.stereotype.Service;
-
 /**
- * 
  * Calculates a String based Jaccard Index for two Strings. The result ranges between 0 and 1, where 1 is equality.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 @Service
 public class JaccardIndex implements SimilarityCalculator {
 
-    /**
-     * Calculates the Jaccard Index for two String. The result ranges between 0 and 1, where 1 is equality.
-     */
-    @Override
-    public SimilartyMesurement calculateSimilarity(String corpusFirst,
-        String corpusSecond) {
-        Set<String> setCurpusFirst = getSetOfString(corpusFirst);
-        Set<String> setCurpusSecound = getSetOfString(corpusSecond);
+	/**
+	 * Calculates the Jaccard Index for two String. The result ranges between 0 and 1, where 1 is equality.
+	 */
+	@Override
+	public SimilartyMesurement calculateSimilarity(String corpusFirst,
+												   String corpusSecond) {
+		Set<String> setCurpusFirst = getSetOfString(corpusFirst);
+		Set<String> setCurpusSecound = getSetOfString(corpusSecond);
 
-        Set<String> intersection = new HashSet<String>(setCurpusFirst);
-        intersection.retainAll(setCurpusSecound);
+		Set<String> intersection = new HashSet<String>(setCurpusFirst);
+		intersection.retainAll(setCurpusSecound);
 
-        Set<String> merged = new HashSet<String>(setCurpusFirst);
-        merged.addAll(setCurpusSecound);
+		Set<String> merged = new HashSet<String>(setCurpusFirst);
+		merged.addAll(setCurpusSecound);
 
-        Double conclusion = intersection.size() * 1.0 / merged.size() * 1.0;
+		Double conclusion = intersection.size() * 1.0 / merged.size() * 1.0;
 
-        SimilartyMesurement result = new SimilartyMesurement();
+		SimilartyMesurement result = new SimilartyMesurement();
 
-        result.setSimilarty(conclusion);
+		result.setSimilarty(conclusion);
 
-        return result;
-    }
+		return result;
+	}
 
-    private Set<String> getSetOfString(String corpus) {
-        StringTokenizer tokenizer = new StringTokenizer(corpus);
-        Set<String> result = new HashSet<String>();
+	private Set<String> getSetOfString(String corpus) {
+		StringTokenizer tokenizer = new StringTokenizer(corpus);
+		Set<String> result = new HashSet<String>();
 
-        while (tokenizer.hasMoreElements()) {
-            result.add(tokenizer.nextToken());
-        }
+		while (tokenizer.hasMoreElements()) {
+			result.add(tokenizer.nextToken());
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

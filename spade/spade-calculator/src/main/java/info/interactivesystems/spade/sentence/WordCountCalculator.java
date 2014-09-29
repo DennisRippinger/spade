@@ -15,39 +15,37 @@
 package info.interactivesystems.spade.sentence;
 
 import info.interactivesystems.spade.nlp.SentenceDetector;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 /**
  * The Class SentenceLength.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Component
 public class WordCountCalculator {
 
-    @Resource
-    private SentenceDetector sentenceDetector;
+	@Resource
+	private SentenceDetector sentenceDetector;
 
-    /**
-     * Gets the word count.
-     * 
-     * @param review the review
-     * @return the word count
-     */
-    public Integer getWordCount(String review) {
-        List<String> sentences = sentenceDetector.detectSentencesFromCorpus(review);
-        Integer result = 0;
-        for (String sentence : sentences) {
-            String[] split = sentence.split(" ");
-            result += split.length;
-        }
+	/**
+	 * Gets the word count.
+	 *
+	 * @param review the review
+	 * @return the word count
+	 */
+	public Integer getWordCount(String review) {
+		List<String> sentences = sentenceDetector.detectSentencesFromCorpus(review);
+		Integer result = 0;
+		for (String sentence : sentences) {
+			String[] split = sentence.split(" ");
+			result += split.length;
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

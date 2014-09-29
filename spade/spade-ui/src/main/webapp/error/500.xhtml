@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
-	template="/WEB-INF/templates/error-template.xhtml">
-	<ui:define name="content">
-	
-	<layout:box size="medium" title="#{messages['info.error.500.title']}">
-		<p>
-			#{messages['info.error.500.explanation']}
-		</p>
-		
-		<p:button outcome="/home.xhtml" value="#{messages['info.error.button.home']}"/>
-	</layout:box>
-	
-		
-	
-	</ui:define>
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:layout="http://java.sun.com/jsf/composite/components/layout"
+                template="/WEB-INF/templates/error-template.xhtml">
+    <ui:define name="content">
+
+        <layout:box size="medium" title="#{messages['info.error.500.title']}">
+            <p>
+                #{messages['info.error.500.explanation']}
+            </p>
+
+            <p:button outcome="/home.xhtml" value="#{messages['info.error.button.home']}"/>
+        </layout:box>
+
+
+    </ui:define>
 </ui:composition>

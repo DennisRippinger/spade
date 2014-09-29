@@ -14,25 +14,25 @@
  */
 package info.interactivesystems.spade.similarity;
 
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
 /**
  * The Class NilsimsaSimilarityCalculatorTest.
- * 
+ *
  * @author Dennis Rippinger
  */
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class NilsimsaSimilarityCalculatorTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private NilsimsaSimilarityCalculator calculator;
+	@Resource
+	private NilsimsaSimilarityCalculator calculator;
 
-    private String[] categories = {
-        "Magazine Subscriptions"
+	private String[] categories = {
+			"Magazine Subscriptions"
 //        "Furniture & Décor",
 //        "Collectibles",
 //        "Car Electronics",
@@ -49,13 +49,13 @@ public class NilsimsaSimilarityCalculatorTest extends AbstractTestNGSpringContex
 //        "All Electronics",
 //        "Magazine Subscriptions",
 //        "Arts"
-    };
+	};
 
-    @Test
-    public void calculateSimilarityBetweenUniqueReviews() {
-        for (String category : categories) {
-            calculator.calculateSimilarityBetweenUniqueReviews(category);
-        }
+	@Test
+	public void calculateSimilarityBetweenUniqueReviews() {
+		for (String category : categories) {
+			calculator.calculateSimilarityBetweenUniqueReviews(category);
+		}
 
-    }
+	}
 }

@@ -15,105 +15,100 @@
 package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Review;
-
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Subqueries;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * The Class ReviewDao for the {@link Review} entities.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Repository
 public class ReviewDao extends AbstractDao<Review> {
 
-    public ReviewDao() {
-        super(Review.class);
-    }
+	public ReviewDao() {
+		super(Review.class);
+	}
 
-    public Boolean checkIfAlreadyExists(String id) {
-        Review find = find(id);
+	public Boolean checkIfAlreadyExists(String id) {
+		Review find = find(id);
 
-        return find != null;
-    }
+		return find != null;
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Review> findReviewByProductID(String productID) {
+	@SuppressWarnings("unchecked")
+	public List<Review> findReviewByProductID(String productID) {
 
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Review.class);
-        criteria.add(Restrictions.eq("review.Product_fk", productID));
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(Review.class);
+		criteria.add(Restrictions.eq("review.Product_fk", productID));
 
-        return (List<Review>) criteria.list();
-    }
+		return (List<Review>) criteria.list();
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Review> findReviewFromUser(String userID) {
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Review.class);
-        criteria.add(Restrictions.eq("user.id", userID));
-        criteria.add(Restrictions.eq("unique", true));
+	@SuppressWarnings("unchecked")
+	public List<Review> findReviewFromUser(String userID) {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(Review.class);
+		criteria.add(Restrictions.eq("user.id", userID));
+		criteria.add(Restrictions.eq("unique", true));
 
-        return criteria.list();
-    }
+		return criteria.list();
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Review> findReviewsByCategory(String category) {
+	@SuppressWarnings("unchecked")
+	public List<Review> findReviewsByCategory(String category) {
 
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Review.class, "review");
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(Review.class, "review");
 
-        criteria.createAlias("review.product", "product");
-        criteria.add(Restrictions.eq("product.category", category));
-        criteria.add(Restrictions.eq("unique", true));
+		criteria.createAlias("review.product", "product");
+		criteria.add(Restrictions.eq("product.category", category));
+		criteria.add(Restrictions.eq("unique", true));
 
-        criteria.setProjection(Projections.projectionList()
-            .add(Projections.property("id"), "id")
-            .add(Projections.property("nilsimsa"), "nilsimsa"))
-            .setResultTransformer(Transformers.aliasToBean(Review.class));
+		criteria.setProjection(Projections.projectionList()
+				.add(Projections.property("id"), "id")
+				.add(Projections.property("nilsimsa"), "nilsimsa"))
+				.setResultTransformer(Transformers.aliasToBean(Review.class));
 
-        return criteria.list();
-    }
+		return criteria.list();
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Review> findReviewFromUserInCategory(String userID, String category) {
+	@SuppressWarnings("unchecked")
+	public List<Review> findReviewFromUserInCategory(String userID, String category) {
 
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Review.class, "review");
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(Review.class, "review");
 
-        criteria.createAlias("review.product", "product");
-        criteria.add(Restrictions.eq("product.category", category));
-        criteria.add(Restrictions.eq("user.id", userID));
-        criteria.add(Restrictions.eq("unique", true));
+		criteria.createAlias("review.product", "product");
+		criteria.add(Restrictions.eq("product.category", category));
+		criteria.add(Restrictions.eq("user.id", userID));
+		criteria.add(Restrictions.eq("unique", true));
 
-        criteria.setProjection(Projections.projectionList()
-            .add(Projections.property("id"), "id")
-            .add(Projections.property("nilsimsa"), "nilsimsa"))
-            .setResultTransformer(Transformers.aliasToBean(Review.class));
+		criteria.setProjection(Projections.projectionList()
+				.add(Projections.property("id"), "id")
+				.add(Projections.property("nilsimsa"), "nilsimsa"))
+				.setResultTransformer(Transformers.aliasToBean(Review.class));
 
-        return criteria.list();
-    }
+		return criteria.list();
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Review> findHighestVarianceReview(String userID) {
+	@SuppressWarnings("unchecked")
+	public List<Review> findHighestVarianceReview(String userID) {
 
-        Query query = sessionFactory.getCurrentSession().
-            createQuery("FROM Review WHERE User_fk = :user AND variance = "
-                + "(SELECT MAX(variance) "
-                + "FROM Review "
-                + "WHERE User_fk = :user)");
-        query.setParameter("user", userID);
+		Query query = sessionFactory.getCurrentSession().
+				createQuery("FROM Review WHERE User_fk = :user AND variance = "
+						+ "(SELECT MAX(variance) "
+						+ "FROM Review "
+						+ "WHERE User_fk = :user)");
+		query.setParameter("user", userID);
 
-        return query.list();
-    }
+		return query.list();
+	}
 }

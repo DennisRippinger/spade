@@ -16,42 +16,40 @@ package info.interactivesystems.spade.crawler.yelp;
 
 import info.interactivesystems.spade.dao.UserDao;
 import info.interactivesystems.spade.entities.User;
-
-import javax.annotation.Resource;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
 /**
  * The Class YelpReverseCrawlerTest.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class YelpReverseCrawlerTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private UserDao userDao;
+	@Resource
+	private UserDao userDao;
 
-    @Resource
-    private YelpReverseUserCrawler crawler;
+	@Resource
+	private YelpReverseUserCrawler crawler;
 
-    @Test
-    public void testReverseCrawling() {
-        User user = userDao.find("--jSxZSrjvyIvR88zldm1A");
+	@Test
+	public void testReverseCrawling() {
+		User user = userDao.find("--jSxZSrjvyIvR88zldm1A");
 
-        try {
-            crawler.setPageNo(0);
-            crawler.crawlReverse(user);
-        } catch (Exception e) {
+		try {
+			crawler.setPageNo(0);
+			crawler.crawlReverse(user);
+		} catch (Exception e) {
 
-            log.error("Unkown Error, marked user", e);
-        }
+			log.error("Unkown Error, marked user", e);
+		}
 
-    }
+	}
 
 }

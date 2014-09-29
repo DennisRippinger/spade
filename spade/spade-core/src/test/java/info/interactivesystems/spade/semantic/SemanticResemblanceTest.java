@@ -14,52 +14,50 @@
  */
 package info.interactivesystems.spade.semantic;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+import java.util.Map;
+import java.util.Map.Entry;
+
 /**
  * The Class SemanticResemblanceTest.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Test(enabled = false)
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class SemanticResemblanceTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private DiscoResemblance semanticResemblance;
+	private static final String WORD_ONE = "love";
+	private static final String WORD_TWO = "feel";
+	@Resource
+	private DiscoResemblance semanticResemblance;
 
-    private static final String WORD_ONE = "love";
-    private static final String WORD_TWO = "feel";
+	@Test
+	public void getFirstOrderSimilarity() {
+		Float firstOrderSimilarity = semanticResemblance
+				.calculateSimilarity(WORD_ONE, WORD_TWO);
+		System.out.println("First: " + firstOrderSimilarity);
+	}
 
-    @Test
-    public void getFirstOrderSimilarity() {
-        Float firstOrderSimilarity = semanticResemblance
-            .calculateSimilarity(WORD_ONE, WORD_TWO);
-        System.out.println("First: " + firstOrderSimilarity);
-    }
+	@Test
+	public void getSecondOrderSimilarity() {
+		Float secondOrderSimilarity = semanticResemblance
+				.getSecondOrderSimilarity(WORD_ONE, WORD_TWO);
+		System.out.println("Second: " + secondOrderSimilarity);
+	}
 
-    @Test
-    public void getSecondOrderSimilarity() {
-        Float secondOrderSimilarity = semanticResemblance
-            .getSecondOrderSimilarity(WORD_ONE, WORD_TWO);
-        System.out.println("Second: " + secondOrderSimilarity);
-    }
+	@Test
+	public void getgetSimilarWords() {
+		Map<String, String> similarWords = semanticResemblance
+				.getSimilarWords(WORD_ONE);
 
-    @Test
-    public void getgetSimilarWords() {
-        Map<String, String> similarWords = semanticResemblance
-            .getSimilarWords(WORD_ONE);
-
-        for (Entry<String, String> word : similarWords.entrySet()) {
-            System.out.println(word.getKey() + " " + word.getValue());
-        }
-    }
+		for (Entry<String, String> word : similarWords.entrySet()) {
+			System.out.println(word.getKey() + " " + word.getValue());
+		}
+	}
 
 }

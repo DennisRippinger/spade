@@ -14,51 +14,51 @@
  */
 package info.interactivesystems.spade.similarity;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.dto.SimilartyMesurement;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
-import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests similarity for the Levenshtein Similarity.
- * 
+ *
  * @author Dennis Rippinger
  */
-@Test(groups = { "functionTest" })
+@Test(groups = {"functionTest"})
 public class LevenshteinSimilarityTest extends SimilarityTest {
 
-    public LevenshteinSimilarityTest() {
-        super();
-        calculator = new LevenshteinDistance();
-        assertThat(calculator).isNotNull();
-    }
+	public LevenshteinSimilarityTest() {
+		super();
+		calculator = new LevenshteinDistance();
+		assertThat(calculator).isNotNull();
+	}
 
-    @Test
-    public void calculateSimilarity_same() {
-        List<String> detectedSentences = getTestString();
+	@Test
+	public void calculateSimilarity_same() {
+		List<String> detectedSentences = getTestString();
 
-        for (String testSentence : detectedSentences) {
-            SimilartyMesurement calculatedSimilarity = calculator
-                .calculateSimilarity(testSentence, testSentence);
+		for (String testSentence : detectedSentences) {
+			SimilartyMesurement calculatedSimilarity = calculator
+					.calculateSimilarity(testSentence, testSentence);
 
-            assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(0.0);
-        }
-    }
+			assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(0.0);
+		}
+	}
 
-    @Test
-    public void calculateSimilarity_different() {
+	@Test
+	public void calculateSimilarity_different() {
 
-        String testStringOne = "I did extensive research before selecting the "
-            + "SD600, " + "and I am thrilled with my purchase.";
-        String testStringTwo = "I did extensive research before selecting the "
-            + "Kodak EasyShare C875, "
-            + "and I am thrilled with my purchase.";
+		String testStringOne = "I did extensive research before selecting the "
+				+ "SD600, " + "and I am thrilled with my purchase.";
+		String testStringTwo = "I did extensive research before selecting the "
+				+ "Kodak EasyShare C875, "
+				+ "and I am thrilled with my purchase.";
 
-        SimilartyMesurement calculatedSimilarity = calculator
-            .calculateSimilarity(testStringOne, testStringTwo);
+		SimilartyMesurement calculatedSimilarity = calculator
+				.calculateSimilarity(testStringOne, testStringTwo);
 
-        assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(19.0);
-    }
+		assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(19.0);
+	}
 }

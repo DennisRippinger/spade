@@ -14,78 +14,74 @@
  */
 package info.interactivesystems.spade.semantic;
 
-import java.io.IOException;
-
+import de.linguatools.disco.DISCO;
+import edu.smu.tspell.wordnet.WordNetDatabase;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import de.linguatools.disco.DISCO;
-import edu.smu.tspell.wordnet.WordNetDatabase;
+import java.io.IOException;
 
 /**
  * Basic factory to create a {@link DISCO} instance.
- * 
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 @Slf4j
 public final class SemanticFactory {
 
-    private static final Boolean LOAD_TO_RAM = false;
+	private static final Boolean LOAD_TO_RAM = false;
 
-    private static PropertiesConfiguration configuration;
-    private static String discoDir;
+	private static PropertiesConfiguration configuration;
+	private static String discoDir;
 
-    static {
-        try {
-            configuration = new PropertiesConfiguration("disco.properties");
-            discoDir = configuration.getString("disco.english.wikipedia");
+	static {
+		try {
+			configuration = new PropertiesConfiguration("disco.properties");
+			discoDir = configuration.getString("disco.english.wikipedia");
 
-            System.setProperty("wordnet.database.dir", "/Users/dennisrippinger/Downloads/WordNet-3.0/dict");
-        } catch (ConfigurationException e) {
-            log.error("Could not load Disco Properties", e);
-        }
-    }
+			System.setProperty("wordnet.database.dir", "/Users/dennisrippinger/Downloads/WordNet-3.0/dict");
+		} catch (ConfigurationException e) {
+			log.error("Could not load Disco Properties", e);
+		}
+	}
 
-    public static WordNetDatabase getWordnetDatabase() {
-        try {
-            return WordNetDatabase.getFileInstance();
-        } catch (Exception e) {
-            log.error("Could not load Wordnet Database", e);
-        }
-        return null;
-    }
+	/**
+	 * Private Constructor
+	 */
+	private SemanticFactory() {
 
-    /**
-     * Creates an {@link DICO} Instance with English co-occurence data.
-     * 
-     * @return the english co-ocurence data as {@link DISCO} instance.
-     */
-    public static DISCO getEnglishCoOcurenceData() {
-        DISCO disco = null;
-        try {
+	}
 
-            log.debug("Loading English word coocurence File from '{}'",
-                discoDir);
-            disco = new DISCO(discoDir, LOAD_TO_RAM);
-            log.debug("Loaded English word coocurence into RAM = '{}'",
-                LOAD_TO_RAM);
+	public static WordNetDatabase getWordnetDatabase() {
+		try {
+			return WordNetDatabase.getFileInstance();
+		} catch (Exception e) {
+			log.error("Could not load Wordnet Database", e);
+		}
+		return null;
+	}
 
-        } catch (IOException e) {
-            log.error("Could not load Disco folder", e);
-        }
+	/**
+	 * Creates an {@link de.linguatools.disco.DISCO} Instance with English co-occurrence data.
+	 *
+	 * @return the english co-occurrence data as {@link DISCO} instance.
+	 */
+	public static DISCO getEnglishCoOccurrenceData() {
+		DISCO disco = null;
+		try {
 
-        return disco;
-    }
+			log.debug("Loading English word concurrence File from '{}'",
+					discoDir);
+			disco = new DISCO(discoDir, LOAD_TO_RAM);
+			log.debug("Loaded English word concurrence into RAM = '{}'",
+					LOAD_TO_RAM);
 
-    /**
-     * Private Constructor
-     */
-    private SemanticFactory() {
+		} catch (IOException e) {
+			log.error("Could not load Disco folder", e);
+		}
 
-    }
+		return disco;
+	}
 
 }

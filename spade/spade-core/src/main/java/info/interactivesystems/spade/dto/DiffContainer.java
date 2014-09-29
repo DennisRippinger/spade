@@ -18,14 +18,14 @@ import lombok.Data;
 
 /**
  * The Class DiffContainer.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Data
 public class DiffContainer {
 
-    private String html;
+	private String html;
 
-    private Integer numberOfDifferences;
+	private Integer numberOfDifferences;
 
 }

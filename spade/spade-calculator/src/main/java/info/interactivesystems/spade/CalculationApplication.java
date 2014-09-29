@@ -18,7 +18,6 @@ import info.interactivesystems.spade.importer.UniqueReviewCrystalizer;
 import info.interactivesystems.spade.recommender.HIndex;
 import info.interactivesystems.spade.similarity.NilsimsaSimilarityCalculator;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.catalina.connector.Connector;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -38,7 +37,7 @@ import org.springframework.context.annotation.ImportResource;
 
 /**
  * The Class CalculationApplication.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
@@ -48,89 +47,89 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("classpath:beans.xml")
 public class CalculationApplication {
 
-    /**
-     * The main method.
-     * 
-     * @param args the arguments
-     * @throws ParseException
-     */
-    public static void main(String[] args) throws ParseException {
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws ParseException
+	 */
+	public static void main(String[] args) throws ParseException {
 
-        CommandLineParser parser = new GnuParser();
-        CommandLine line = parser.parse(CliCommands.getCliOptions(), args);
+		CommandLineParser parser = new GnuParser();
+		CommandLine line = parser.parse(CliCommands.getCliOptions(), args);
 
-        hIndex(args, line);
-        nilsimsa(args, line);
-        unique(args, line);
-    }
+		hIndex(args, line);
+		nilsimsa(args, line);
+		unique(args, line);
+	}
 
-    private static void unique(String[] args, CommandLine line) {
-        ConfigurableApplicationContext context;
-        if (line.hasOption(CliCommands.UNIQUE)) {
-            log.info("Removing non-Unique Reviews");
+	private static void unique(String[] args, CommandLine line) {
+		ConfigurableApplicationContext context;
+		if (line.hasOption(CliCommands.UNIQUE)) {
+			log.info("Removing non-Unique Reviews");
 
-            context = SpringApplication.run(CalculationApplication.class, args);
-            UniqueReviewCrystalizer crystalizer = context.getBean(UniqueReviewCrystalizer.class);
-            
-            crystalizer.tagUniqueReviews();
-        }
-    }
+			context = SpringApplication.run(CalculationApplication.class, args);
+			UniqueReviewCrystalizer crystalizer = context.getBean(UniqueReviewCrystalizer.class);
+
+			crystalizer.tagUniqueReviews();
+		}
+	}
 
 
-    private static void nilsimsa(String[] args, CommandLine line) {
-        ConfigurableApplicationContext context;
-        if (line.hasOption(CliCommands.NISLIMSA) && line.hasOption(CliCommands.CATEGORY)) {
-            String category = line.getOptionValue(CliCommands.CATEGORY).replace("_", " ").replace("*", "&");
-            log.info("CurrentCategory: '{}'", category);
+	private static void nilsimsa(String[] args, CommandLine line) {
+		ConfigurableApplicationContext context;
+		if (line.hasOption(CliCommands.NISLIMSA) && line.hasOption(CliCommands.CATEGORY)) {
+			String category = line.getOptionValue(CliCommands.CATEGORY).replace("_", " ").replace("*", "&");
+			log.info("CurrentCategory: '{}'", category);
 
-            context = SpringApplication.run(CalculationApplication.class, args);
-            NilsimsaSimilarityCalculator calculator = context.getBean(NilsimsaSimilarityCalculator.class);
-            calculator.calculateSimilarityBetweenUniqueReviews(category);
-        }
-    }
+			context = SpringApplication.run(CalculationApplication.class, args);
+			NilsimsaSimilarityCalculator calculator = context.getBean(NilsimsaSimilarityCalculator.class);
+			calculator.calculateSimilarityBetweenUniqueReviews(category);
+		}
+	}
 
-    private static void hIndex(String[] args, CommandLine line) {
-        ConfigurableApplicationContext context;
-        if (line.hasOption(CliCommands.HINDEX) && line.hasOption(CliCommands.FROM) && line.hasOption(CliCommands.TO)) {
-            String stringFrom = line.getOptionValue(CliCommands.FROM);
-            String stringTo = line.getOptionValue(CliCommands.TO);
+	private static void hIndex(String[] args, CommandLine line) {
+		ConfigurableApplicationContext context;
+		if (line.hasOption(CliCommands.HINDEX) && line.hasOption(CliCommands.FROM) && line.hasOption(CliCommands.TO)) {
+			String stringFrom = line.getOptionValue(CliCommands.FROM);
+			String stringTo = line.getOptionValue(CliCommands.TO);
 
-            try {
-                Long from = Long.parseLong(stringFrom);
-                Long to = Long.parseLong(stringTo);
+			try {
+				Long from = Long.parseLong(stringFrom);
+				Long to = Long.parseLong(stringTo);
 
-                context = SpringApplication.run(CalculationApplication.class, args);
-                HIndex hIndex = context.getBean(HIndex.class);
+				context = SpringApplication.run(CalculationApplication.class, args);
+				HIndex hIndex = context.getBean(HIndex.class);
 
-                hIndex.calculateHIndex(from, to);
-            } catch (NumberFormatException e) {
-                return;
-            }
+				hIndex.calculateHIndex(from, to);
+			} catch (NumberFormatException e) {
+				return;
+			}
 
-        }
-    }
+		}
+	}
 
-    @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
-        return new MyCustomizer();
-    }
+	@Bean
+	public EmbeddedServletContainerCustomizer containerCustomizer() {
+		return new MyCustomizer();
+	}
 
-    private static class MyCustomizer implements EmbeddedServletContainerCustomizer {
+	private static class MyCustomizer implements EmbeddedServletContainerCustomizer {
 
-        @Override
-        public void customize(ConfigurableEmbeddedServletContainer factory) {
-            if (factory instanceof TomcatEmbeddedServletContainerFactory) {
-                customizeTomcat((TomcatEmbeddedServletContainerFactory) factory);
-            }
-        }
+		@Override
+		public void customize(ConfigurableEmbeddedServletContainer factory) {
+			if (factory instanceof TomcatEmbeddedServletContainerFactory) {
+				customizeTomcat((TomcatEmbeddedServletContainerFactory) factory);
+			}
+		}
 
-        public void customizeTomcat(TomcatEmbeddedServletContainerFactory factory) {
-            factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
-                @Override
-                public void customize(Connector connector) {
-                    connector.setPort(12000);
-                }
-            });
-        }
-    }
+		public void customizeTomcat(TomcatEmbeddedServletContainerFactory factory) {
+			factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
+				@Override
+				public void customize(Connector connector) {
+					connector.setPort(12000);
+				}
+			});
+		}
+	}
 }

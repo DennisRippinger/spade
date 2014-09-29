@@ -14,45 +14,45 @@
  */
 package info.interactivesystems.spade.similarity;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.dto.SimilartyMesurement;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
-import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * The Class TanimotoResemblanceTest.
- * 
+ *
  * @author Dennis Rippinger
  */
-@Test(groups = { "functionTest" })
+@Test(groups = {"functionTest"})
 public class TanimotoResemblanceTest extends SimilarityTest {
 
-    public TanimotoResemblanceTest() {
-        super();
-        calculator = new TanimotoResemblance();
-        assertThat(calculator).isNotNull();
-    }
+	public TanimotoResemblanceTest() {
+		super();
+		calculator = new TanimotoResemblance();
+		assertThat(calculator).isNotNull();
+	}
 
-    @Test
-    public void calculateSimilarity_same() {
-        List<String> detectedSentences = getTestString();
+	@Test
+	public void calculateSimilarity_same() {
+		List<String> detectedSentences = getTestString();
 
-        for (String testSentence : detectedSentences) {
-            SimilartyMesurement calculatedSimilarity = calculator
-                .calculateSimilarity(testSentence, testSentence);
+		for (String testSentence : detectedSentences) {
+			SimilartyMesurement calculatedSimilarity = calculator
+					.calculateSimilarity(testSentence, testSentence);
 
-            assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(1.0);
-        }
-    }
+			assertThat(calculatedSimilarity.getSimilarty()).isEqualTo(1.0);
+		}
+	}
 
-    @Test
-    public void calculateSimilarity_different() {
+	@Test
+	public void calculateSimilarity_different() {
 
-        SimilartyMesurement calculatedSimilarity = calculator
-            .calculateSimilarity(testStringOne, testStringTwo);
+		SimilartyMesurement calculatedSimilarity = calculator
+				.calculateSimilarity(testStringOne, testStringTwo);
 
-        assertThat(calculatedSimilarity.getSimilarty()).isBetween(0.7, 0.8);
-    }
+		assertThat(calculatedSimilarity.getSimilarty()).isBetween(0.7, 0.8);
+	}
 }

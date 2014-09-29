@@ -14,41 +14,40 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
-import java.io.Serializable;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import java.io.Serializable;
 
 /**
  * Caps long Strings.
- * 
+ *
  * @author Dennis Rippinger
  */
 @FacesConverter(value = "converter.longName")
 public class LongNameConverter implements Converter, Serializable {
 
-    private static final long serialVersionUID = 2479669304984009829L;
+	private static final long serialVersionUID = 2479669304984009829L;
 
-    private static final int MAXIMUM = 35;
+	private static final int MAXIMUM = 35;
 
-    @Override
-    public String getAsString(FacesContext context, UIComponent component, Object value) {
-        String productName = (String) value;
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		String productName = (String) value;
 
-        if (productName.length() > MAXIMUM) {
-            productName = productName.substring(0, MAXIMUM);
-            productName += " ...";
-        }
+		if (productName.length() > MAXIMUM) {
+			productName = productName.substring(0, MAXIMUM);
+			productName += " ...";
+		}
 
-        return productName;
+		return productName;
 
-    }
+	}
 
-    @Override
-    public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-        // Direction not needed
-        return null;
-    }
+	@Override
+	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		// Direction not needed
+		return null;
+	}
 }

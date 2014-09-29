@@ -16,27 +16,27 @@ package info.interactivesystems.spade.util;
 
 /**
  * The Enum Authority to store the source and nature of the product. I.e. Amazon or Yelp.
- * 
+ *
  * @author Dennis Rippinger
  */
 public enum Authority {
 
-    AMAZON(1),
-    YELP(2);
+	AMAZON(1),
+	YELP(2);
 
-    private final Integer id;
+	private final Integer id;
 
-    /**
-     * Private instantiation of a new ProductCategory enum.
-     * 
-     * @param id the id
-     */
-    private Authority(Integer id) {
-        this.id = id;
-    }
+	/**
+	 * Private instantiation of a new ProductCategory enum.
+	 *
+	 * @param id the id
+	 */
+	private Authority(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
 }

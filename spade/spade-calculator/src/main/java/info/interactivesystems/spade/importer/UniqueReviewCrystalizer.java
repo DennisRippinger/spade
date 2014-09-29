@@ -1,90 +1,86 @@
 /**
- * 
+ *
  */
 package info.interactivesystems.spade.importer;
 
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Resource;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Component;
-
 /**
  * @author Dennis Rippinger
- * 
  */
 @Slf4j
 @Component
 public class UniqueReviewCrystalizer {
 
-    @Resource
-    private ReviewContentService service;
+	@Resource
+	private ReviewContentService service;
 
-    private Integer uniqueCounter = 0;
+	private Integer uniqueCounter = 0;
 
-    public void tagUniqueReviews() {
-        for (Long userID = 1L; userID <= 6643623; userID++) {
-            User currentUser = service.findUserByID(userID);
+	public void tagUniqueReviews() {
+		for (Long userID = 1L; userID <= 6643623; userID++) {
+			User currentUser = service.findUserByID(userID);
 
-            List<Review> uniqueReviews = new LinkedList<Review>();
+			List<Review> uniqueReviews = new LinkedList<Review>();
 
-            List<Review> reviews = currentUser.getReviews();
-            for (Review review : reviews) {
-                if (isNew(review, uniqueReviews)) {
-                    review.setUnique(true);
-                    uniqueReviews.add(review);
-                }
-            }
+			List<Review> reviews = currentUser.getReviews();
+			for (Review review : reviews) {
+				if (isNew(review, uniqueReviews)) {
+					review.setUnique(true);
+					uniqueReviews.add(review);
+				}
+			}
 
-            Integer helpFull = 0, votes = 0;
+			Integer helpFull = 0, votes = 0;
 
-            for (Review review : uniqueReviews) {
-                service.saveReview(review);
-                helpFull += review.getHelpfulVotes();
-                votes += review.getTotalVotes();
-            }
+			for (Review review : uniqueReviews) {
+				service.saveReview(review);
+				helpFull += review.getHelpfulVotes();
+				votes += review.getTotalVotes();
+			}
 
-            currentUser.setNumberOfReviews(uniqueReviews.size());
-            currentUser.setHelpfulVotes(helpFull);
-            currentUser.setHelpfulOverallVotes(votes);
-            if (votes.equals(0)) {
-                currentUser.setHelpfulness(0);
-            } else {
-                currentUser.setHelpfulness(helpFull / votes);
-            }
+			currentUser.setNumberOfReviews(uniqueReviews.size());
+			currentUser.setHelpfulVotes(helpFull);
+			currentUser.setHelpfulOverallVotes(votes);
+			if (votes.equals(0)) {
+				currentUser.setHelpfulness(0);
+			} else {
+				currentUser.setHelpfulness(helpFull / votes);
+			}
 
-            service.saveUser(currentUser);
+			service.saveUser(currentUser);
 
-            uniqueCounter += uniqueReviews.size();
+			uniqueCounter += uniqueReviews.size();
 
-            Integer rand = ThreadLocalRandom.current().nextInt(1, 500);
-            if (rand == 50) {
-                log.info("Current User No '{}', Unique Items so far '{}'", userID, uniqueCounter);
-            }
-        }
-        log.info("Unique Reviews: '{}'", uniqueCounter);
-    }
+			Integer rand = ThreadLocalRandom.current().nextInt(1, 500);
+			if (rand == 50) {
+				log.info("Current User No '{}', Unique Items so far '{}'", userID, uniqueCounter);
+			}
+		}
+		log.info("Unique Reviews: '{}'", uniqueCounter);
+	}
 
-    private boolean isNew(Review review, List<Review> uniqueReviews) {
-        for (Review knownReview : uniqueReviews) {
-            if (isEqual(knownReview, review)) {
-                return false;
-            }
-        }
-        return true;
-    }
+	private boolean isNew(Review review, List<Review> uniqueReviews) {
+		for (Review knownReview : uniqueReviews) {
+			if (isEqual(knownReview, review)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-    private boolean isEqual(Review knownReview, Review review) {
-        return knownReview.getTitle().equals(review.getTitle()) &&
-            knownReview.getContent().equals(review.getContent()) &&
-            knownReview.getReviewDate().equals(review.getReviewDate());
-    }
+	private boolean isEqual(Review knownReview, Review review) {
+		return knownReview.getTitle().equals(review.getTitle()) &&
+				knownReview.getContent().equals(review.getContent()) &&
+				knownReview.getReviewDate().equals(review.getReviewDate());
+	}
 }

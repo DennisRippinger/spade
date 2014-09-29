@@ -1,34 +1,34 @@
 .nav {
-	width: 100%;
+    width: 100%;
 }
 
-.nav ul,.nav ul * {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+.nav ul, .nav ul * {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
 .nav ul {
-	padding-left: 1em;
+    padding-left: 1em;
 }
 
 .nav ul li:hover {
-	visibility: inherit;
+    visibility: inherit;
 }
 
 .nav ul li {
-	display: inline-block;
+    display: inline-block;
 }
 
 .nav ul li a {
-	display: block;
-	line-height: 1em;
-	padding: 1em;
-	font-size: 15px;
-	color: #fff;
-	font-weight: 700;
+    display: block;
+    line-height: 1em;
+    padding: 1em;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 700;
 }
 
 .nav ul li a:hover {
-	
+
 }

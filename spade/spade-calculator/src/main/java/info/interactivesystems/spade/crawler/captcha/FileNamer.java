@@ -16,46 +16,46 @@ package info.interactivesystems.spade.crawler.captcha;
 
 /**
  * The Class FileNamer provides static methods to create a thread depended name for each CAPTCHA file and Tesseract output.
- * 
+ *
  * @author Dennis Rippinger
  */
 public final class FileNamer {
 
-    private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+	private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
 
-    /**
-     * Gets the output name for the CAPTCHA image.
-     * 
-     * @param type the type of image
-     * @return the output name with a patch in $OS tempdir.
-     */
-    public static String getOutputName(String type) {
-        return String.format("%s%s.%s", TEMP_DIR, Thread.currentThread().getName(), type);
-    }
+	/**
+	 * Private Constructor.
+	 */
+	private FileNamer() {
 
-    /**
-     * Gets the output Name for the text file.
-     * 
-     * @return the output name with a patch in $OS tempdir.
-     */
-    static String getTextOutputName() {
-        return String.format("%s%s", TEMP_DIR, Thread.currentThread().getName());
-    }
+	}
 
-    /**
-     * Gets the output Name for the text file. Tesseract adds a "txt" in every case.
-     * 
-     * @return the output name with a patch in $OS tempdir.
-     */
-    static String getActualTextOutputName() {
-        return String.format("%s%s.txt", TEMP_DIR, Thread.currentThread().getName());
-    }
+	/**
+	 * Gets the output name for the CAPTCHA image.
+	 *
+	 * @param type the type of image
+	 * @return the output name with a patch in $OS tempdir.
+	 */
+	public static String getOutputName(String type) {
+		return String.format("%s%s.%s", TEMP_DIR, Thread.currentThread().getName(), type);
+	}
 
-    /**
-     * Private Constructor.
-     */
-    private FileNamer() {
+	/**
+	 * Gets the output Name for the text file.
+	 *
+	 * @return the output name with a patch in $OS tempdir.
+	 */
+	static String getTextOutputName() {
+		return String.format("%s%s", TEMP_DIR, Thread.currentThread().getName());
+	}
 
-    }
+	/**
+	 * Gets the output Name for the text file. Tesseract adds a "txt" in every case.
+	 *
+	 * @return the output name with a patch in $OS tempdir.
+	 */
+	static String getActualTextOutputName() {
+		return String.format("%s%s.txt", TEMP_DIR, Thread.currentThread().getName());
+	}
 
 }

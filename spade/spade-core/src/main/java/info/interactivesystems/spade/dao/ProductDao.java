@@ -16,57 +16,56 @@ package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * The Class ProductDao for the {@link Product} entities.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Repository
 public class ProductDao extends AbstractDao<Product> {
 
-    public ProductDao() {
-        super(Product.class);
-    }
+	public ProductDao() {
+		super(Product.class);
+	}
 
-    public Boolean checkIfAlreadyExists(String id) {
-        Product find = find(id);
+	public Boolean checkIfAlreadyExists(String id) {
+		Product find = find(id);
 
-        return find != null;
-    }
+		return find != null;
+	}
 
-    public Product findByID(Long id) {
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Product.class);
-        criteria.add(Restrictions.eq("randomID", id));
+	public Product findByID(Long id) {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(Product.class);
+		criteria.add(Restrictions.eq("randomID", id));
 
-        return (Product) criteria.uniqueResult();
-    }
+		return (Product) criteria.uniqueResult();
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Review> findReviewsByCategory(String category) {
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(Product.class);
-        criteria.add(Restrictions.eq("category", category));
+	@SuppressWarnings("unchecked")
+	public List<Review> findReviewsByCategory(String category) {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(Product.class);
+		criteria.add(Restrictions.eq("category", category));
 
-        List<Review> result = new LinkedList<>();
-        for (Product product : (List<Product>) criteria.list()) {
-            for (Review review : product.getReviews()) {
-                if (review.isUnique()) {
-                    result.add(review);
-                }
-            }
+		List<Review> result = new LinkedList<>();
+		for (Product product : (List<Product>) criteria.list()) {
+			for (Review review : product.getReviews()) {
+				if (review.isUnique()) {
+					result.add(review);
+				}
+			}
 
-        }
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 }

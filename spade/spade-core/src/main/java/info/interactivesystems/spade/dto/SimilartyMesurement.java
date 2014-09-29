@@ -18,16 +18,16 @@ import lombok.Data;
 
 /**
  * The Class SimilartyMesurement.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Data
 public class SimilartyMesurement {
 
-    private Double similarty;
+	private Double similarty;
 
-    /**
-     * Additional values follow.
-     */
+	/**
+	 * Additional values follow.
+	 */
 
 }

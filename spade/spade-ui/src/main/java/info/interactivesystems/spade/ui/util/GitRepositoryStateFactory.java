@@ -14,32 +14,29 @@
  */
 package info.interactivesystems.spade.ui.util;
 
+import javax.inject.Named;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.inject.Named;
-
 /**
  * A factory for creating GitRepositoryState objects.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Named
 public class GitRepositoryStateFactory {
 
-    private GitRepositoryState gitRepositoryState;
+	private GitRepositoryState gitRepositoryState;
 
-    public GitRepositoryState getGitRepositoryState() throws IOException
-    {
-        if (gitRepositoryState == null)
-        {
-            Properties properties = new Properties();
-            properties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
+	public GitRepositoryState getGitRepositoryState() throws IOException {
+		if (gitRepositoryState == null) {
+			Properties properties = new Properties();
+			properties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
 
-            gitRepositoryState = new GitRepositoryState(properties);
-        }
+			gitRepositoryState = new GitRepositoryState(properties);
+		}
 
-        return gitRepositoryState;
-    }
+		return gitRepositoryState;
+	}
 
 }

@@ -14,29 +14,29 @@
  */
 package info.interactivesystems.spade.dto;
 
-import lombok.Data;
 import edu.smu.tspell.wordnet.Synset;
+import lombok.Data;
 
 /**
  * The Class SynSetWrapper.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Data
 public class SynSetWrapper {
 
-    private String firstSynset;
+	private String firstSynset;
 
-    private Synset[] synset;
+	private Synset[] synset;
 
-    private Boolean root = false;
+	private Boolean root = false;
 
-    public SynSetWrapper(Synset[] synset) {
-        this.synset = synset;
-        firstSynset = synset[0].toString();
-        if (firstSynset.equals("entity")) {
-            root = true;
-        }
-    }
+	public SynSetWrapper(Synset[] synset) {
+		this.synset = synset;
+		firstSynset = synset[0].toString();
+		if (firstSynset.equals("entity")) {
+			root = true;
+		}
+	}
 
 }

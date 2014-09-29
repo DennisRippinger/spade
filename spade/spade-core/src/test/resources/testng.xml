@@ -2,20 +2,20 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Spade Core Tests" parallel="false">
 
-	<test name="Function Test Group">
-		<groups>
-			<run>
-				<include name="functionTest" />
-			</run>
-		</groups>
-		<classes>
-			<class name="info.interactivesystems.spade.dao.ReviewDaoTest" />
-			<class name="info.interactivesystems.spade.dao.SentenceSimilarityDaoTest" />
-			<class name="info.interactivesystems.spade.similarity.JaccardIndexTest" />
-			<class
-				name="info.interactivesystems.spade.similarity.LevenshteinSimilarityTest" />
-			<class
-				name="info.interactivesystems.spade.similarity.TanimotoResemblanceTest" />
-		</classes>
-	</test>
+    <test name="Function Test Group">
+        <groups>
+            <run>
+                <include name="functionTest"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="info.interactivesystems.spade.dao.ReviewDaoTest"/>
+            <class name="info.interactivesystems.spade.dao.SentenceSimilarityDaoTest"/>
+            <class name="info.interactivesystems.spade.similarity.JaccardIndexTest"/>
+            <class
+                    name="info.interactivesystems.spade.similarity.LevenshteinSimilarityTest"/>
+            <class
+                    name="info.interactivesystems.spade.similarity.TanimotoResemblanceTest"/>
+        </classes>
+    </test>
 </suite>

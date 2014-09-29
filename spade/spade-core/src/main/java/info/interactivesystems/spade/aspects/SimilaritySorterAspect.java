@@ -17,72 +17,70 @@ package info.interactivesystems.spade.aspects;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
-
-import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
+import java.util.List;
+
 /**
  * Aspect to sort incoming {@link NilsimsaSimilarity} elements.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 @Aspect
 public class SimilaritySorterAspect {
 
-    @SuppressWarnings("unchecked")
-    @AfterReturning(pointcut = "execution(* info.interactivesystems.spade.dao.NilsimsaSimilarityDao.find(..))", returning = "result")
-    public Object sortAfterReturn(Object result) {
+	@SuppressWarnings("unchecked")
+	@AfterReturning(pointcut = "execution(* info.interactivesystems.spade.dao.NilsimsaSimilarityDao.find(..))", returning = "result")
+	public Object sortAfterReturn(Object result) {
 
-        List<NilsimsaSimilarity> similarities = (List<NilsimsaSimilarity>) result;
+		List<NilsimsaSimilarity> similarities = (List<NilsimsaSimilarity>) result;
 
-        log.debug("Sorting '{}' similarities", similarities.size());
+		log.debug("Sorting '{}' similarities", similarities.size());
 
-        return orderSimilarities(similarities);
-    }
+		return orderSimilarities(similarities);
+	}
 
-    /**
-     * Order similarities. This ensures that the First Review (Review A) is the youngest one.
-     * 
-     * @param similarities the incoming similarities.
-     * @return the ordered similarities.
-     */
-    private List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> similarities) {
-        Integer counter = 0;
-        for (NilsimsaSimilarity nilsimsaSimilarity : similarities) {
-            if (nilsimsaSimilarity.getReviewA().getReviewDate().after(nilsimsaSimilarity.getReviewB().getReviewDate())) {
-                Review first = nilsimsaSimilarity.getReviewB();
-                Review last = nilsimsaSimilarity.getReviewA();
+	/**
+	 * Order similarities. This ensures that the First Review (Review A) is the youngest one.
+	 *
+	 * @param similarities the incoming similarities.
+	 * @return the ordered similarities.
+	 */
+	private List<NilsimsaSimilarity> orderSimilarities(List<NilsimsaSimilarity> similarities) {
+		Integer counter = 0;
+		for (NilsimsaSimilarity nilsimsaSimilarity : similarities) {
+			if (nilsimsaSimilarity.getReviewA().getReviewDate().after(nilsimsaSimilarity.getReviewB().getReviewDate())) {
+				Review first = nilsimsaSimilarity.getReviewB();
+				Review last = nilsimsaSimilarity.getReviewA();
 
-                unescapeContent(first);
-                unescapeContent(last);
+				unescapeContent(first);
+				unescapeContent(last);
 
-                User firstUser = nilsimsaSimilarity.getUserB();
-                User lastUser = nilsimsaSimilarity.getUserA();
+				User firstUser = nilsimsaSimilarity.getUserB();
+				User lastUser = nilsimsaSimilarity.getUserA();
 
-                nilsimsaSimilarity.setUserA(firstUser);
-                nilsimsaSimilarity.setUserB(lastUser);
-                nilsimsaSimilarity.setReviewA(first);
-                nilsimsaSimilarity.setReviewB(last);
+				nilsimsaSimilarity.setUserA(firstUser);
+				nilsimsaSimilarity.setUserB(lastUser);
+				nilsimsaSimilarity.setReviewA(first);
+				nilsimsaSimilarity.setReviewB(last);
 
-                counter++;
-            }
+				counter++;
+			}
 
-        }
+		}
 
-        log.debug("Sorted '{}' items", counter);
+		log.debug("Sorted '{}' items", counter);
 
-        return similarities;
-    }
+		return similarities;
+	}
 
-    private void unescapeContent(Review first) {
-        String content = StringEscapeUtils.unescapeHtml4(first.getContent());
-        first.setContent(content);
-    }
+	private void unescapeContent(Review first) {
+		String content = StringEscapeUtils.unescapeHtml4(first.getContent());
+		first.setContent(content);
+	}
 
 }

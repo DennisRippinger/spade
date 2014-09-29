@@ -18,36 +18,36 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * The Class PropertyUtil.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 public final class PropertyUtil {
 
-    /**
-     * Gets the integer value of a system property.
-     * 
-     * @param property the system property
-     * @param defaultValue the default value in case a property is not set.
-     * @return default or property value as integer.
-     */
-    public static Integer getIntegerProperty(String property, Integer defaultValue) {
-        String propertyValue = System.getProperty(property);
-        if (propertyValue != null && !propertyValue.isEmpty()) {
-            try {
-                defaultValue = Integer.parseInt(propertyValue);
-            } catch (NumberFormatException e) {
-                log.warn("Could not parse property '{}'", property);
-            }
-        }
-        return defaultValue;
-    }
+	/**
+	 * Private Constructor.
+	 */
+	private PropertyUtil() {
 
-    /**
-     * Private Constructor.
-     */
-    private PropertyUtil() {
+	}
 
-    }
+	/**
+	 * Gets the integer value of a system property.
+	 *
+	 * @param property     the system property
+	 * @param defaultValue the default value in case a property is not set.
+	 * @return default or property value as integer.
+	 */
+	public static Integer getIntegerProperty(String property, Integer defaultValue) {
+		String propertyValue = System.getProperty(property);
+		if (propertyValue != null && !propertyValue.isEmpty()) {
+			try {
+				defaultValue = Integer.parseInt(propertyValue);
+			} catch (NumberFormatException e) {
+				log.warn("Could not parse property '{}'", property);
+			}
+		}
+		return defaultValue;
+	}
 
 }

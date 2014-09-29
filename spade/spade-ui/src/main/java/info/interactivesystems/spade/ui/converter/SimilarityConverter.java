@@ -14,7 +14,6 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
-import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.ui.dto.DetailsRow;
 import info.interactivesystems.spade.ui.util.CopyDirection;
 
@@ -22,58 +21,58 @@ import javax.inject.Named;
 
 /**
  * The Class SimilarityConverter.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Named
 public class SimilarityConverter {
 
-    /**
-     * Returns a Font Awesome element defining the similarity.
-     * 
-     * @param similar the similar
-     * @return the similarity
-     */
-    public String getSimilarity(Boolean similar) {
+	/**
+	 * Returns a Font Awesome element defining the similarity.
+	 *
+	 * @param similar the similar
+	 * @return the similarity
+	 */
+	public String getSimilarity(Boolean similar) {
 
-        if (similar) {
-            return "sameTable";
-        } else {
-            return "differentTable";
-        }
+		if (similar) {
+			return "sameTable";
+		} else {
+			return "differentTable";
+		}
 
-    }
+	}
 
-    public String getCopyDirection(CopyDirection direction) {
+	public String getCopyDirection(CopyDirection direction) {
 
-        switch (direction) {
-            case FIRST:
-                return "fa-long-arrow-left";
-            case LATER:
-                return "fa-long-arrow-right";
-            case SAME:
-                return "fa-arrows-h";
-            case NONE:
-                return "";
-            default:
-                return "";
-        }
+		switch (direction) {
+			case FIRST:
+				return "fa-long-arrow-left";
+			case LATER:
+				return "fa-long-arrow-right";
+			case SAME:
+				return "fa-arrows-h";
+			case NONE:
+				return "";
+			default:
+				return "";
+		}
 
-    }
+	}
 
-    public String getStylometry(DetailsRow detailsRow) {
+	public String getStylometry(DetailsRow detailsRow) {
 
-		if(detailsRow.getWordLength() <= 20){
+		if (detailsRow.getWordLength() <= 20) {
 			return "grey";
 		}
 
-        if (detailsRow.getStylometry() > 0.97) {
-            return "green";
-        } else if (detailsRow.getStylometry()  > 0.80) {
-            return "#D2CD00";
-        } else {
-            return "red";
-        }
+		if (detailsRow.getStylometry() > 0.97) {
+			return "green";
+		} else if (detailsRow.getStylometry() > 0.80) {
+			return "#D2CD00";
+		} else {
+			return "red";
+		}
 
-    }
+	}
 }

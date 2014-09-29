@@ -14,57 +14,48 @@
  */
 package info.interactivesystems.spade.entities;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * User Entity.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 @Setter
 @Getter
 @Entity
-@Table(name = "users", indexes = { @Index(columnList = "randomID"), @Index(columnList = "hIndex"), @Index(columnList = "meanDifference") })
+@Table(name = "users", indexes = {@Index(columnList = "randomID"), @Index(columnList = "hIndex"), @Index(columnList = "meanDifference")})
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 7916895135811744472L;
+	private static final long serialVersionUID = 7916895135811744472L;
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    private Long randomID;
+	private Long randomID;
 
-    @Lob
-    private String name;
+	@Lob
+	private String name;
 
-    private Integer numberOfReviews = 0;
+	private Integer numberOfReviews = 0;
 
-    private Integer helpfulness = 0;
+	private Integer helpfulness = 0;
 
-    private Integer helpfulVotes = 0;
+	private Integer helpfulVotes = 0;
 
-    private Integer helpfulOverallVotes = 0;
+	private Integer helpfulOverallVotes = 0;
 
-    private Double hIndex;
+	private Double hIndex;
 
-    @Column(name = "meanDifference")
-    private Double meanStylometry;
+	@Column(name = "meanDifference")
+	private Double meanStylometry;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Review> reviews;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Review> reviews;
 
 }

@@ -16,106 +16,105 @@ package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Class UserDao for the {@link User} entities.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Repository
 public class UserDao extends AbstractDao<User> {
 
-    private static final String HINDEX = "hIndex";
+	private static final String HINDEX = "hIndex";
 
-    public UserDao() {
-        super(User.class);
-    }
+	public UserDao() {
+		super(User.class);
+	}
 
-    public Boolean checkIfAlreadyExists(String id) {
-        User find = find(id);
+	public Boolean checkIfAlreadyExists(String id) {
+		User find = find(id);
 
-        return find != null;
-    }
+		return find != null;
+	}
 
-    public User findByRandomID(Long id) {
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(User.class);
-        criteria.add(Restrictions.eq("randomID", id));
+	public User findByRandomID(Long id) {
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(User.class);
+		criteria.add(Restrictions.eq("randomID", id));
 
-        return (User) criteria.uniqueResult();
-    }
+		return (User) criteria.uniqueResult();
+	}
 
-    /**
-     * Lists all Users with an Hindex >= the minIndex parameter.
-     * 
-     * @param minIndex
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public List<User> findUsersWithHIndex(Double minIndex) {
+	/**
+	 * Lists all Users with an Hindex >= the minIndex parameter.
+	 *
+	 * @param minIndex
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<User> findUsersWithHIndex(Double minIndex) {
 
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(User.class);
-        criteria.add(Restrictions.ge(HINDEX, minIndex));
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(User.class);
+		criteria.add(Restrictions.ge(HINDEX, minIndex));
 
-        return criteria.list();
-    }
+		return criteria.list();
+	}
 
-    /**
-     * Lists all Users with an Hindex >= the maxIndex parameter.
-     * 
-     * @param minIndex the minimum index value.
-     * @param limit maximum amount of users returned.
-     * @return the User list
-     */
-    public List<User> findUsersWithHIndex(Double minIndex, Integer limit) {
+	/**
+	 * Lists all Users with an Hindex >= the maxIndex parameter.
+	 *
+	 * @param minIndex the minimum index value.
+	 * @param limit    maximum amount of users returned.
+	 * @return the User list
+	 */
+	public List<User> findUsersWithHIndex(Double minIndex, Integer limit) {
 
-        Criteria criteria = sessionFactory.getCurrentSession()
-            .createCriteria(User.class);
-        criteria.add(Restrictions.ge(HINDEX, minIndex));
-        criteria.add(Restrictions.ge("numberOfReviews", 10));
-        
-        // TODO Topmost hIndex user has 21k reviews.
-        criteria.add(Restrictions.le(HINDEX, 20.0));
+		Criteria criteria = sessionFactory.getCurrentSession()
+				.createCriteria(User.class);
+		criteria.add(Restrictions.ge(HINDEX, minIndex));
+		criteria.add(Restrictions.ge("numberOfReviews", 10));
 
-        criteria.addOrder(Order.desc(HINDEX));
-        criteria.setMaxResults(limit);
+		// TODO Topmost hIndex user has 21k reviews.
+		criteria.add(Restrictions.le(HINDEX, 20.0));
 
-        return initialize(criteria);
-    }
+		criteria.addOrder(Order.desc(HINDEX));
+		criteria.setMaxResults(limit);
 
-    /**
-     * In this case EAGER loading will result in the n+1 error. touching the collection tells Hibernate to collect the
-     * information in a proper way.
-     * 
-     * @param criteria
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    private List<User> initialize(Criteria criteria) {
-        List<User> result = criteria.list();
-        for (User user : result) {
-            user.setReviews(getUniqueReviews(user.getReviews()));
-        }
-        return result;
-    }
+		return initialize(criteria);
+	}
 
-    private List<Review> getUniqueReviews(List<Review> reviews) {
-        List<Review> result = new ArrayList<>();
+	/**
+	 * In this case EAGER loading will result in the n+1 error. touching the collection tells Hibernate to collect the
+	 * information in a proper way.
+	 *
+	 * @param criteria
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private List<User> initialize(Criteria criteria) {
+		List<User> result = criteria.list();
+		for (User user : result) {
+			user.setReviews(getUniqueReviews(user.getReviews()));
+		}
+		return result;
+	}
 
-        for (Review review : reviews) {
-            if (review.isUnique()) {
-                result.add(review);
-            }
-        }
-        return result;
-    }
+	private List<Review> getUniqueReviews(List<Review> reviews) {
+		List<Review> result = new ArrayList<>();
+
+		for (Review review : reviews) {
+			if (review.isUnique()) {
+				result.add(review);
+			}
+		}
+		return result;
+	}
 }

@@ -1,73 +1,73 @@
 package info.interactivesystems.spade.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.User;
-
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+import javax.annotation.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private UserDao userDao;
+	@Resource
+	private UserDao userDao;
 
-    private User demoUser;
+	private User demoUser;
 
-    @BeforeTest
-    private void getDemoUser() {
-        User result = new User();
-        result.setId("123");
-        result.setName("Test User");
-        result.setNumberOfReviews(5);
+	@Test(groups = {"functionTest"})
+	public void delete() {
+		userDao.save(demoUser);
+		User found = userDao.find(demoUser.getId());
 
-        demoUser = result;
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoUser);
 
-    @Test(groups = { "functionTest" })
-    public void delete() {
-        userDao.save(demoUser);
-        User found = userDao.find(demoUser.getId());
+		userDao.delete(demoUser);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoUser);
+		found = userDao.find(found.getId());
+		assertThat(found).isNull();
 
-        userDao.delete(demoUser);
+	}
 
-        found = userDao.find(found.getId());
-        assertThat(found).isNull();
+	@Test
+	public void find() {
+		userDao.save(demoUser);
+		User found = userDao.find(demoUser.getId());
 
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoUser);
 
-    @Test
-    public void find() {
-        userDao.save(demoUser);
-        User found = userDao.find(demoUser.getId());
+		userDao.delete(demoUser);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoUser);
+		found = userDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        userDao.delete(demoUser);
+	@Test
+	public void save() {
+		userDao.save(demoUser);
+		User found = userDao.find(demoUser.getId());
 
-        found = userDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoUser);
 
-    @Test
-    public void save() {
-        userDao.save(demoUser);
-        User found = userDao.find(demoUser.getId());
+		userDao.delete(demoUser);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoUser);
+		found = userDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        userDao.delete(demoUser);
+	@BeforeTest
+	private void getDemoUser() {
+		User result = new User();
+		result.setId("123");
+		result.setName("Test User");
+		result.setNumberOfReviews(5);
 
-        found = userDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		demoUser = result;
+	}
 }

@@ -16,36 +16,35 @@ package info.interactivesystems.spade.util;
 
 /**
  * Venues offer a short information on the price range.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 public enum PriceCategory {
 
-    NON_GIVEN(0),
-    $(1),
-    $$(2),
-    $$$(3),
-    $$$$(4);
+	NON_GIVEN(0),
+	$(1),
+	$$(2),
+	$$$(3),
+	$$$$(4);
 
-    private Integer id;
+	private Integer id;
 
-    /**
-     * Instantiates a new price category.
-     * 
-     * @param id the id
-     */
-    private PriceCategory(Integer id) {
-        this.id = id;
-    }
+	/**
+	 * Instantiates a new price category.
+	 *
+	 * @param id the id
+	 */
+	private PriceCategory(Integer id) {
+		this.id = id;
+	}
 
-    /**
-     * The Enum ID.
-     * 
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
+	/**
+	 * The Enum ID.
+	 *
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
 
 }

@@ -1,74 +1,74 @@
 package info.interactivesystems.spade.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.Product;
-
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 // @Test(groups = { "FunctionTest" })
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class ProductDaoTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private ProductDao productDao;
+	@Resource
+	private ProductDao productDao;
 
-    private Product demoValue;
+	private Product demoValue;
 
-    @BeforeTest
-    private void getDemoProduct() {
-        Product result = new Product();
-        result.setId("AED12345");
-        result.setName("Demo Product");
-        result.setRating(4.5);
+	@Test
+	public void delete() {
+		productDao.save(demoValue);
+		Product found = productDao.find(demoValue.getId());
 
-        demoValue = result;
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoValue);
 
-    @Test
-    public void delete() {
-        productDao.save(demoValue);
-        Product found = productDao.find(demoValue.getId());
+		productDao.delete(demoValue);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoValue);
+		found = productDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        productDao.delete(demoValue);
+	@Test
+	public void find() {
+		productDao.save(demoValue);
+		Product found = productDao.find(demoValue.getId());
 
-        found = productDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoValue);
 
-    @Test
-    public void find() {
-        productDao.save(demoValue);
-        Product found = productDao.find(demoValue.getId());
+		productDao.delete(demoValue);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoValue);
+		found = productDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        productDao.delete(demoValue);
+	@Test
+	public void save() {
+		productDao.save(demoValue);
+		Product found = productDao.find(demoValue.getId());
 
-        found = productDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoValue);
 
-    @Test
-    public void save() {
-        productDao.save(demoValue);
-        Product found = productDao.find(demoValue.getId());
+		productDao.delete(demoValue);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoValue);
+		found = productDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        productDao.delete(demoValue);
+	@BeforeTest
+	private void getDemoProduct() {
+		Product result = new Product();
+		result.setId("AED12345");
+		result.setName("Demo Product");
+		result.setRating(4.5);
 
-        found = productDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		demoValue = result;
+	}
 
 }

@@ -27,6 +27,13 @@ import java.security.NoSuchAlgorithmException;
 public final class HashUtil {
 
 	/**
+	 * Private Constructor.
+	 */
+	private HashUtil() {
+
+	}
+
+	/**
 	 * Calculates the SHA-1 value for the given input.
 	 *
 	 * @param input the original String.
@@ -44,12 +51,5 @@ public final class HashUtil {
 		}
 
 		return sb.toString();
-	}
-
-	/**
-	 * Private Constructor.
-	 */
-	private HashUtil() {
-
 	}
 }

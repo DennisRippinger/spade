@@ -1,20 +1,15 @@
 /**
- * 
+ *
  */
 package info.interactivesystems.spade.entities;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 /**
  * @author Dennis Rippinger
- * 
  */
 @Getter
 @Setter
@@ -22,38 +17,38 @@ import lombok.Setter;
 @Table(name = "stylometry")
 public class Stylometry {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long id;
 
-    private Double density;
+	private Double density;
 
-    // Readability
+	// Readability
 
-    private Double ari;
+	private Double ari;
 
-    private Double gfi;
+	private Double gfi;
 
-    // Lexical
+	// Lexical
 
-    private Double wordLevel;
+	private Double wordLevel;
 
-    private Double digits;
+	private Double digits;
 
-    private Double digitBigrams;
+	private Double digitBigrams;
 
-    private Double digitTrigrams;
+	private Double digitTrigrams;
 
-    private Double dollarOccurence;
+	private Double dollarOccurence;
 
-    private Double commaOccurence;
+	private Double commaOccurence;
 
-    // Syntactic
+	// Syntactic
 
-    private Double functionWordFrequency;
+	private Double functionWordFrequency;
 
-    private Double exclamationMarkOccurence;
+	private Double exclamationMarkOccurence;
 
-    private Double questionmarkOccurence;
+	private Double questionmarkOccurence;
 
 }

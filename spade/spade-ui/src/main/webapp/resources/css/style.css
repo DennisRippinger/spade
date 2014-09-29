@@ -1,188 +1,186 @@
-html,body {
-	margin: 0;
-	padding: 0;
-	background: #fafafa;
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #fafafa;
 }
 
 img {
-	border: 0;
+    border: 0;
 }
 
 .container {
-	margin: 0 auto;
-	width: 1140px;;
-	height: 100%;
-	box-shadow: 0 -3px 3px rgba(50, 50, 50, 0.3);
-	background: #fff;
-	margin-bottom: 20px;
+    margin: 0 auto;
+    width: 1140px;;
+    height: 100%;
+    box-shadow: 0 -3px 3px rgba(50, 50, 50, 0.3);
+    background: #fff;
+    margin-bottom: 20px;
 }
 
 #reviewBox {
-	font-size: medium;
-	margin-left: 16px;
-	margin-right: 16px;
+    font-size: medium;
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 #hIndexGauge {
-	width: 200px;
-	height: 160px;
-	margin: 1em;
+    width: 200px;
+    height: 160px;
+    margin: 1em;
 }
 
 .reviewText {
-	margin: 1em;
-	text-align: justify;
+    margin: 1em;
+    text-align: justify;
 }
 
 .reviewDialog {
-	margin: 0.3em;
-	margin-right: 2.3em;
-	text-align: justify;
+    margin: 0.3em;
+    margin-right: 2.3em;
+    text-align: justify;
 }
 
 .sameTable {
-	color: green;
-	margin-left: auto;
-	margin-right: auto;
-	display: table !important;
-	font-size: x-large;
+    color: green;
+    margin-left: auto;
+    margin-right: auto;
+    display: table !important;
+    font-size: x-large;
 }
 
 .differentTable {
-	margin-left: auto;
-	margin-right: auto;
-	display: table !important;
-	font-size: x-large;
+    margin-left: auto;
+    margin-right: auto;
+    display: table !important;
+    font-size: x-large;
 }
 
 .copied {
-	margin-left: auto;
-	margin-right: auto;
-	display: table !important;
+    margin-left: auto;
+    margin-right: auto;
+    display: table !important;
 }
 
 .stylometry {
-	margin-left: auto;
-	margin-right: auto;
-	display: table !important;
-	font-size: x-large;
+    margin-left: auto;
+    margin-right: auto;
+    display: table !important;
+    font-size: x-large;
 }
 
 .header {
-	width: 100%;
-	background: #fff;
-	height: 70px;
+    width: 100%;
+    background: #fff;
+    height: 70px;
 }
 
 .header h1 {
-	float: left;
-	margin: 0;
-	padding: 0;
-	margin-left: 12px;
-	margin-top: 10px;
-	color: #383838;
+    float: left;
+    margin: 0;
+    padding: 0;
+    margin-left: 12px;
+    margin-top: 10px;
+    color: #383838;
 }
 
-.header h1 a,.header h1 a:link,.header h1 a:visited,.header h1 a:active
-	{
-	background-image: url(../../resources/img/logo.svg);
-	background-size: 57px 57px;
-	background-repeat: no-repeat;
-	height: 45px;
-	display: block;
-	padding-left: 60px;
-	padding-top: 14px;
-	font-size: 22px;
+.header h1 a, .header h1 a:link, .header h1 a:visited, .header h1 a:active {
+    background-image: url(../../resources/img/logo.svg);
+    background-size: 57px 57px;
+    background-repeat: no-repeat;
+    height: 45px;
+    display: block;
+    padding-left: 60px;
+    padding-top: 14px;
+    font-size: 22px;
 }
 
 .content {
-	padding: 1em;
-	position: relative;
+    padding: 1em;
+    position: relative;
 }
 
 .footer {
-	width: 100%;
-	font-size: 10px;
-	color: #adadad;
-	background: #f5f5f5;
-	border-top: 1px solid #E6E6E6;
-	border-bottom: 1px solid #E6E6E6;
-	margin-top: 60px;
+    width: 100%;
+    font-size: 10px;
+    color: #adadad;
+    background: #f5f5f5;
+    border-top: 1px solid #E6E6E6;
+    border-bottom: 1px solid #E6E6E6;
+    margin-top: 60px;
 }
 
 .footer-content {
-	padding: 1em;
+    padding: 1em;
 }
 
 .footer-content .logos {
-	width: 25%;
-	float: left;
-	height: 40px;
+    width: 25%;
+    float: left;
+    height: 40px;
 }
 
 .footer-content .page {
-	width: 48%;
-	text-align: center;
-	float: left;
-	line-height: 40px;
+    width: 48%;
+    text-align: center;
+    float: left;
+    line-height: 40px;
 }
 
 .footer-content .version {
-	width: 25%;
-	text-align: right;
-	float: right;
+    width: 25%;
+    text-align: right;
+    float: right;
 }
 
 .sameContent {
-	position: relative;
+    position: relative;
 }
 
 .sameContent:before {
-	color: green;
-	float: right;
-	margin-right: 7px;
-	margin-top: 9px;
-	margin-bottom: 3px;
-	font-family: FontAwesome;
-	font-size: xx-large;
-	content: "\f14a";
+    color: green;
+    float: right;
+    margin-right: 7px;
+    margin-top: 9px;
+    margin-bottom: 3px;
+    font-family: FontAwesome;
+    font-size: xx-large;
+    content: "\f14a";
 }
 
 .differentContent {
-	
+
 }
 
 .differentContent:before {
-	color: #adadad;
-	float: right;
-	margin-right: 7px;
-	margin-top: 9px;
-	margin-bottom: 3px;
-	font-family: FontAwesome;
-	font-size: xx-large;
-	content: "\f14a";
+    color: #adadad;
+    float: right;
+    margin-right: 7px;
+    margin-top: 9px;
+    margin-bottom: 3px;
+    font-family: FontAwesome;
+    font-size: xx-large;
+    content: "\f14a";
 }
 
 /** ========= Used gradients. */
-.gradient_dark,.nav,h2 a.tour,.introjs-helperNumberLayer {
-	color: #cdbfe3;
-	background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
-	background-repeat: repeat-x;
+.gradient_dark, .nav, h2 a.tour, .introjs-helperNumberLayer {
+    color: #cdbfe3;
+    background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
+    background-repeat: repeat-x;
 }
 
-.gradient_dark:hover,.nav ul li a:hover,.nav ul li a.active,a.tour:hover
-	{
-	color: #cdbfe3;
-	background-color: transparent;
-	background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
-	background-repeat: repeat-x;
-	border: 2x solid transparent;
+.gradient_dark:hover, .nav ul li a:hover, .nav ul li a.active, a.tour:hover {
+    color: #cdbfe3;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, #563d7c 0, #6f5499 100%);
+    background-repeat: repeat-x;
+    border: 2x solid transparent;
 }
 
 .ui-panel-titlebar {
-	cursor: pointer !important;
+    cursor: pointer !important;
 }
 
 .ui-widget-content {
-	border: 0px !important;
+    border: 0px !important;
 }

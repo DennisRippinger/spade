@@ -14,25 +14,23 @@
  */
 package info.interactivesystems.spade.crawler.amazon;
 
-import info.interactivesystems.spade.crawler.amazon.ReviewHistoryCrawler;
-
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
 /**
  * The Class ReviewHistoryCrawlerTest.
  */
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class ReviewHistoryCrawlerTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private ReviewHistoryCrawler crawler;
+	@Resource
+	private ReviewHistoryCrawler crawler;
 
-    @Test
-    public void f() {
-        crawler.crawlTimeFrequency();
-    }
+	@Test
+	public void f() {
+		crawler.crawlTimeFrequency();
+	}
 }

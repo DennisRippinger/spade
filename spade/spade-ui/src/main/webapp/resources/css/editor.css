@@ -1,112 +1,111 @@
 .productSheet {
-	border: 1px solid #dcdcdc;
-	padding: 0;
-	margin: 10px;
-	display: inline-block;
-	background-color: #f5f5f5;
-	min-width: 500px;
-	width: 97%;
+    border: 1px solid #dcdcdc;
+    padding: 0;
+    margin: 10px;
+    display: inline-block;
+    background-color: #f5f5f5;
+    min-width: 500px;
+    width: 97%;
 }
 
 .productSheet hr {
-	
+
 }
 
 .productSheet-image {
-	height: 150px;
-	width: 150px;
-	float: right;
-	border: 1px solid #C3D0E1;
-	background-color: #FFF;
-	display: block;
-	text-align: center;
-	vertical-align: middle;
+    height: 150px;
+    width: 150px;
+    float: right;
+    border: 1px solid #C3D0E1;
+    background-color: #FFF;
+    display: block;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .productSheet-image button {
-	position: relative;
-	top: -38px;
-	right: 1px;
+    position: relative;
+    top: -38px;
+    right: 1px;
 }
 
 .productSheet h2 {
-	margin-bottom: 32px;
-	font-weight: 700;
+    margin-bottom: 32px;
+    font-weight: 700;
 }
 
 .productSheet h3 {
-	font-weight: 500;
-	font-weight: bold;
+    font-weight: 500;
+    font-weight: bold;
 }
 
 #basicActionPanel {
-	background: none;
-	background-color: #f9f9f9;
-	border: 0;
-	border-radius: 0;
-	padding: 0px;
-	height: 40px;
+    background: none;
+    background-color: #f9f9f9;
+    border: 0;
+    border-radius: 0;
+    padding: 0px;
+    height: 40px;
 }
 
 #basicActionPanel button {
-	margin: 5px;
+    margin: 5px;
 }
 
 #basicActionPanel .ui-panel-content {
-	padding: 0;
+    padding: 0;
 }
 
-.smallDialog>.ui-dialog-content {
-	width: auto;
+.smallDialog > .ui-dialog-content {
+    width: auto;
 }
 
-.mediumDialog>.ui-dialog-content {
-	width: auto;
+.mediumDialog > .ui-dialog-content {
+    width: auto;
 }
 
-.largeDialog>.ui-dialog-content {
-	width: auto;
+.largeDialog > .ui-dialog-content {
+    width: auto;
 }
 
-.type, .range, .unit{
-	margin-right: 1em;
+.type, .range, .unit {
+    margin-right: 1em;
 }
 
-
-.type span, h3 .type{
-	background: #4C8AB2;
-	color: #fff;
-	padding: 2px;
-	border-radius: 3px;
-	margin-right: 0.4em;
+.type span, h3 .type {
+    background: #4C8AB2;
+    color: #fff;
+    padding: 2px;
+    border-radius: 3px;
+    margin-right: 0.4em;
 }
 
 .value {
-	color: #0B3861;
+    color: #0B3861;
 }
 
-.values span, h3 .values{
-	background: #B0BA00;
-	color: #fff;
-	padding: 2px;
-	border-radius: 3px;
-	margin-right: 0.4em;
+.values span, h3 .values {
+    background: #B0BA00;
+    color: #fff;
+    padding: 2px;
+    border-radius: 3px;
+    margin-right: 0.4em;
 }
 
-.range span, h3 .range{
-	background: #D3014E;
-	color: #fff;
-	padding: 2px;
-	border-radius: 3px;
-	margin-right: 0.4em;
+.range span, h3 .range {
+    background: #D3014E;
+    color: #fff;
+    padding: 2px;
+    border-radius: 3px;
+    margin-right: 0.4em;
 }
 
-.unit span, h3 .unit{
-	background: #E35F23;
-	color: #fff;
-	padding: 2px;
-	border-radius: 3px;
-	margin-right: 0.4em;
+.unit span, h3 .unit {
+    background: #E35F23;
+    color: #fff;
+    padding: 2px;
+    border-radius: 3px;
+    margin-right: 0.4em;
 }
 
 /*
@@ -118,57 +117,57 @@
 */
 
 .range {
-	color: #424242;
+    color: #424242;
 }
 
 .propertyDialogPanel {
-	border: 0;
-	background: 0;
+    border: 0;
+    background: 0;
 }
 
-.field,.fieldSmall {
-	background-color: #FFF;
-	border: 1px solid #ededed;
-	margin-bottom: 8px;
-	min-height: 40px;
-	position: relative;
+.field, .fieldSmall {
+    background-color: #FFF;
+    border: 1px solid #ededed;
+    margin-bottom: 8px;
+    min-height: 40px;
+    position: relative;
 }
 
 .fieldSmall {
-	margin-right: 160px;
+    margin-right: 160px;
 }
 
-.field ul,.fieldSmall ul {
-	list-style: none;
+.field ul, .fieldSmall ul {
+    list-style: none;
 }
 
-.field ul li,.fieldSmall ul li {
-	
+.field ul li, .fieldSmall ul li {
+
 }
 
-.fieldSmall .fieldContent,.field .fieldContent {
-	padding: 8px;
-	width: 85%;
+.fieldSmall .fieldContent, .field .fieldContent {
+    padding: 8px;
+    width: 85%;
 }
 
-.fieldSmall .fieldControl,.field .fieldControl {
-	padding: 4px;
-	position: absolute;
-	right: 0;
-	bottom: 0;
+.fieldSmall .fieldControl, .field .fieldControl {
+    padding: 4px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 .buttonRightBottom {
-	float: right;
-	margin-top: 4px;
+    float: right;
+    margin-top: 4px;
 }
 
 .buttonRightTop {
-	float: right;
-	margin-top: -2px;
+    float: right;
+    margin-top: -2px;
 }
 
 /** primefaces upload fix: do not display useless buttons */
-.template-upload .cancel,.template-upload .start {
-	display: none;
+.template-upload .cancel, .template-upload .start {
+    display: none;
 }

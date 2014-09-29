@@ -14,62 +14,52 @@
  */
 package info.interactivesystems.spade.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
 /**
  * Entity for an opinion spam rating.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Setter
 @Getter
 @Entity
-@Table(name = "votings", indexes = { @Index(columnList = "sessionID") })
+@Table(name = "votings", indexes = {@Index(columnList = "sessionID")})
 public class Vote {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String sessionID;
+	private String sessionID;
 
-    @OneToOne
-    private Review review;
+	@OneToOne
+	private Review review;
 
-    @OneToOne
-    private User user;
+	@OneToOne
+	private User user;
 
-    private Double similarity;
+	private Double similarity;
 
     /*
-     * Options
+	 * Options
      */
 
-    private boolean unknownEditFunction = false;
+	private boolean unknownEditFunction = false;
 
-    private boolean angryCustomer = false;
+	private boolean angryCustomer = false;
 
-    private boolean lazyUser = false;
+	private boolean lazyUser = false;
 
-    private boolean ospam = false;
+	private boolean ospam = false;
 
-    private boolean advertising = false;
+	private boolean advertising = false;
 
-    private boolean reviewIsNotReason = false;
+	private boolean reviewIsNotReason = false;
 
-    private boolean somethingElse = false;
-    
-    private boolean push = false;
-    
-    private boolean pull = false;
+	private boolean somethingElse = false;
 
 }

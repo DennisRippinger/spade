@@ -15,46 +15,45 @@
 package info.interactivesystems.spade.ui.dto;
 
 import info.interactivesystems.spade.ui.util.CopyDirection;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Data;
-
 /**
  * Simple bean to store row content.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Data
 public class DetailsRow implements Serializable {
 
-    private static final long serialVersionUID = 8677667436570421318L;
+	private static final long serialVersionUID = 8677667436570421318L;
 
-    private String productId;
+	private String productId;
 
-    private String productName;
+	private String productName;
 
-    private String category;
+	private String category;
 
-    private Date reviewDate;
+	private Date reviewDate;
 
-    private Double userRating;
+	private Double userRating;
 
-    private Double rating;
+	private Double rating;
 
-    private boolean similar;
-    
-    private Double stylometry;
+	private boolean similar;
 
-    private String reviewTitle;
+	private Double stylometry;
 
-    private String reviewText;
+	private String reviewTitle;
+
+	private String reviewText;
 
 	private Integer wordLength;
 
-    private Long similarityId;
-    
-    private CopyDirection direction;
+	private Long similarityId;
+
+	private CopyDirection direction;
 
 }

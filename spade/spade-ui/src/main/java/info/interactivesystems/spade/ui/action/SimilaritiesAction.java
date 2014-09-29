@@ -20,10 +20,10 @@ import info.interactivesystems.spade.dto.DiffContainer;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.util.DiffCreator;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -32,16 +32,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.annotation.Scope;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The Class SimilaritiesAction.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
@@ -49,183 +46,183 @@ import org.springframework.context.annotation.Scope;
 @Scope("session")
 public class SimilaritiesAction {
 
-    // Resources
+	// Resources
 
-    @Resource
-    private ReviewContentService service;
+	@Resource
+	private ReviewContentService service;
 
-    @Resource
-    private NilsimsaSimilarityDao similarityDao;
+	@Resource
+	private NilsimsaSimilarityDao similarityDao;
 
-    @Resource
-    private DiffCreator diffCreator;
+	@Resource
+	private DiffCreator diffCreator;
 
-    @Resource
-    private UserAction userAction;
+	@Resource
+	private UserAction userAction;
 
-    @Resource
-    private SimilarityBean similarityBean;
+	@Resource
+	private SimilarityBean similarityBean;
 
-    // Variables
+	// Variables
 
-    @Getter
-    private List<NilsimsaSimilarity> currentSimilarItem;
+	@Getter
+	private List<NilsimsaSimilarity> currentSimilarItem;
 
-    @Getter
-    private DiffContainer diffContainer;
+	@Getter
+	private DiffContainer diffContainer;
 
-    @Getter
-    private NilsimsaSimilarity similarPair;
+	@Getter
+	private NilsimsaSimilarity similarPair;
 
-    @Getter
-    @Setter
-    private String currentCategory;
+	@Getter
+	@Setter
+	private String currentCategory;
 
-    @Setter
-    @Getter
-    private boolean userView = false;
+	@Setter
+	@Getter
+	private boolean userView = false;
 
-    @Getter
-    private List<SelectItem> categories;
+	@Getter
+	private List<SelectItem> categories;
 
-    private Integer counter = 0;
+	private Integer counter = 0;
 
-    @Getter
-    private String sessionID;
+	@Getter
+	private String sessionID;
 
-    /**
-     * Initializes with no certain category.
-     */
-    @PostConstruct
-    public void init() {
+	/**
+	 * Initializes with no certain category.
+	 */
+	@PostConstruct
+	public void init() {
 
-        sessionID = getSessionKey();
+		sessionID = getSessionKey();
 
-        log.info("Current Session ID: '{}'", sessionID);
+		log.info("Current Session ID: '{}'", sessionID);
 
-        categories = new ArrayList<>();
-        for (String category : similarityDao.getCategories()) {
-            SelectItem categoryItem = new SelectItem();
-            categoryItem.setLabel(category);
-            categoryItem.setValue(category);
-            categories.add(categoryItem);
-        }
+		categories = new ArrayList<>();
+		for (String category : similarityDao.getCategories()) {
+			SelectItem categoryItem = new SelectItem();
+			categoryItem.setLabel(category);
+			categoryItem.setValue(category);
+			categories.add(categoryItem);
+		}
 
-        next();
-    }
+		next();
+	}
 
-    /**
-     * Switch to the selected author of a review and the user view.
-     * 
-     * @param user
-     */
-    public void switchUserView(User user) {
-        userView = true;
-        userAction.setUser(user);
-        userAction.init();
-    }
+	/**
+	 * Switch to the selected author of a review and the user view.
+	 *
+	 * @param user
+	 */
+	public void switchUserView(User user) {
+		userView = true;
+		userAction.setUser(user);
+		userAction.init();
+	}
 
-    /**
-     * Switch back to review perspective.
-     */
-    public void switchUserViewBack() {
-        userView = false;
-    }
+	/**
+	 * Switch back to review perspective.
+	 */
+	public void switchUserViewBack() {
+		userView = false;
+	}
 
-    /**
-     * Selects the next review in the category set.
-     */
-    public void next() {
-        similarPair = similarityBean.getSimilarity(counter++);
-        diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
+	/**
+	 * Selects the next review in the category set.
+	 */
+	public void next() {
+		similarPair = similarityBean.getSimilarity(counter++);
+		diffContainer = diffCreator.getDifferences(similarPair.getReviewA(), similarPair.getReviewB());
 
-        switchUserViewBack();
-    }
+		switchUserViewBack();
+	}
 
-    /**
-     * CSS for same Product
-     * 
-     * @return CSS Key
-     */
-    public String sameProduct() {
-        String reviewIdA = similarPair.getReviewA().getProduct().getId();
-        String reviewIdB = similarPair.getReviewB().getProduct().getId();
+	/**
+	 * CSS for same Product
+	 *
+	 * @return CSS Key
+	 */
+	public String sameProduct() {
+		String reviewIdA = similarPair.getReviewA().getProduct().getId();
+		String reviewIdB = similarPair.getReviewB().getProduct().getId();
 
-        return getCssForContentFlag(reviewIdA, reviewIdB);
-    }
+		return getCssForContentFlag(reviewIdA, reviewIdB);
+	}
 
-    /**
-     * CSS for same author
-     * 
-     * @return CSS Key
-     */
-    public String sameAuthor() {
-        String userIdA = similarPair.getUserA().getId();
-        String userIdB = similarPair.getUserB().getId();
+	/**
+	 * CSS for same author
+	 *
+	 * @return CSS Key
+	 */
+	public String sameAuthor() {
+		String userIdA = similarPair.getUserA().getId();
+		String userIdB = similarPair.getUserB().getId();
 
-        return getCssForContentFlag(userIdA, userIdB);
-    }
+		return getCssForContentFlag(userIdA, userIdB);
+	}
 
-    /**
-     * CSS for same rating
-     * 
-     * @return CSS Key
-     */
-    public String sameRating() {
-        Double ratingA = similarPair.getReviewA().getRating();
-        Double ratingB = similarPair.getReviewB().getRating();
+	/**
+	 * CSS for same rating
+	 *
+	 * @return CSS Key
+	 */
+	public String sameRating() {
+		Double ratingA = similarPair.getReviewA().getRating();
+		Double ratingB = similarPair.getReviewB().getRating();
 
-        return getCssForContentFlag(ratingA, ratingB);
-    }
+		return getCssForContentFlag(ratingA, ratingB);
+	}
 
-    /**
-     * CSS for same date
-     * 
-     * @return CSS Key
-     */
-    public String sameDate() {
-        Date dateA = similarPair.getReviewA().getReviewDate();
-        Date dateB = similarPair.getReviewB().getReviewDate();
+	/**
+	 * CSS for same date
+	 *
+	 * @return CSS Key
+	 */
+	public String sameDate() {
+		Date dateA = similarPair.getReviewA().getReviewDate();
+		Date dateB = similarPair.getReviewB().getReviewDate();
 
-        return getCssForContentFlag(dateA, dateB);
-    }
+		return getCssForContentFlag(dateA, dateB);
+	}
 
-    /**
-     * CSS for same title
-     * 
-     * @return CSS Key
-     */
-    public String sameTitle() {
-        String titleA = similarPair.getReviewA().getTitle();
-        String titleB = similarPair.getReviewB().getTitle();
+	/**
+	 * CSS for same title
+	 *
+	 * @return CSS Key
+	 */
+	public String sameTitle() {
+		String titleA = similarPair.getReviewA().getTitle();
+		String titleB = similarPair.getReviewB().getTitle();
 
-        return getCssForContentFlag(titleA, titleB);
-    }
+		return getCssForContentFlag(titleA, titleB);
+	}
 
-    /**
-     * CSS for same content
-     * 
-     * @return CSS Key
-     */
-    public String sameContent() {
-        String titleA = similarPair.getReviewA().getContent();
-        String titleB = similarPair.getReviewB().getContent();
+	/**
+	 * CSS for same content
+	 *
+	 * @return CSS Key
+	 */
+	public String sameContent() {
+		String titleA = similarPair.getReviewA().getContent();
+		String titleB = similarPair.getReviewB().getContent();
 
-        return getCssForContentFlag(titleA, titleB);
-    }
+		return getCssForContentFlag(titleA, titleB);
+	}
 
-    private String getCssForContentFlag(Object idA, Object idB) {
-        if (idA.equals(idB)) {
-            return "sameContent";
-        }
-        return "differentContent";
-    }
+	private String getCssForContentFlag(Object idA, Object idB) {
+		if (idA.equals(idB)) {
+			return "sameContent";
+		}
+		return "differentContent";
+	}
 
-    private String getSessionKey() {
-        FacesContext fctx = FacesContext.getCurrentInstance();
-        ExternalContext ectx = fctx.getExternalContext();
-        HttpSession session = (HttpSession) ectx.getSession(false);
+	private String getSessionKey() {
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		ExternalContext ectx = fctx.getExternalContext();
+		HttpSession session = (HttpSession) ectx.getSession(false);
 
-        return session.getId();
-    }
+		return session.getId();
+	}
 }

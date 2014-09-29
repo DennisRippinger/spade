@@ -14,19 +14,17 @@
  */
 package info.interactivesystems.spade.dao;
 
-import java.io.Serializable;
+import org.hibernate.SessionFactory;
 
 import javax.annotation.Resource;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-
-import org.hibernate.SessionFactory;
+import java.io.Serializable;
 
 /**
  * The Interface GenericDao. Offers generic methods for all entities.
- * 
- * @param <T>
- *            the desired type.
+ *
+ * @param <T> the desired type.
  * @author Dennis Rippinger
  */
 @Transactional

@@ -14,46 +14,46 @@
  */
 package info.interactivesystems.spade.nlp;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.sentdetect.SentenceModel;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * A factory for creating NlpModel objects.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 public final class NlpModelFactory {
 
-    private static final String SENTENCE_MODEL = "/en-sent.bin";
+	private static final String SENTENCE_MODEL = "/en-sent.bin";
 
-    /**
-     * Creates a Sentence Model for the Apache NLP Tooling
-     * 
-     * @return the sentence model
-     */
-    public static SentenceModel getSentenceModel() {
+	/**
+	 * Private Constructor.
+	 */
+	private NlpModelFactory() {
 
-        try (InputStream is = NlpModelFactory.class
-            .getResourceAsStream(SENTENCE_MODEL);) {
-            SentenceModel model = new SentenceModel(is);
-            log.debug("Create Sentence Model for '{}' language",
-                model.getLanguage());
-            return model;
-        } catch (IOException e) {
-            log.error("Could not load sentence model '{}'", SENTENCE_MODEL, e);
-        }
+	}
 
-        return null;
-    }
+	/**
+	 * Creates a Sentence Model for the Apache NLP Tooling
+	 *
+	 * @return the sentence model
+	 */
+	public static SentenceModel getSentenceModel() {
 
-    /**
-     * Private Constructor.
-     */
-    private NlpModelFactory() {
+		try (InputStream is = NlpModelFactory.class
+				.getResourceAsStream(SENTENCE_MODEL);) {
+			SentenceModel model = new SentenceModel(is);
+			log.debug("Create Sentence Model for '{}' language",
+					model.getLanguage());
+			return model;
+		} catch (IOException e) {
+			log.error("Could not load sentence model '{}'", SENTENCE_MODEL, e);
+		}
 
-    }
+		return null;
+	}
 }

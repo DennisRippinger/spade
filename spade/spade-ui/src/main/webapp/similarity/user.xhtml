@@ -1,122 +1,124 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<h:outputScript library="js" name="justgage.1.0.1.min.js" target="head" />
-	<h:outputScript library="js" name="raphael.2.1.0.min.js" target="head" />
+    <h:outputScript library="js" name="justgage.1.0.1.min.js" target="head"/>
+    <h:outputScript library="js" name="raphael.2.1.0.min.js" target="head"/>
 
-	<h1>Author</h1>
-	<div style="width: 100%; overflow: auto;">
-		<div style="float: left; width: 60%;">
+    <h1>Author</h1>
 
-
-			<h:panelGrid columns="2" cellspacing="10">
-				<h:outputLabel for="author" value="Name:" />
-				<h:outputText id="author" value="#{userAction.user.name}" />
-
-				<h:outputLabel for="numReviews" value="Reviews:" />
-				<h:outputText id="numReviews" value="#{userAction.user.numberOfReviews}" />
-
-				<h:outputLabel for="helpful" value="Helpful Votes:" />
-				<h:outputText id="helpful" value="#{userAction.user.helpfulVotes}" />
-
-				<h:outputLabel for="overall" value="Overall Votes:" />
-				<h:outputText id="overall" value="#{userAction.user.helpfulOverallVotes}" />
-
-				<c:if test="#{userAction.user.helpfulOverallVotes > 0}">
-					<h:outputLabel for="overallPercent" value="Helpfulnes:" />
-					<h:outputText id="overallPercent"
-						value="#{userAction.user.helpfulVotes / userAction.user.helpfulOverallVotes}">
-						<f:convertNumber type="percent" />
-					</h:outputText>
-				</c:if>
-			</h:panelGrid>
-		</div>
-
-		<div style="float: right; width: 40%;">
-			<div id="hIndexGauge"></div>
-			<script>
-			  var g = new JustGage({
-				    id: "hIndexGauge", 
-				    value: #{hindexConverter.gaugeValue(userAction.user.HIndex)}, 
-				    min: 0,
-				    max: 3.5,
-				    title: "H-Index"
-				  }); 
-			</script>
-		</div>
-	</div>
+    <div style="width: 100%; overflow: auto;">
+        <div style="float: left; width: 60%;">
 
 
-	<h:form>
-		<a href="http://www.amazon.com/gp/cdp/member-reviews/#{userAction.user.id}" target="_blank"> <input
-			type="button" value="User Page on Amazon.com" />
-		</a>
+            <h:panelGrid columns="2" cellspacing="10">
+                <h:outputLabel for="author" value="Name:"/>
+                <h:outputText id="author" value="#{userAction.user.name}"/>
 
-		<h:commandButton action="#{similaritiesAction.switchUserViewBack()}" value="Back to Overview" />
-	</h:form>
+                <h:outputLabel for="numReviews" value="Reviews:"/>
+                <h:outputText id="numReviews" value="#{userAction.user.numberOfReviews}"/>
 
-	<p></p>
-	<h1>Reviews</h1>
+                <h:outputLabel for="helpful" value="Helpful Votes:"/>
+                <h:outputText id="helpful" value="#{userAction.user.helpfulVotes}"/>
 
-	<h:form>
-		<p:dataTable var="review" value="#{userAction.currentRows}" sortBy="#{review.similar}"
-			sortOrder="descending">
+                <h:outputLabel for="overall" value="Overall Votes:"/>
+                <h:outputText id="overall" value="#{userAction.user.helpfulOverallVotes}"/>
 
-			<p:column headerText="Product" sortBy="#{review.productName}">
-				<h:outputLink value="http://amazon.com/dp/#{review.productId}" target="_blank">
-					<h:outputText value="#{review.productName}" />
-				</h:outputLink>
-			</p:column>
+                <c:if test="#{userAction.user.helpfulOverallVotes > 0}">
+                    <h:outputLabel for="overallPercent" value="Helpfulnes:"/>
+                    <h:outputText id="overallPercent"
+                                  value="#{userAction.user.helpfulVotes / userAction.user.helpfulOverallVotes}">
+                        <f:convertNumber type="percent"/>
+                    </h:outputText>
+                </c:if>
+            </h:panelGrid>
+        </div>
 
-			<p:column headerText="Category" sortBy="#{review.category}">
-				<h:outputText value="#{review.category}" />
-			</p:column>
+        <div style="float: right; width: 40%;">
+            <div id="hIndexGauge"></div>
+            <script>
+                var g = new JustGage({
+                    id: "hIndexGauge",
+                    value: #{hindexConverter.gaugeValue(userAction.user.HIndex)},
+                    min: 0,
+                    max: 3.5,
+                    title: "H-Index"
+                });
+            </script>
+        </div>
+    </div>
 
-			<p:column headerText="Date" sortBy="#{review.reviewDate}">
-				<h:outputText value="#{review.reviewDate}">
-					<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
-				</h:outputText>
-			</p:column>
 
-			<p:column headerText="Style" sortBy="#{review.stylometry}">
-				<i class="fa fa-keyboard-o stylometry"
-					style="color: #{similarityConverter.getStylometry(review)};" />
-			</p:column>
+    <h:form>
+        <a href="http://www.amazon.com/gp/cdp/member-reviews/#{userAction.user.id}" target="_blank"> <input
+                type="button" value="User Page on Amazon.com"/>
+        </a>
 
-			<p:column headerText="Similar" sortBy="#{review.similar}">
-				<i class="fa fa-check-square #{similarityConverter.getSimilarity(review.similar)}" />
-			</p:column>
-			
-			<p:column headerText="Copied">
-				<i class="fa #{similarityConverter.getCopyDirection(review.direction)} fa-2x copied"/>
-			</p:column>
+        <h:commandButton action="#{similaritiesAction.switchUserViewBack()}" value="Back to Overview"/>
+    </h:form>
 
-			<p:column headerText="User Rating" sortBy="#{review.userRating}">
-				<i class="a-icon-star #{starRatingConverter.getAsString(review.userRating)}" />
-			</p:column>
+    <p></p>
 
-			<p:column headerText="Rating" sortBy="#{review.rating}">
-				<i class="a-icon-star #{starRatingConverter.getAsString(review.rating)}" />
-			</p:column>
+    <h1>Reviews</h1>
 
-			<p:column style="width:24px">
-				<p:commandLink update=":dlgForm:dialog" oncomplete="PF('documentDialog').show()" title="Review"
-					styleClass="fa fa-search">
-					<f:setPropertyActionListener value="#{review}" target="#{userAction.selectedRow}" />
-				</p:commandLink>
-			</p:column>
+    <h:form>
+        <p:dataTable var="review" value="#{userAction.currentRows}" sortBy="#{review.similar}"
+                     sortOrder="descending">
 
-		</p:dataTable>
-	</h:form>
+            <p:column headerText="Product" sortBy="#{review.productName}">
+                <h:outputLink value="http://amazon.com/dp/#{review.productId}" target="_blank">
+                    <h:outputText value="#{review.productName}"/>
+                </h:outputLink>
+            </p:column>
 
-	<h:form id="dlgForm">
-		<p:dialog id="dialog" header="Review: #{userAction.selectedRow.reviewTitle}" showEffect="fade"
-			widgetVar="documentDialog" modal="false" resizable="true" width="60em">
-			<div class="reviewDialog">
-				<h:outputText value="#{userAction.selectedRow.reviewText}" />
-			</div>
-		</p:dialog>
-	</h:form>
+            <p:column headerText="Category" sortBy="#{review.category}">
+                <h:outputText value="#{review.category}"/>
+            </p:column>
+
+            <p:column headerText="Date" sortBy="#{review.reviewDate}">
+                <h:outputText value="#{review.reviewDate}">
+                    <f:convertDateTime type="date" pattern="dd.MM.yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Style" sortBy="#{review.stylometry}">
+                <i class="fa fa-keyboard-o stylometry"
+                   style="color: #{similarityConverter.getStylometry(review)};"/>
+            </p:column>
+
+            <p:column headerText="Similar" sortBy="#{review.similar}">
+                <i class="fa fa-check-square #{similarityConverter.getSimilarity(review.similar)}"/>
+            </p:column>
+
+            <p:column headerText="Copied">
+                <i class="fa #{similarityConverter.getCopyDirection(review.direction)} fa-2x copied"/>
+            </p:column>
+
+            <p:column headerText="User Rating" sortBy="#{review.userRating}">
+                <i class="a-icon-star #{starRatingConverter.getAsString(review.userRating)}"/>
+            </p:column>
+
+            <p:column headerText="Rating" sortBy="#{review.rating}">
+                <i class="a-icon-star #{starRatingConverter.getAsString(review.rating)}"/>
+            </p:column>
+
+            <p:column style="width:24px">
+                <p:commandLink update=":dlgForm:dialog" oncomplete="PF('documentDialog').show()" title="Review"
+                               styleClass="fa fa-search">
+                    <f:setPropertyActionListener value="#{review}" target="#{userAction.selectedRow}"/>
+                </p:commandLink>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+    <h:form id="dlgForm">
+        <p:dialog id="dialog" header="Review: #{userAction.selectedRow.reviewTitle}" showEffect="fade"
+                  widgetVar="documentDialog" modal="false" resizable="true" width="60em">
+            <div class="reviewDialog">
+                <h:outputText value="#{userAction.selectedRow.reviewText}"/>
+            </div>
+        </p:dialog>
+    </h:form>
 
 </ui:composition>

@@ -14,83 +14,82 @@
  */
 package info.interactivesystems.spade.dao;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import info.interactivesystems.spade.entities.Review;
-
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Test for the ReviewDao.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
-@Test(groups = { "functionTest" })
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@Test(groups = {"functionTest"})
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class ReviewDaoTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private ReviewDao reviewDao;
+	@Resource
+	private ReviewDao reviewDao;
 
-    private Review demoValue;
+	private Review demoValue;
 
-    @BeforeTest
-    private void getDemoReview() {
-        Review result = new Review();
-        result.setContent("Text String");
-        result.setHelpfulVotes(5);
-        result.setId("AED12345");
-        result.setTitle("Test Title");
+	@Test(groups = {"functionTest"})
+	public void delete() {
+		reviewDao.save(demoValue);
+		Review found = reviewDao.find(demoValue.getId());
 
-        demoValue = result;
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoValue);
 
-    @Test(groups = { "functionTest" })
-    public void delete() {
-        reviewDao.save(demoValue);
-        Review found = reviewDao.find(demoValue.getId());
+		reviewDao.delete(demoValue);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoValue);
+		found = reviewDao.find(found.getId());
+		assertThat(found).isNull();
 
-        reviewDao.delete(demoValue);
+	}
 
-        found = reviewDao.find(found.getId());
-        assertThat(found).isNull();
+	@Test
+	public void find() {
+		reviewDao.save(demoValue);
+		Review found = reviewDao.find(demoValue.getId());
 
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoValue);
 
-    @Test
-    public void find() {
-        reviewDao.save(demoValue);
-        Review found = reviewDao.find(demoValue.getId());
+		reviewDao.delete(demoValue);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoValue);
+		found = reviewDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        reviewDao.delete(demoValue);
+	@Test
+	public void save() {
+		reviewDao.save(demoValue);
+		Review found = reviewDao.find(demoValue.getId());
 
-        found = reviewDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		assertThat(found).isNotNull();
+		assertThat(found).isEqualsToByComparingFields(demoValue);
 
-    @Test
-    public void save() {
-        reviewDao.save(demoValue);
-        Review found = reviewDao.find(demoValue.getId());
+		reviewDao.delete(demoValue);
 
-        assertThat(found).isNotNull();
-        assertThat(found).isEqualsToByComparingFields(demoValue);
+		found = reviewDao.find(found.getId());
+		assertThat(found).isNull();
+	}
 
-        reviewDao.delete(demoValue);
+	@BeforeTest
+	private void getDemoReview() {
+		Review result = new Review();
+		result.setContent("Text String");
+		result.setHelpfulVotes(5);
+		result.setId("AED12345");
+		result.setTitle("Test Title");
 
-        found = reviewDao.find(found.getId());
-        assertThat(found).isNull();
-    }
+		demoValue = result;
+	}
 
 }

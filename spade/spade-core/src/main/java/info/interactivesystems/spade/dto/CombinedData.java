@@ -21,19 +21,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * Combined Data DTO is used to store all relevant Entities of the import 
+ * Combined Data DTO is used to store all relevant Entities of the import
  * process to be piped within a LinkedBlockingQueue.
- * 
- * @param user the user
- * @param review the review
+ *
+ * @param user    the user
+ * @param review  the review
  * @param product the product
  */
 @Data
 @AllArgsConstructor
 public class CombinedData {
 
-    private User user;
-    private Review review;
-    private Product product;
+	private User user;
+	private Review review;
+	private Product product;
 
 }

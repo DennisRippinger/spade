@@ -14,46 +14,45 @@
  */
 package info.interactivesystems.spade;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Factory Methods for property files with example and test related information.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 @Slf4j
 public final class PropertyTestUtil {
 
-    /**
-     * Creates an {@link PropertiesConfiguration} instance for example sentences.
-     * 
-     * @return the example sentences
-     */
-    public static XMLConfiguration getExampleSentences() {
-        try {
-            XMLConfiguration exampleSentences = new XMLConfiguration(
-                "example_sentences.xml");
+	/**
+	 * Private Constructor.
+	 */
+	private PropertyTestUtil() {
 
-            assertThat(exampleSentences).isNotNull();
-            assertThat(exampleSentences.containsKey("cases.one.data")).isTrue();
+	}
 
-            return exampleSentences;
-        } catch (ConfigurationException e) {
-            log.error("Could not load Example Sentences", e);
-        }
-        return null;
-    }
+	/**
+	 * Creates an {@link PropertiesConfiguration} instance for example sentences.
+	 *
+	 * @return the example sentences
+	 */
+	public static XMLConfiguration getExampleSentences() {
+		try {
+			XMLConfiguration exampleSentences = new XMLConfiguration(
+					"example_sentences.xml");
 
-    /**
-     * Private Constructor.
-     */
-    private PropertyTestUtil() {
+			assertThat(exampleSentences).isNotNull();
+			assertThat(exampleSentences.containsKey("cases.one.data")).isTrue();
 
-    }
+			return exampleSentences;
+		} catch (ConfigurationException e) {
+			log.error("Could not load Example Sentences", e);
+		}
+		return null;
+	}
 }

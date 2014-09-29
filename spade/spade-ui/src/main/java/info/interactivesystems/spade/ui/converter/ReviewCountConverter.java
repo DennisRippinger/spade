@@ -18,32 +18,32 @@ import javax.inject.Named;
 
 /**
  * The Class ReviewCountConverter.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Named
 public class ReviewCountConverter {
 
-    private static final String IMG_PATH = "../resources/img/sum/sum-%s.svg";
+	private static final String IMG_PATH = "../resources/img/sum/sum-%s.svg";
 
-    /**
-     * Returns the path of the appropriate review count icon.
-     * 
-     * @param count number of reviews.
-     * @return path of appropriate image.
-     */
-    public String getReviewIcon(Integer count) {
+	/**
+	 * Returns the path of the appropriate review count icon.
+	 *
+	 * @param count number of reviews.
+	 * @return path of appropriate image.
+	 */
+	public String getReviewIcon(Integer count) {
 
-        if (count <= 2) {
-            return String.format(IMG_PATH, 1);
-        } else if (count < 8) {
-            return String.format(IMG_PATH, 2);
-        } else if (count < 50) {
-            return String.format(IMG_PATH, 3);
-        } else {
-            return String.format(IMG_PATH, 4);
-        }
+		if (count <= 2) {
+			return String.format(IMG_PATH, 1);
+		} else if (count < 8) {
+			return String.format(IMG_PATH, 2);
+		} else if (count < 50) {
+			return String.format(IMG_PATH, 3);
+		} else {
+			return String.format(IMG_PATH, 4);
+		}
 
-    }
+	}
 
 }

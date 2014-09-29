@@ -18,38 +18,38 @@ import javax.inject.Named;
 
 /**
  * Converter for h-index related UI Elements.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Named
 public class HindexConverter {
 
-    public String gaugeValue(Double hindex) {
-        if(hindex == null){
-            return "0.0";
-        }
-        
-        if (hindex > 3.5) {
-            hindex = 3.5;
-        }
+	public String gaugeValue(Double hindex) {
+		if (hindex == null) {
+			return "0.0";
+		}
 
-        Double result = Math.round(100.0 * hindex) / 100.0;
+		if (hindex > 3.5) {
+			hindex = 3.5;
+		}
 
-        return result.toString();
-    }
+		Double result = Math.round(100.0 * hindex) / 100.0;
 
-    public String colorValue(Double hindex) {
-        if (hindex == null) {
-            return "green";
-        }
+		return result.toString();
+	}
 
-        if (hindex < 0.9) {
-            return "green";
-        } else if (hindex < 2.0) {
-            return "#D2CD00";
-        } else {
-            return "red";
-        }
-    }
+	public String colorValue(Double hindex) {
+		if (hindex == null) {
+			return "green";
+		}
+
+		if (hindex < 0.9) {
+			return "green";
+		} else if (hindex < 2.0) {
+			return "#D2CD00";
+		} else {
+			return "red";
+		}
+	}
 
 }

@@ -15,20 +15,18 @@
 package info.interactivesystems.spade.dao;
 
 import info.interactivesystems.spade.entities.Vote;
-
 import org.springframework.stereotype.Repository;
 
 /**
  * DAO for the Vote Entity.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 @Repository
 public class VoteDao extends AbstractDao<Vote> {
 
-    public VoteDao() {
-        super(Vote.class);
-    }
+	public VoteDao() {
+		super(Vote.class);
+	}
 
 }

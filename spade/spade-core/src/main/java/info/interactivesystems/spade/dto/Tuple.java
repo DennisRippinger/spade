@@ -19,24 +19,24 @@ import lombok.Setter;
 
 /**
  * The Class Tuple contains a simple tuple.
- * 
+ *
  * @param <X> the generic type
  * @param <Y> the generic type
  */
 @Getter
 @Setter
 public class Tuple<X, Y> {
-    private final X x;
-    private final Y y;
+	private final X x;
+	private final Y y;
 
-    /**
-     * Instantiates a new tuple.
-     * 
-     * @param x the x
-     * @param y the y
-     */
-    public Tuple(X x, Y y) {
-        this.x = x;
-        this.y = y;
-    }
+	/**
+	 * Instantiates a new tuple.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
+	public Tuple(X x, Y y) {
+		this.x = x;
+		this.y = y;
+	}
 }

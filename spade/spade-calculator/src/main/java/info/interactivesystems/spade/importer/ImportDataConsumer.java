@@ -14,20 +14,17 @@
  */
 package info.interactivesystems.spade.importer;
 
-import java.util.concurrent.LinkedBlockingQueue;
-
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.dto.CombinedData;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
-
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * The Class ImportDataConsumer.
@@ -36,65 +33,61 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class ImportDataConsumer implements Runnable {
 
-    private static final Boolean IMPORT_UNKOWN = false;
-    private static final String UNKNOWN = "unknown";
+	private static final Boolean IMPORT_UNKOWN = false;
+	private static final String UNKNOWN = "unknown";
+	@Setter
+	private static LinkedBlockingQueue<CombinedData> queue;
+	private Long productCounter = 1L;
+	private Long userCounter = 1L;
+	@Setter
+	private Integer reviewCounter;
+	@Setter
+	private Boolean hasMore;
 
-    private Long productCounter = 1L;
-    private Long userCounter = 1L;
+	@Resource
+	private ReviewContentService contentService;
 
-    @Setter
-    private Integer reviewCounter;
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				CombinedData combined = queue.take();
 
-    @Setter
-    private static LinkedBlockingQueue<CombinedData> queue;
+				persist(combined.getUser(), combined.getProduct(), combined.getReview());
 
-    @Setter
-    private Boolean hasMore;
+			} catch (Exception e) {
+				log.error("Error Persisting Data '{}'", e);
+			}
+		}
+	}
 
-    @Resource
-    private ReviewContentService contentService;
+	private void persist(User user, Product product, Review review) {
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                CombinedData combined = queue.take();
+		if (!contentService.checkIfProductExists(product.getId())) {
+			product.setRandomID(productCounter++);
+			contentService.saveProduct(product);
+		}
 
-                persist(combined.getUser(), combined.getProduct(), combined.getReview());
+		if (!contentService.checkIfUserExists(user.getId())) {
+			if (!user.getId().equals(UNKNOWN)) {
+				user.setRandomID(userCounter++);
+				contentService.saveUser(user);
+			} else if (IMPORT_UNKOWN) {
+				contentService.saveUser(user);
+			} else {
+				log.trace("Skipping unknown user");
+			}
+		}
 
-            } catch (Exception e) {
-                log.error("Error Persisting Data '{}'", e);
-            }
-        }
-    }
-
-    private void persist(User user, Product product, Review review) {
-
-        if (!contentService.checkIfProductExists(product.getId())) {
-            product.setRandomID(productCounter++);
-            contentService.saveProduct(product);
-        }
-
-        if (!contentService.checkIfUserExists(user.getId())) {
-            if (!user.getId().equals(UNKNOWN)) {
-                user.setRandomID(userCounter++);
-                contentService.saveUser(user);
-            } else if (IMPORT_UNKOWN) {
-                contentService.saveUser(user);
-            } else {
-                log.trace("Skipping unknown user");
-            }
-        }
-
-        if (!user.getId().equals(UNKNOWN)) {
-            String id = String.format("R%010d", reviewCounter++);
-            review.setId(id);
-            contentService.saveReview(review);
-        } else if (IMPORT_UNKOWN) {
-            String id = String.format("R%010d", reviewCounter++);
-            review.setId(id);
-            contentService.saveReview(review);
-        }
-    }
+		if (!user.getId().equals(UNKNOWN)) {
+			String id = String.format("R%010d", reviewCounter++);
+			review.setId(id);
+			contentService.saveReview(review);
+		} else if (IMPORT_UNKOWN) {
+			String id = String.format("R%010d", reviewCounter++);
+			review.setId(id);
+			contentService.saveReview(review);
+		}
+	}
 
 }

@@ -14,70 +14,69 @@
  */
 package info.interactivesystems.spade.sentence;
 
-import javax.annotation.Resource;
-
 import lombok.NonNull;
-
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * The Class SentenceService.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Component
 public class SentenceService {
 
-    @Resource
-    private AutomatedReadabilityIndex ari;
+	@Resource
+	private AutomatedReadabilityIndex ari;
 
-    @Resource
-    private GunningFogIndex gfi;
+	@Resource
+	private GunningFogIndex gfi;
 
-    @Resource
-    private InfoDensityIndex idi;
+	@Resource
+	private InfoDensityIndex idi;
 
-    @Resource
-    private WordCountCalculator wordCount;
+	@Resource
+	private WordCountCalculator wordCount;
 
-    /**
-     * Calculates the AR Index of a given review.
-     * 
-     * @param review a review.
-     * @return the AR Index.
-     */
-    public Double calculateARIndex(@NonNull String review) {
-        return ari.calculateReadability(review);
-    }
+	/**
+	 * Calculates the AR Index of a given review.
+	 *
+	 * @param review a review.
+	 * @return the AR Index.
+	 */
+	public Double calculateARIndex(@NonNull String review) {
+		return ari.calculateReadability(review);
+	}
 
-    /**
-     * Calculates the GF Index of a given review.
-     * 
-     * @param review a review.
-     * @return the GF Index.
-     */
-    public Double calculateGFIndex(@NonNull String review) {
-        return gfi.calculateReadability(review);
-    }
+	/**
+	 * Calculates the GF Index of a given review.
+	 *
+	 * @param review a review.
+	 * @return the GF Index.
+	 */
+	public Double calculateGFIndex(@NonNull String review) {
+		return gfi.calculateReadability(review);
+	}
 
-    /**
-     * Calculates the Information density of a review. <br/>
-     * Returns values on an interval [0,1].
-     * 
-     * @param review a review.
-     * @return the information density.
-     */
-    public Double calculateInformationDensity(@NonNull String review) {
-        return idi.getInformationDensity(review);
-    }
+	/**
+	 * Calculates the Information density of a review. <br/>
+	 * Returns values on an interval [0,1].
+	 *
+	 * @param review a review.
+	 * @return the information density.
+	 */
+	public Double calculateInformationDensity(@NonNull String review) {
+		return idi.getInformationDensity(review);
+	}
 
-    /**
-     * Calculates the number of words for a given review.
-     * 
-     * @param review the review
-     * @return the integer
-     */
-    public Integer calculateWordCount(@NonNull String review) {
-        return wordCount.getWordCount(review);
-    }
+	/**
+	 * Calculates the number of words for a given review.
+	 *
+	 * @param review the review
+	 * @return the integer
+	 */
+	public Integer calculateWordCount(@NonNull String review) {
+		return wordCount.getWordCount(review);
+	}
 }

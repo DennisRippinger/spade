@@ -17,103 +17,100 @@ package info.interactivesystems.spade.ui.action;
 import info.interactivesystems.spade.dao.NilsimsaSimilarityDao;
 import info.interactivesystems.spade.entities.NilsimsaSimilarity;
 import info.interactivesystems.spade.exception.SpadeException;
-
-import java.io.InputStream;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.inject.Named;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.VFS;
 import org.hibernate.loader.hql.QueryLoader;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.inject.Named;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * The Class SimilarityBean.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 @Named
 public class SimilarityBean {
 
-    @Resource
-    private NilsimsaSimilarityDao similarityDao;
+	@Resource
+	private NilsimsaSimilarityDao similarityDao;
 
-    private List<NilsimsaSimilarity> similarities;
+	private List<NilsimsaSimilarity> similarities;
 
-    private List<String> blacklist;
+	private List<String> blacklist;
 
-    private Integer internalWindow = 1;
+	private Integer internalWindow = 1;
 
-    /**
-     * Inits the similarity bean.
-     * 
-     * @throws SpadeException if the bean can't be initialized.
-     */
-    @PostConstruct
-    public void init() throws SpadeException {
+	/**
+	 * Init the similarity bean.
+	 *
+	 * @throws SpadeException if the bean can't be initialized.
+	 */
+	@PostConstruct
+	public void init() throws SpadeException {
 
-        log.info("Init Similarity Bean");
-        
-        try {
-            initializeBlacklist();
+		log.info("Init Similarity Bean");
 
-            similarities = new LinkedList<>();
+		try {
+			initializeBlacklist();
 
-            queryPagination();
+			similarities = new LinkedList<>();
 
-        } catch (Exception e) {
-            log.error("Could not initialize similarity List");
-            throw new SpadeException("Could not initialize Similarity Bean", e);
-        }
+			queryPagination();
 
-    }
+		} catch (Exception e) {
+			log.error("Could not initialize similarity List");
+			throw new SpadeException("Could not initialize Similarity Bean", e);
+		}
 
-    /**
-     * Gets the similarity or adds new items to the collection.
-     * 
-     * @param id the id
-     * @return the similarity
-     */
-    public NilsimsaSimilarity getSimilarity(Integer id) {
-        if (id >= similarities.size()) {
-            internalWindow++;
-            queryPagination();
-        }
+	}
 
-        return similarities.get(id);
-    }
+	/**
+	 * Gets the similarity or adds new items to the collection.
+	 *
+	 * @param id the id
+	 * @return the similarity
+	 */
+	public NilsimsaSimilarity getSimilarity(Integer id) {
+		if (id >= similarities.size()) {
+			internalWindow++;
+			queryPagination();
+		}
 
-    private void queryPagination() {
-        List<NilsimsaSimilarity> tempResult = similarityDao.find(0.9, false, internalWindow);
-        Integer logCounter = 0;
+		return similarities.get(id);
+	}
 
-        for (NilsimsaSimilarity similarity : tempResult) {
-            if (!blacklist.contains(similarity.getReviewA().getId())) {
-                similarities.add(similarity);
-                logCounter++;
-            }
-        }
+	private void queryPagination() {
+		List<NilsimsaSimilarity> tempResult = similarityDao.find(0.9, false, internalWindow);
+		Integer logCounter = 0;
 
-        log.info("Added '{}' new items to collection", logCounter);
-    }
+		for (NilsimsaSimilarity similarity : tempResult) {
+			if (!blacklist.contains(similarity.getReviewA().getId())) {
+				similarities.add(similarity);
+				logCounter++;
+			}
+		}
 
-    private void initializeBlacklist() throws Exception {
-        URL urlResource = QueryLoader.class.getResource("/Blacklist.txt");
+		log.info("Added '{}' new items to collection", logCounter);
+	}
 
-        FileSystemManager fsManager = VFS.getManager();
-        FileObject file = fsManager.resolveFile(urlResource.toURI().toString());
-        InputStream inputStream = file.getContent().getInputStream();
+	private void initializeBlacklist() throws Exception {
+		URL urlResource = QueryLoader.class.getResource("/Blacklist.txt");
 
-        blacklist = IOUtils.readLines(inputStream);
-    }
+		FileSystemManager fsManager = VFS.getManager();
+		FileObject file = fsManager.resolveFile(urlResource.toURI().toString());
+		InputStream inputStream = file.getContent().getInputStream();
+
+		blacklist = IOUtils.readLines(inputStream);
+	}
 
 }

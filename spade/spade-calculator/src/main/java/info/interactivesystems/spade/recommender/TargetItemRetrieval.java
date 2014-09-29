@@ -22,32 +22,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * The Class TargetItemRetrieval. Implements the second step of the UnRAP Paper.
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 @Component
-public class HIndexResolver {
-
-	private static final Long MAXSIZE = 6643623L;
+public class TargetItemRetrieval {
 
 	@Resource
 	private ReviewContentService service;
 
-	/**
-	 * Resolve h index.
-	 *
-	 * @param maxIndex the max index
-	 */
-	public void resolveHIndex() {
-		for (Long count = 2441053L; count <= MAXSIZE; count++) {
-			User user = service.findUserByID(count);
+	public void retrievalOfTargetItems() {
 
-			List<Review> reviewsFromUser = service.findReviewFromUser(user.getId());
-			calculateMaximumVariance(reviewsFromUser);
+		List<User> users = service.findUsersWithHIndex(2.0, 10057);
+		Integer count = 1;
+
+		for (User user : users) {
+			List<Review> reviews = service.findHighestVarianceReview(user.getId());
+			incrementVariance(reviews);
+			count++;
 
 			Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
 			if (rand == 500) {
@@ -55,21 +54,22 @@ public class HIndexResolver {
 			}
 		}
 
-		log.info("Finished calculating Variances related to HIndex");
-
 	}
 
-	private void calculateMaximumVariance(List<Review> reviewsFromUser) {
+	@Transactional
+	private void incrementVariance(List<Review> reviews) {
+		for (Review review : reviews) {
+			Product product = review.getProduct();
+			Integer noOfTopDifferences = product.getNoOfTopDifferences();
 
-		for (Review review : reviewsFromUser) {
-			Product currentProduct = review.getProduct();
-			Double tmp = review.getRating() - currentProduct.getRating();
-			tmp = Math.abs(tmp);
-			review.setVariance(tmp);
+			if (noOfTopDifferences == null) {
+				noOfTopDifferences = 1;
+			} else {
+				noOfTopDifferences++;
+			}
 
-			service.saveReview(review);
+			product.setNoOfTopDifferences(noOfTopDifferences);
+			service.saveProduct(product);
 		}
-
 	}
-
 }

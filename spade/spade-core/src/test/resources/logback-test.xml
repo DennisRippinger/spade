@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-			</Pattern>
-		</layout>
-	</appender>
-	<appender name="LE" class="com.logentries.logback.LogentriesAppender">
-		<Debug>False</Debug>
-		<Token>67508365-d1f0-4ab4-8bf2-eff5800cb084</Token>
-		<Ssl>False</Ssl>
-		<facility>USER</facility>
-		<layout>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-		</layout>
-	</appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+    <appender name="LE" class="com.logentries.logback.LogentriesAppender">
+        <Debug>False</Debug>
+        <Token>67508365-d1f0-4ab4-8bf2-eff5800cb084</Token>
+        <Ssl>False</Ssl>
+        <facility>USER</facility>
+        <layout>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </layout>
+    </appender>
 
-	<logger name="info.interactivesystems" level="INFO" />
+    <logger name="info.interactivesystems" level="INFO"/>
 
-	<!-- Reduce Noise -->
-	<logger name="org.hibernate" level="ERROR" />
-	<logger name="com.gargoylesoftware" level="ERROR" />
-	<logger name="com.mchange.v2.c3p0" level="ERROR" />
+    <!-- Reduce Noise -->
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="com.gargoylesoftware" level="ERROR"/>
+    <logger name="com.mchange.v2.c3p0" level="ERROR"/>
 
-	<root level="OFF">
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="LE" />
-	</root>
+    <root level="OFF">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LE"/>
+    </root>
 
 </configuration>

@@ -16,30 +16,30 @@ package info.interactivesystems.spade.exception;
 
 /**
  * The Class SpadeException.
- * 
+ *
  * @author Dennis Rippinger
  */
 public class SpadeException extends Exception {
 
-    private static final long serialVersionUID = 2637512426961963804L;
+	private static final long serialVersionUID = 2637512426961963804L;
 
-    /**
-     * Instantiates a new spade exception.
-     * 
-     * @param message the message
-     */
-    public SpadeException(String message) {
-        super(message);
-    }
+	/**
+	 * Instantiates a new spade exception.
+	 *
+	 * @param message the message
+	 */
+	public SpadeException(String message) {
+		super(message);
+	}
 
-    /**
-     * Instantiates a new spade exception.
-     * 
-     * @param message the message
-     * @param cause the cause
-     */
-    public SpadeException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Instantiates a new spade exception.
+	 *
+	 * @param message the message
+	 * @param cause   the cause
+	 */
+	public SpadeException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

@@ -16,14 +16,14 @@ package info.interactivesystems.spade.ui.util;
 
 /**
  * The Enum CopyDirection to indicate the temporal copy direction.
- * 
+ *
  * @author Dennis Rippinger
  */
 public enum CopyDirection {
 
-    FIRST,
-    SAME,
-    LATER,
-    NONE;
+	FIRST,
+	SAME,
+	LATER,
+	NONE;
 
 }

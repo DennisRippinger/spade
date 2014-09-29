@@ -1,52 +1,52 @@
 .a-icon-star {
-	width: 80px;
-	height: 18px;
-	background-image: url("../../resources/img/amazon-sprite.png");
-	background-repeat: no-repeat;
-	background-size: 400px 600px;
-	display: inline-block;
+    width: 80px;
+    height: 18px;
+    background-image: url("../../resources/img/amazon-sprite.png");
+    background-repeat: no-repeat;
+    background-size: 400px 600px;
+    display: inline-block;
 }
 
 .a-star-5 {
-	background-position: -5px -368px
+    background-position: -5px -368px
 }
 
 .a-star-4 {
-	background-position: -21px -368px
+    background-position: -21px -368px
 }
 
 .a-star-3 {
-	background-position: -37px -368px
+    background-position: -37px -368px
 }
 
 .a-star-2 {
-	background-position: -53px -368px
+    background-position: -53px -368px
 }
 
 .a-star-1 {
-	background-position: -69px -368px
+    background-position: -69px -368px
 }
 
 .a-star-0 {
-	background-position: -85px -368px
+    background-position: -85px -368px
 }
 
 .a-star-4-5 {
-	background-position: -175px -368px
+    background-position: -175px -368px
 }
 
 .a-star-3-5 {
-	background-position: -191px -368px
+    background-position: -191px -368px
 }
 
 .a-star-2-5 {
-	background-position: -207px -368px
+    background-position: -207px -368px
 }
 
 .a-star-1-5 {
-	background-position: -223px -368px
+    background-position: -223px -368px
 }
 
 .a-star-0-5 {
-	background-position: -239px -368px
+    background-position: -239px -368px
 }

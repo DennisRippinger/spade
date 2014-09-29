@@ -14,51 +14,49 @@
  */
 package info.interactivesystems.spade.ui.util;
 
-import java.util.Properties;
+import lombok.Data;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
-import lombok.Data;
+import java.util.Properties;
 
 /**
  * The Class GitRepositoryState.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Data
 @XmlRootElement
 public class GitRepositoryState {
 
-    private String branch;
-    private String describe;
-    private String shortDescribe;
-    private String describeShort;
-    private String commitId;
-    private String commitIdAbbrev;
-    private String buildUserName;
-    private String buildUserEmail;
-    private String buildTime;
-    private String commitUserName;
-    private String commitUserEmail;
-    private String commitMessageFull;
-    private String commitMessageShort;
-    private String commitTime;
+	private String branch;
+	private String describe;
+	private String shortDescribe;
+	private String describeShort;
+	private String commitId;
+	private String commitIdAbbrev;
+	private String buildUserName;
+	private String buildUserEmail;
+	private String buildTime;
+	private String commitUserName;
+	private String commitUserEmail;
+	private String commitMessageFull;
+	private String commitMessageShort;
+	private String commitTime;
 
-    public GitRepositoryState(Properties properties)
-    {
-        this.branch = properties.get("git.branch").toString();
-        this.describe = properties.get("git.commit.id.describe").toString();
-        this.describeShort = properties.get("git.commit.id.describe-short").toString();
-        this.commitId = properties.get("git.commit.id").toString();
-        this.commitIdAbbrev = properties.getProperty("git.commit.id.abbrev").toString();
-        this.buildUserName = properties.get("git.build.user.name").toString();
-        this.buildUserEmail = properties.get("git.build.user.email").toString();
-        this.buildTime = properties.get("git.build.time").toString();
-        this.commitUserName = properties.get("git.commit.user.name").toString();
-        this.commitUserEmail = properties.get("git.commit.user.email").toString();
-        this.commitMessageShort = properties.get("git.commit.message.short").toString();
-        this.commitMessageFull = properties.get("git.commit.message.full").toString();
-        this.commitTime = properties.get("git.commit.time").toString();
-    }
+	public GitRepositoryState(Properties properties) {
+		this.branch = properties.get("git.branch").toString();
+		this.describe = properties.get("git.commit.id.describe").toString();
+		this.describeShort = properties.get("git.commit.id.describe-short").toString();
+		this.commitId = properties.get("git.commit.id").toString();
+		this.commitIdAbbrev = properties.getProperty("git.commit.id.abbrev").toString();
+		this.buildUserName = properties.get("git.build.user.name").toString();
+		this.buildUserEmail = properties.get("git.build.user.email").toString();
+		this.buildTime = properties.get("git.build.time").toString();
+		this.commitUserName = properties.get("git.commit.user.name").toString();
+		this.commitUserEmail = properties.get("git.commit.user.email").toString();
+		this.commitMessageShort = properties.get("git.commit.message.short").toString();
+		this.commitMessageFull = properties.get("git.commit.message.full").toString();
+		this.commitTime = properties.get("git.commit.time").toString();
+	}
 
 }

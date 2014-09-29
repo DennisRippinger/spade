@@ -14,26 +14,26 @@
  */
 package info.interactivesystems.spade.importer;
 
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
 /**
  * The Class AmazonCountTest.
- * 
+ *
  * @author Dennis Rippinger
  */
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class AmazonCountTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private AmazonCount counter;
+	@Resource
+	private AmazonCount counter;
 
-    @Test
-    public void amazonImporterTest() {
-        counter.countNumberOfReviews();
-    }
+	@Test
+	public void amazonImporterTest() {
+		counter.countNumberOfReviews();
+	}
 
 }

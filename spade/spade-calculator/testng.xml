@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Crawler" parallel="none">
-  <test name="Tests">
-    <packages>
-      <package name="info.interactivesystems.spade.captcha"/>
-<!--       <package name="info.interactivesystems.spade.crawler"/> -->
-    </packages>
-  </test> <!-- Tests -->
+    <test name="Tests">
+        <packages>
+            <package name="info.interactivesystems.spade.captcha"/>
+            <!--       <package name="info.interactivesystems.spade.crawler"/> -->
+        </packages>
+    </test>
+    <!-- Tests -->
 </suite> <!-- Crawler -->

@@ -20,97 +20,95 @@ import info.interactivesystems.spade.entities.Review;
 import info.interactivesystems.spade.entities.User;
 import info.interactivesystems.spade.ui.dto.DetailsRow;
 import info.interactivesystems.spade.ui.util.CopyDirection;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.annotation.Resource;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Class UserAction.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Named
 @ViewScoped
 public class UserAction implements Serializable {
 
-    private static final long serialVersionUID = -503276225717002437L;
+	private static final long serialVersionUID = -503276225717002437L;
 
-    @Resource
-    private transient NilsimsaSimilarityDao nilsimsaDao;
+	@Resource
+	private transient NilsimsaSimilarityDao nilsimsaDao;
 
-    @Setter
-    @Getter
-    private User user;
+	@Setter
+	@Getter
+	private User user;
 
-    @Getter
-    @Setter
-    private DetailsRow selectedRow;
+	@Getter
+	@Setter
+	private DetailsRow selectedRow;
 
-    @Getter
-    private List<DetailsRow> currentRows;
+	@Getter
+	private List<DetailsRow> currentRows;
 
-    public void init() {
+	public void init() {
 
 		// Wrapper needed to be sortable within the UI.
 
-        List<DetailsRow> rows = new ArrayList<>();
-        if (user != null) {
-            for (Review review : user.getReviews()) {
-                DetailsRow row = new DetailsRow();
-                row.setProductId(review.getProduct().getId());
-                row.setProductName(review.getProduct().getName());
-                row.setCategory(review.getProduct().getCategory());
-                row.setRating(review.getProduct().getRating());
-                row.setReviewDate(review.getReviewDate());
-                row.setReviewText(review.getContent());
-                row.setReviewTitle(review.getTitle());
-                row.setUserRating(review.getRating());
+		List<DetailsRow> rows = new ArrayList<>();
+		if (user != null) {
+			for (Review review : user.getReviews()) {
+				DetailsRow row = new DetailsRow();
+				row.setProductId(review.getProduct().getId());
+				row.setProductName(review.getProduct().getName());
+				row.setCategory(review.getProduct().getCategory());
+				row.setRating(review.getProduct().getRating());
+				row.setReviewDate(review.getReviewDate());
+				row.setReviewText(review.getContent());
+				row.setReviewTitle(review.getTitle());
+				row.setUserRating(review.getRating());
 				row.setWordLength(review.getWordCount());
-                row.setStylometry(review.getMeanSimilarity() != null ? review.getMeanSimilarity() : 1.0);
+				row.setStylometry(review.getMeanSimilarity() != null ? review.getMeanSimilarity() : 1.0);
 
-                NilsimsaSimilarity similar = nilsimsaDao.findSimilarityByReviewId(review.getId());
-                if (similar != null) {
-                    row.setSimilar(true);
-                    row.setSimilarityId(similar.getId());
+				NilsimsaSimilarity similar = nilsimsaDao.findSimilarityByReviewId(review.getId());
+				if (similar != null) {
+					row.setSimilar(true);
+					row.setSimilarityId(similar.getId());
 
-                    getCopyDirection(review, row, similar);
+					getCopyDirection(review, row, similar);
 
-                } else {
-                    row.setSimilar(false);
-                    row.setDirection(CopyDirection.NONE);
-                }
+				} else {
+					row.setSimilar(false);
+					row.setDirection(CopyDirection.NONE);
+				}
 
-                rows.add(row);
-            }
-        }
+				rows.add(row);
+			}
+		}
 
-        currentRows = rows;
-    }
+		currentRows = rows;
+	}
 
-    private void getCopyDirection(Review review, DetailsRow row, NilsimsaSimilarity similar) {
-        Review otherReview;
-        if (similar.getReviewA().getId().equals(review.getId())) {
-            otherReview = similar.getReviewB();
-        } else {
-            otherReview = similar.getReviewA();
-        }
+	private void getCopyDirection(Review review, DetailsRow row, NilsimsaSimilarity similar) {
+		Review otherReview;
+		if (similar.getReviewA().getId().equals(review.getId())) {
+			otherReview = similar.getReviewB();
+		} else {
+			otherReview = similar.getReviewA();
+		}
 
-        Integer compare = review.getReviewDate().compareTo(otherReview.getReviewDate());
+		Integer compare = review.getReviewDate().compareTo(otherReview.getReviewDate());
 
-        if (compare.equals(0)) {
-            row.setDirection(CopyDirection.SAME);
-        } else if (compare > 0) {
-            row.setDirection(CopyDirection.LATER);
-        } else if (compare < 0) {
-            row.setDirection(CopyDirection.FIRST);
-        }
-    }
+		if (compare.equals(0)) {
+			row.setDirection(CopyDirection.SAME);
+		} else if (compare > 0) {
+			row.setDirection(CopyDirection.LATER);
+		} else if (compare < 0) {
+			row.setDirection(CopyDirection.FIRST);
+		}
+	}
 }

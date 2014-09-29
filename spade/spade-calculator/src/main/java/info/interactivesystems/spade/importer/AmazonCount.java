@@ -17,68 +17,65 @@ package info.interactivesystems.spade.importer;
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Product;
 import info.interactivesystems.spade.entities.Review;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Resource;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Component;
-
 /**
  * Calculates an Baysian average value to gain an average that is near to amazons original.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 @Component
 public class AmazonCount {
 
-    private static final Integer OBERSERVATIONS = 5;
-    private static final Integer MAXSIZE = 2441053;
-    private static final Double AMAZON_GLOBAL_AVG = 4.190279903844344;
+	private static final Integer OBERSERVATIONS = 5;
+	private static final Integer MAXSIZE = 2441053;
+	private static final Double AMAZON_GLOBAL_AVG = 4.190279903844344;
 
-    @Resource
-    private ReviewContentService service;
+	@Resource
+	private ReviewContentService service;
 
-    public void countNumberOfReviews() {
-        for (Long count = 1L; count <= MAXSIZE; count++) {
-            Product currentProduct = service.findByID(count);
+	public void countNumberOfReviews() {
+		for (Long count = 1L; count <= MAXSIZE; count++) {
+			Product currentProduct = service.findByID(count);
 
-            if (currentProduct != null) {
-                Set<Review> reviews = currentProduct.getReviews();
-                currentProduct.setNoOfReviews(reviews.size());
-                currentProduct.setRating(getAverage(reviews));
+			if (currentProduct != null) {
+				Set<Review> reviews = currentProduct.getReviews();
+				currentProduct.setNoOfReviews(reviews.size());
+				currentProduct.setRating(getAverage(reviews));
 
-                service.saveProduct(currentProduct);
-            }
+				service.saveProduct(currentProduct);
+			}
 
-            Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
-            if (rand == 500) {
-                log.info("Current Item ID '{}'", count);
-            }
-        }
-    }
+			Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
+			if (rand == 500) {
+				log.info("Current Item ID '{}'", count);
+			}
+		}
+	}
 
-    /**
-     * Bayesian average calculation.
-     * 
-     * @param reviews
-     * @return
-     */
-    public Double getAverage(Set<Review> reviews) {
-        Double numberOfStars = 0.0;
+	/**
+	 * Bayesian average calculation.
+	 *
+	 * @param reviews
+	 * @return
+	 */
+	public Double getAverage(Set<Review> reviews) {
+		Double numberOfStars = 0.0;
 
-        for (Review review : reviews) {
-            numberOfStars += review.getRating();
-        }
+		for (Review review : reviews) {
+			numberOfStars += review.getRating();
+		}
 
-        Double nominator = (OBERSERVATIONS * AMAZON_GLOBAL_AVG) + numberOfStars;
-        Integer denominator = OBERSERVATIONS + reviews.size();
+		Double nominator = (OBERSERVATIONS * AMAZON_GLOBAL_AVG) + numberOfStars;
+		Integer denominator = OBERSERVATIONS + reviews.size();
 
-        return nominator / denominator;
-    }
+		return nominator / denominator;
+	}
 
 }

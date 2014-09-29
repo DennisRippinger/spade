@@ -14,25 +14,25 @@
  */
 package info.interactivesystems.spade.recommender;
 
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+
 /**
  * The Class HIndexTest.
- * 
+ *
  * @author Dennis Rippinger
  */
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class HIndexTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private HIndex hIndex;
+	@Resource
+	private HIndex hIndex;
 
-    @Test
-    public void calculateHIndex() {
-        hIndex.calculateHIndex(5439404L, 6643623L);
-    }
+	@Test
+	public void calculateHIndex() {
+		hIndex.calculateHIndex(5439404L, 6643623L);
+	}
 }

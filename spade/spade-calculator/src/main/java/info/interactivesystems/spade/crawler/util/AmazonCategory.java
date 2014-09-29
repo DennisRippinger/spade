@@ -16,28 +16,30 @@ package info.interactivesystems.spade.crawler.util;
 
 /**
  * Enum provides internal amazon category numbers.
- * 
+ *
  * @author Dennis Rippinger
+ * @deprecated Categories not in use due to new data source.
  */
+@Deprecated
 public enum AmazonCategory {
 
-    DIGITALCAMERA("281052"),
-    CAMCORDER("172421"),
-    BLURAYPLAYER("352697011"),
-    VIDEOPROJECTOR("300334"),
-    MOBILEPHONE("2407749011"),
-    PRINTER("172646"), // only inkjet printer
-    PCSYSTEM("565098"),
-    TV("172659");
+	DIGITALCAMERA("281052"),
+	CAMCORDER("172421"),
+	BLURAYPLAYER("352697011"),
+	VIDEOPROJECTOR("300334"),
+	MOBILEPHONE("2407749011"),
+	PRINTER("172646"), // only inkjet printer
+	PCSYSTEM("565098"),
+	TV("172659");
 
-    private String id;
+	private String id;
 
-    private AmazonCategory(String id) {
-        this.id = id;
-    }
+	private AmazonCategory(String id) {
+		this.id = id;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
 }

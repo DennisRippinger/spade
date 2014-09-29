@@ -14,52 +14,52 @@
  */
 package info.interactivesystems.spade.sentence;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Component;
 
 /**
  * Calculates the information density of a review. The information density is defined by the relation of the size of the GZIP
  * compressed review to its original length.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
 @Component
 public class InfoDensityIndex {
 
-    /**
-     * Calculates the information density with the GZIP algorithm.
-     * 
-     * @param review a review as text.
-     * @return the density of the text.
-     */
-    public Double getInformationDensity(String review) {
+	/**
+	 * Calculates the information density with the GZIP algorithm.
+	 *
+	 * @param review a review as text.
+	 * @return the density of the text.
+	 */
+	public Double getInformationDensity(String review) {
 
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-            GZIPOutputStream gzip = new GZIPOutputStream(out);
-            gzip.write(review.getBytes("UTF-8"));
-            gzip.close();
+		try (ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+			GZIPOutputStream gzip = new GZIPOutputStream(out);
+			gzip.write(review.getBytes(StandardCharsets.UTF_8));
+			gzip.close();
 
-            Double compressed = out.size() * 1.0;
-            Double uncompressed = review.getBytes().length * 1.0;
+			Double compressed = out.size() * 1.0;
+			Double uncompressed = review.getBytes().length * 1.0;
 
-            Double result = compressed / uncompressed;
+			Double result = compressed / uncompressed;
 
-            if (result > 1.0) {
-                result = 1.0;
-            }
-            return result;
+			if (result > 1.0) {
+				result = 1.0;
+			}
+			return result;
 
-        } catch (IOException e) {
-            log.warn("Could not Compress the Input String", e);
-        }
-        return 0.0;
+		} catch (IOException e) {
+			log.warn("Could not Compress the Input String", e);
+		}
+		return 0.0;
 
-    }
+	}
 
 }

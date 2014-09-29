@@ -18,44 +18,44 @@ import org.apache.commons.cli.Options;
 
 /**
  * The Class CliCommands.
- * 
+ *
  * @author Dennis Rippinger
  */
 public final class CliCommands {
 
-    public static final String NISLIMSA = "nilsimsa";
-    public static final String HINDEX = "hindex";
-    public static final String HINDEXRESOLVER = "hindexResolver";
-    public static final String UNIQUE = "unique";
-    public static final String FROM = "from";
-    public static final String TO = "to";
-    public static final String CATEGORY = "category";
+	public static final String NISLIMSA = "nilsimsa";
+	public static final String HINDEX = "hindex";
+	public static final String HINDEXRESOLVER = "hindexResolver";
+	public static final String UNIQUE = "unique";
+	public static final String FROM = "from";
+	public static final String TO = "to";
+	public static final String CATEGORY = "category";
 
-    /**
-     * Creates a set of possible CLI Commands.
-     * 
-     * @return the CLI options
-     */
-    public static Options getCliOptions() {
+	/**
+	 * Private Constructor.
+	 */
+	private CliCommands() {
 
-        Options options = new Options();
-        options.addOption("f", FROM, true, "From a given value");
-        options.addOption("t", TO, true, "To a given value");
-        options.addOption("c", CATEGORY, true, "a given category");
-        options.addOption("u", UNIQUE, false, "removes non Unique Reviews");
+	}
 
-        options.addOption("h", HINDEX, false, "Calculates the HIndex");
-        options.addOption("hr", HINDEXRESOLVER, true, "Calculates the most variant review");
-        options.addOption("n", NISLIMSA, false, "Calculates the nilsimsa simmilarity for a given category");
+	/**
+	 * Creates a set of possible CLI Commands.
+	 *
+	 * @return the CLI options
+	 */
+	public static Options getCliOptions() {
 
-        return options;
-    }
+		Options options = new Options();
+		options.addOption("f", FROM, true, "From a given value");
+		options.addOption("t", TO, true, "To a given value");
+		options.addOption("c", CATEGORY, true, "a given category");
+		options.addOption("u", UNIQUE, false, "removes non Unique Reviews");
 
-    /**
-     * Private Constructor.
-     */
-    private CliCommands() {
+		options.addOption("h", HINDEX, false, "Calculates the HIndex");
+		options.addOption("hr", HINDEXRESOLVER, true, "Calculates the most variant review");
+		options.addOption("n", NISLIMSA, false, "Calculates the nilsimsa similarity for a given category");
 
-    }
+		return options;
+	}
 
 }

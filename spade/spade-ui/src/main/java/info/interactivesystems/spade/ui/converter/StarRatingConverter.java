@@ -14,49 +14,48 @@
  */
 package info.interactivesystems.spade.ui.converter;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-
 /**
  * The Class StarRatingConverter.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Named
 public class StarRatingConverter {
 
-    private Map<Double, String> ratings = new LinkedHashMap<>();
+	private Map<Double, String> ratings = new LinkedHashMap<>();
 
-    @PostConstruct
-    void init() {
-        ratings.put(0.75, "a-star-0-5");
-        ratings.put(1.25, "a-star-1");
-        ratings.put(1.75, "a-star-1-5");
-        ratings.put(2.25, "a-star-2");
-        ratings.put(2.75, "a-star-2-5");
-        ratings.put(3.25, "a-star-3");
-        ratings.put(3.75, "a-star-3-5");
-        ratings.put(4.25, "a-star-4");
-        ratings.put(4.75, "a-star-4-5");
-    }
+	/**
+	 * Returns a CSS Class defining the star rating from the amazon sprite.
+	 */
+	public String getAsString(Double rating) {
 
-    /**
-     * Returns a CSS Class defining the star rating from the amazon sprite.
-     */
-    public String getAsString(Double rating) {
+		for (Entry<Double, String> entry : ratings.entrySet()) {
+			if (rating < entry.getKey()) {
+				return entry.getValue();
+			}
+		}
 
-        for (Entry<Double, String> entry : ratings.entrySet()) {
-            if (rating < entry.getKey()) {
-                return entry.getValue();
-            }
-        }
+		return "a-star-5";
 
-        return "a-star-5";
+	}
 
-    }
+	@PostConstruct
+	void init() {
+		ratings.put(0.75, "a-star-0-5");
+		ratings.put(1.25, "a-star-1");
+		ratings.put(1.75, "a-star-1-5");
+		ratings.put(2.25, "a-star-2");
+		ratings.put(2.75, "a-star-2-5");
+		ratings.put(3.25, "a-star-3");
+		ratings.put(3.75, "a-star-3-5");
+		ratings.put(4.25, "a-star-4");
+		ratings.put(4.75, "a-star-4-5");
+	}
 
 }

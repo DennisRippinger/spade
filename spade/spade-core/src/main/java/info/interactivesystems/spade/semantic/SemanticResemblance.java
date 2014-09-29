@@ -16,13 +16,13 @@ package info.interactivesystems.spade.semantic;
 
 public interface SemanticResemblance {
 
-    /**
-     * Calculates the similarity between two words.
-     * 
-     * @param wordOne the first word.
-     * @param wordTwo the second word.
-     * @return Result as Float.
-     */
-    public abstract Float calculateSimilarity(String wordOne, String wordTwo);
+	/**
+	 * Calculates the similarity between two words.
+	 *
+	 * @param wordOne the first word.
+	 * @param wordTwo the second word.
+	 * @return Result as Float.
+	 */
+	public abstract Float calculateSimilarity(String wordOne, String wordTwo);
 
 }

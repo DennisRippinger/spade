@@ -14,73 +14,71 @@
  */
 package info.interactivesystems.spade.crawler.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
- * 
  * Renews the IP on FRITZ.BOX router.
- * 
+ *
  * @author Dennis Rippinger
- * 
  */
 @Slf4j
 public final class RenewIP {
 
-    /**
-     * Renew dynamic IP on Fritz Boxes.
-     */
-    public static void renewIpOnFritzBox() {
-        try {
-            String xmldata = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-                + "<s:Envelope s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">"
-                + "<s:Body>"
-                + "<u:ForceTermination xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\" />"
-                + "</s:Body>" + "</s:Envelope>";
+	/**
+	 * Private Constructor.
+	 */
+	private RenewIP() {
 
-            // Create socket
-            String hostname = "fritz.box";
-            int port = 49000;
-            InetAddress addr = InetAddress.getByName(hostname);
+	}
 
-            try (Socket sock = new Socket(addr, port);) {
-                // Send header
-                BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(
-                    sock.getOutputStream(), "UTF-8"));
-                wr.write("POST /upnp/control/WANIPConn1 HTTP/1.1");
-                wr.write("Host: fritz.box:49000" + "\r\n");
-                wr.write("SOAPACTION: \"urn:schemas-upnp-org:service:WANIPConnection:1#ForceTermination\""
-                    + "\r\n");
-                wr.write("Content-Type: text/xml; charset=\"utf-8\"" + "\r\n");
-                wr.write("Content-Length: " + xmldata.length() + "\r\n");
-                wr.write("\r\n");
+	/**
+	 * Renew dynamic IP on Fritz Boxes.
+	 */
+	public static void renewIpOnFritzBox() {
+		try {
+			String xmldata = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+					+ "<s:Envelope s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">"
+					+ "<s:Body>"
+					+ "<u:ForceTermination xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\" />"
+					+ "</s:Body>" + "</s:Envelope>";
 
-                // Send data
-                wr.write(xmldata);
-                wr.flush();
-            }
+			// Create socket
+			String hostname = "fritz.box";
+			int port = 49000;
+			InetAddress addr = InetAddress.getByName(hostname);
 
-        } catch (Exception e) {
-            log.error("Could not send Renew IP Command", e);
-        }
+			try (Socket sock = new Socket(addr, port);) {
+				// Send header
+				BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(
+						sock.getOutputStream(), "UTF-8"));
+				wr.write("POST /upnp/control/WANIPConn1 HTTP/1.1");
+				wr.write("Host: fritz.box:49000" + "\r\n");
+				wr.write("SOAPACTION: \"urn:schemas-upnp-org:service:WANIPConnection:1#ForceTermination\""
+						+ "\r\n");
+				wr.write("Content-Type: text/xml; charset=\"utf-8\"" + "\r\n");
+				wr.write("Content-Length: " + xmldata.length() + "\r\n");
+				wr.write("\r\n");
 
-        try {
-            TimeUnit.MINUTES.sleep(1);
-        } catch (InterruptedException e) {
-            log.error("Interruped", e);
-        }
+				// Send data
+				wr.write(xmldata);
+				wr.flush();
+			}
 
-    }
+		} catch (Exception e) {
+			log.error("Could not send Renew IP Command", e);
+		}
 
-    /**
-     * Private Constructor.
-     */
-    private RenewIP() {
+		try {
+			TimeUnit.MINUTES.sleep(1);
+		} catch (InterruptedException e) {
+			log.error("Interruped", e);
+		}
 
-    }
+	}
 }

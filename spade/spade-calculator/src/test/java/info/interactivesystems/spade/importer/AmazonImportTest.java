@@ -14,21 +14,20 @@
  */
 package info.interactivesystems.spade.importer;
 
-import java.io.File;
-import java.util.concurrent.ExecutionException;
-
-import javax.annotation.Resource;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+import java.io.File;
+import java.util.concurrent.ExecutionException;
+
 /**
  * The Class AmazonImportTest.
- * 
+ *
  * @author Dennis Rippinger
  */
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class AmazonImportTest extends AbstractTestNGSpringContextTests {
 
 	@Resource

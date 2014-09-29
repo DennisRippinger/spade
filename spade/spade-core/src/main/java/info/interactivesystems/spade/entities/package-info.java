@@ -1,6 +1,6 @@
 /**
  * Entities for the Spam Detection.
- * 
+ *
  * @author Dennis Rippinger
  *
  */

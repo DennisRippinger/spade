@@ -14,52 +14,45 @@
  */
 package info.interactivesystems.spade.entities;
 
-import java.io.Serializable;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
+
 /**
  * Entitiy for a Product.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Getter
 @Setter
 @Entity
-@Table(name = "products", indexes = { @Index(columnList = "randomID"), @Index(columnList = "category"),@Index(columnList = "noOfTopDifferences") })
+@Table(name = "products", indexes = {@Index(columnList = "randomID"), @Index(columnList = "category"), @Index(columnList = "noOfTopDifferences")})
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 7936029047258589542L;
+	private static final long serialVersionUID = 7936029047258589542L;
 
-    @Id
-    private String id;
-    
-    private Long randomID;
+	@Id
+	private String id;
 
-    @Lob
-    private String name;
+	private Long randomID;
 
-    private String category;
+	@Lob
+	private String name;
 
-    private Double rating;
+	private String category;
 
-    private Double price;
+	private Double rating;
 
-    private Integer noOfReviews;
-    
-    private Integer noOfTopDifferences;
+	private Double price;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Review> reviews;
+	private Integer noOfReviews;
+
+	private Integer noOfTopDifferences;
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	private Set<Review> reviews;
 
 }

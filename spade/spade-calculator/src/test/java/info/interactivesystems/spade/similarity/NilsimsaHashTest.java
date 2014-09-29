@@ -14,67 +14,64 @@
  */
 package info.interactivesystems.spade.similarity;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import info.interactivesystems.spade.dao.service.ReviewContentService;
 import info.interactivesystems.spade.entities.Review;
-
-import javax.annotation.Resource;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import javax.annotation.Resource;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * The Class NilsimsaHashTest.
- * 
+ *
  * @author Dennis Rippinger
  */
 @Slf4j
-@ContextConfiguration(locations = { "classpath:beans.xml" })
+@ContextConfiguration(locations = {"classpath:beans.xml"})
 public class NilsimsaHashTest extends AbstractTestNGSpringContextTests {
 
-    @Resource
-    private ReviewContentService service;
+	@Resource
+	private ReviewContentService service;
 
-    @Resource
-    private NilsimsaHash hash;
+	@Resource
+	private NilsimsaHash hash;
 
-    @Test
-    public void calculateNilsima() {
-        String hashOne =
-            hash.calculateNilsima("A present for my son");
-        String hashTwo =
-            hash.calculateNilsima("A present for my daugther");
+	@Test
+	public void calculateNilsima() {
+		String hashOne =
+				hash.calculateNilsima("A present for my son");
+		String hashTwo =
+				hash.calculateNilsima("A present for my daugther");
 
-        log.info("Hash One '{}'", hashOne);
-        log.info("Hash Two '{}'", hashTwo);
+		log.info("Hash One '{}'", hashOne);
+		log.info("Hash Two '{}'", hashTwo);
 
-        Integer compared = hash.compare(hashOne, hashTwo);
-        log.info("Compared: '{}'", compared);
-    }
+		Integer compared = hash.compare(hashOne, hashTwo);
+		log.info("Compared: '{}'", compared);
+	}
 
-   // @Test
-    public void applyHashOnDataSet() {
-        for (Integer reviewCounter = 1; reviewCounter <= 34686770; reviewCounter++) {
-            String reviewID = String.format("R%010d", reviewCounter);
-            Review currentReview = service.findReview(reviewID);
-            if (currentReview != null) {
-                String nilsimsa = hash.calculateNilsima(currentReview.getContent());
-                currentReview.setNilsimsa(nilsimsa);
+	// @Test
+	public void applyHashOnDataSet() {
+		for (Integer reviewCounter = 1; reviewCounter <= 34686770; reviewCounter++) {
+			String reviewID = String.format("R%010d", reviewCounter);
+			Review currentReview = service.findReview(reviewID);
+			if (currentReview != null) {
+				String nilsimsa = hash.calculateNilsima(currentReview.getContent());
+				currentReview.setNilsimsa(nilsimsa);
 
-                service.saveReview(currentReview);
-            }
+				service.saveReview(currentReview);
+			}
 
-            // Reduce output noise
-            Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
-            if (rand == 500) {
-                log.info("Current Item ID '{}'", reviewCounter);
-            }
+			// Reduce output noise
+			Integer rand = ThreadLocalRandom.current().nextInt(1, 2000);
+			if (rand == 500) {
+				log.info("Current Item ID '{}'", reviewCounter);
+			}
 
-        }
+		}
 
-    }
+	}
 }
